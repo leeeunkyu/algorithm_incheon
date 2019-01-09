@@ -1,0 +1,44 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+
+public class Main_2309 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int keyList[] = new int[9];
+		for (int i = 0; i < keyList.length; i++) {
+			keyList[i] = Integer.parseInt(br.readLine());			
+		}
+		int sum = 0;
+		int temp = 0;
+		loop:
+		for (int i = 0; i < keyList.length; i++) {
+			for (int k = 0; k < 7; k++) {
+				sum += keyList[k];
+				if(sum == 100 && k == 6) {
+					break loop;
+				}
+			}
+			sum = 0;
+			temp = keyList[0];
+			for (int j = 0; j < keyList.length-1; j++) {		
+				keyList[j] = keyList[j+1];
+			}
+			keyList[keyList.length-1] = temp;
+		}
+		int result[] = new int[7];
+		for (int i = 0; i <= 6; i++) {
+			result[i] = keyList[i];
+		}
+		
+		Arrays.sort(result);
+		for (int i = 0; i < 6; i++) {
+			System.out.println(result[i]);
+		}
+		System.out.print(result[6]);
+
+	}
+}

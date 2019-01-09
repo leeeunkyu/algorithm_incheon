@@ -1,0 +1,35 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2309 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int keyList[] = new int[9];
+		for (int i = 0; i < keyList.length; i++) {
+			keyList[i] = Integer.parseInt(br.readLine());			
+		}
+		int sum = 0;
+		int point = 0;
+		int temp = 0;
+		for (int i = 0; i < keyList.length; i++) {
+			sum += keyList[i];
+			if(sum == 100) {
+				point = i;
+				break;
+			}
+			for (int j = 0; j < keyList.length-1; j++) {
+				temp = keyList[j];
+				keyList[j] = keyList[j+1];
+				keyList[j+1] = temp;
+			}
+		}
+		
+		for (int i = 0; i < keyList.length; i++) {
+			
+		}
+		
+	}
+}
