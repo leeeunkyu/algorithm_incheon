@@ -1,0 +1,33 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_14501 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int cnt = Integer.parseInt(br.readLine());
+		int day = cnt;
+		int pSum = 0;
+		int t[] = new int[cnt];
+		int p[] = new int[cnt];
+		String temp[];
+		for (int i = 0; i < cnt; i++) {
+			temp = br.readLine().split(" ");
+			t[i] = Integer.parseInt(temp[0]);
+			p[i] = Integer.parseInt(temp[1]);
+		}
+		
+		for (int i = 0; i < cnt; i++) {
+			System.out.println(i);
+			day -= t[i];
+			i += t[i];
+			if(i < cnt) {
+				System.out.println(i);
+				pSum += p[i];
+			}
+		}
+		System.out.println(sum);
+	}
+}
