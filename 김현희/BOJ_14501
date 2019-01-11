@@ -1,0 +1,22 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+using namespace std;
+int dp[25];
+int max(int a, int b) {
+	return a > b ? a : b;
+}
+int main() {
+	int N;
+	int t, p;
+	scanf("%d", &N);
+	for (int i = 0; i < N; i++) {
+		
+		scanf("%d %d", &t, &p);
+
+		dp[i + 1] = max(dp[i + 1], dp[i]);
+		dp[i + t] = max(dp[i + t], dp[i] + p);
+
+	}
+
+	printf("%d\n", dp[N]);
+}
