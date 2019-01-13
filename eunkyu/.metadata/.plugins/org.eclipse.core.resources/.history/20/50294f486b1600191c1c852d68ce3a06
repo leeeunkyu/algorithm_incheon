@@ -1,0 +1,95 @@
+package algorithm;
+
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main_1012 {
+	//배추 흰니렁이 - 해충방지에 효고적-배추 근처에 서식하면서 해충을 잡아먹어준다.
+	//배추에 배추흰지렁이가 살고 있으면, 인접한 배추로 이동할 수 있어 그 배추도 해충으로 부터 보호 받을 수 있다. 상하좌우
+	static int cnt = 0;	//배추벌래 수
+	public static void main(String[] args) {
+		Scanner scan = new Scanner(System.in);
+		int testCase = scan.nextInt();
+		int m;
+		int n;
+		int k;
+		for (int i = 0; i < testCase; i++) {
+			m = scan.nextInt();	//가로 길이
+			n = scan.nextInt(); //세로 길이 
+			k = scan.nextInt(); //배추 개수
+			int arr[][] = new int[n][m];
+			boolean c[][] = new boolean[n][m];	//
+			boolean balPath[][] = new boolean[n][m];
+			initSetting(arr, k, scan);
+			for (int j = 0; j < c.length; j++) {
+				System.out.println(c[j]+" ");
+			}
+			for (int j = 0; j < arr.length; j++) {
+				for (int j2 = 0; j2 < arr[j].length; j2++) {
+					System.out.print(arr[j][j2]+" ");
+				}
+				System.out.println();
+			}
+			dfs(arr, balPath,c, true);
+			
+			//System.out.println(cnt);
+		}
+		System.out.println(cnt);
+	}
+
+	private static void dfs(int[][] arr, boolean[][] balPath, boolean[][] c, boolean flag) {
+
+		//c[0] = true;
+		
+		for(int vv = 0; vv < arr.length; vv++) {
+			System.out.println("vv: "+vv);
+			for (int i = 0; i < arr[vv].length; i++) {
+				if(arr[vv][i] == 1) {
+					System.out.println("vv: "+vv+" i:"+i+" c["+vv+"]["+i+"]:"+c[vv][i]);
+					selectNearPoint(arr, balPath, c, vv, i);
+					//break;
+				}
+			}
+			
+		}
+	}
+
+	private static void selectNearPoint(int[][] arr, boolean[][] balPath,boolean[][] c, int vv, int i) {
+		//위
+		if((vv - 1) > 0 && balPath[vv-1][i]) {
+			balPath[vv-1][i] = true;
+			cnt++;
+		}
+		//아래
+		if((vv + 1) < (arr.length - 1) && balPath[vv+1][i]) {
+			balPath[vv+1][i] = true;
+			cnt++;
+		}
+		//좌
+		if((i - 1) > 0 && !balPath[vv][i-1]) {
+			balPath[vv][i-1] = true;
+			cnt++;
+		}
+		//우
+		if((i + 1) < (arr[vv].length - 1) && !balPath[vv][i+1]) {
+			balPath[vv][i+1] = true;
+			cnt++;
+		}
+		if(!balPath[vv][i]) {
+			balPath[vv][i] = true;
+			cnt++;
+		}
+		
+	}
+	
+	private static void initSetting(int[][] arr, int k, Scanner scan) {
+		int x;
+		int y;
+		for (int i = 0; i < k; i++) {
+			//x, y
+			x = scan.nextInt();
+			y = scan.nextInt();
+			arr[y][x] = 1;
+		}
+	}
+}

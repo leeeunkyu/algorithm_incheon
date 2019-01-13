@@ -1,0 +1,102 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_13460 {
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = br.readLine().split(" ");
+		int a = Integer.parseInt(str[0]); //세로
+		int b = Integer.parseInt(str[1]); //가로
+		char bord[][] = new char[a][b];
+		int ballX = 0;
+		int ballY = 0;
+		RedBall rb = new RedBall();
+		BlueBall bb = new BlueBall();
+		for (int i = 0; i < a; i++) {
+			char set[] =  br.readLine().toCharArray();
+			for (int j = 0; j < set.length; j++) {
+				bord[i][j] = set[j];
+				if(set[j] == 'O') {
+					ballX = j;
+					ballY = i;
+				}
+				if(set[j] == 'O') {
+					ballX = j;
+					ballY = i;
+				}
+				if(set[j] == 'R') {
+					rb.setX(j);
+					rb.setY(i);
+				}
+				if(set[j] == 'B') {
+					bb.setX(j);
+					bb.setY(i);
+				}
+				
+			}
+		}
+		System.out.println(ballX+" "+ballY);
+
+	}
+}
+
+class RedBall {
+	int x;
+	int y;
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("RedBall [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append("]");
+		return builder.toString();
+	}
+}
+
+class BlueBall {
+	int x;
+	int y;
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("BlueBall [x=");
+		builder.append(x);
+		builder.append(", y=");
+		builder.append(y);
+		builder.append("]");
+		return builder.toString();
+	}
+}

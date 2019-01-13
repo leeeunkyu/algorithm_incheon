@@ -1,0 +1,14 @@
+package algorithm;
+
+import java.util.Stack;
+
+public class Main_1260 {
+	public static void main(String[] args) {
+		
+	}
+	
+	public static void dfs(int[][] a, boolean c, int v, boolean flag) {
+		Stack<Integer> stack = new Stack<Integer>();
+		
+	}
+}
