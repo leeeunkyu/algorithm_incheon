@@ -1,0 +1,28 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2667 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int cnt = Integer.parseInt(br.readLine());
+		int arr[][] = new int[cnt][cnt];
+		for (int i = 0; i < cnt; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				char temp[] = br.readLine().toCharArray();
+				for (int k = 0; k < temp.length; k++) {
+					arr[i][k] = temp[k];
+				}
+			}
+		}
+		
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}

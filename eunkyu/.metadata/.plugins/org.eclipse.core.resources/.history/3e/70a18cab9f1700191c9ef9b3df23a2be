@@ -1,0 +1,64 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2667 {
+	
+	static int cnt = 0;
+	static int arr[][];
+	static int visited[][];
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int cnt = Integer.parseInt(br.readLine());
+		arr = new int[cnt][cnt];
+		visited = new int[cnt][cnt];
+		
+		System.out.println();
+		for (int i = 0; i < cnt; i++) {
+			char temp[] = br.readLine().toCharArray();
+			for (int j = 0; j < arr[i].length; j++) {
+					arr[i][j] = temp[j]-'0';
+			}
+		}
+		
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+		int count = 0;
+		
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				if(arr[i][j] == 1 && visited[i][j] == 0) {
+					dfs(i, j);
+					count++;
+				}
+			}
+		}
+		System.out.println(count);
+	}
+
+	private static void dfs(int i, int j) {
+		int dx[] = {0, 0, 1, -1};
+		int dy[] = {1, -1, 0, 0};
+		
+		visited[i][j] = 1;
+		
+		for (int k = 0; k < dy.length; k++) {
+			int nextX = j + dx[k];
+			int nextY = i + dy[k];
+			
+			if (nextX >= 0 && nextX < cnt && nextY >= 0 && nextY < cnt) {
+				if(arr[nextY][nextX] == 1 && visited[nextY][nextX] == 0) {
+					System.out.println("??");
+					dfs(i, j);
+				}
+			}
+		}
+	}
+}

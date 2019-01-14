@@ -48,20 +48,17 @@ class Main_1012 {
     } // main
  
     static void DFS(int cur_y, int cur_x) {
-    	Stack<Map<Integer, Integer>> stack = new Stack<Map<Integer, Integer>>();
     	
         int move_x[] = { 0, 0, 1, -1 };
         int move_y[] = { 1, -1, 0, 0 };
  
         visited[cur_y][cur_x] = 1;
- 
         for (int i = 0; i < 4; i++) {
             int next_x = cur_x + move_x[i];
             int next_y = cur_y + move_y[i];
  
             if (next_x >= 0 && next_x < m && next_y >= 0 && next_y < n) {
                 if (field[next_y][next_x] == 1 && visited[next_y][next_x] == 0) {
-                    //stack.push(next_x);
                 	DFS(next_y, next_x);
                 }
             }
