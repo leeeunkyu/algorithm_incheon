@@ -1,0 +1,23 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_9466 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		int studentNum = 0;
+		for (int i = 0; i < testCase; i++) {
+			studentNum = Integer.parseInt(br.readLine());
+			int pickList[] = new int[studentNum];
+			char temp[] = br.readLine().toCharArray();
+			for (int j = 0; j < temp.length; j++) {
+				pickList[j] = temp[j] - '0';
+			}
+		}
+		
+		
+	}
+}

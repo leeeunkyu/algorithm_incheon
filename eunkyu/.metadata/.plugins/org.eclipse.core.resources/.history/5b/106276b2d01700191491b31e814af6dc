@@ -1,0 +1,68 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+/*
+ * 말00000
+ * 000000
+ * 000000
+ * 000000
+ */
+public class Main_1987 {
+	static int R = 0;
+	static int C = 0;
+	static char vistied[] = new char[26];
+	static ArrayList<Character> visited;
+//	static int cnt = 0;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = br.readLine().split(" ");
+		R = Integer.parseInt(str[0]);	//행 수
+		C = Integer.parseInt(str[1]);	//열 수
+		char arr[][] = new char[R][C];
+		visited = new ArrayList<>();
+		
+		for (int i = 0; i < R; i++) {
+			arr[i] = br.readLine().toCharArray();
+		}		
+		for (int i = 0; i < R; i++) {
+			for (int j = 0; j < C; j++) {
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
+		}
+		
+		dfs(arr, 0, 0);
+		System.out.println(visited.size());
+		
+	}
+	
+	public static void dfs(char arr[][], int x, int y) {
+		int dx[] = {0,0,1,-1};
+		int dy[] = {1,-1,0,0};
+		
+		visited.add(arr[y][x]);
+		
+		for (int i = 0; i < 4; i++) {
+			int nextX = x + dx[i];
+			int nextY = y + dy[i];
+			
+			if(nextX >=  0 && nextX < C && nextY >= 0 && nextY < R) {
+				if(check(arr[nextY][nextX])) {
+					dfs(arr, nextX, nextY);
+				}
+			}
+		}
+	}
+
+	private static boolean check(char val) {
+		for (int i = 0; i < visited.size(); i++) {
+			if(visited.get(i) == val)
+				return false;
+		}
+		return true;
+	}
+}
