@@ -1,0 +1,169 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+#include <vector>
+#include <algorithm>
+using namespace std;
+int N, M, res = 987654321;
+int map[8][8];
+int copyMap[8][8];
+int dx[] = { 0,-1,0,1 };
+int dy[] = { 1,0,-1,0 };
+int cctvNum;
+
+void copy(int(*map1)[8], int(*map2)[8]) {
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			map1[i][j] = map2[i][j];
+		}
+	}
+}
+struct CCTV {
+	int x;
+	int y;
+	int dir;	//방향
+	int camNum;	//카메라 번호
+};
+void Right(int x, int y) {
+	for (int i = y; i < M; i++) {
+		if (copyMap[x][i] == 6) break;
+		if (copyMap[x][i] == 0)copyMap[x][i] = -1;
+	}
+}
+void Down(int x, int y) {
+	for (int i = x; i < N; i++) {
+		if (copyMap[i][y] == 6) break;
+		if (copyMap[i][y] == 0) copyMap[i][y] = -1;
+	}
+}
+void Left(int x, int y) {
+	for (int i = y; i >= 0; i--) {
+		if (copyMap[x][i] == 6) break;
+		if (copyMap[x][i] == 0) copyMap[x][i] = -1;
+	}
+}
+void Top(int x, int y) {
+	for (int i = x; i >= 0; i--) {
+		if (copyMap[i][y] == 6) break;
+		if (copyMap[i][y] == 0) copyMap[i][y] = -1;
+	}
+}
+void CountSavezone(vector<CCTV> cctv) {
+	copy(copyMap, map);
+	for (int i = 0; i < cctv.size(); i++) {
+		if (cctv[i].camNum == 1) {
+			if (cctv[i].dir == 0) {			//오른쪽
+				Right(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 1) {	//아래
+				Down(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 2) {	//왼쪽
+				Left(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 3) {	//위쪽
+				Top(cctv[i].x, cctv[i].y);
+			}
+		}
+		else if (cctv[i].camNum == 2) {
+			if (cctv[i].dir == 0 || cctv[i].dir == 2) {
+				Right(cctv[i].x, cctv[i].y);
+				Left(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 1 || cctv[i].dir == 3) {
+				Down(cctv[i].x, cctv[i].y);
+				Top(cctv[i].x, cctv[i].y);
+			}
+		}
+		else if (cctv[i].camNum == 3) {
+			if (cctv[i].dir == 0) {
+				Right(cctv[i].x, cctv[i].y);
+				Down(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 1) {
+				Down(cctv[i].x, cctv[i].y);
+				Left(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 2) {
+				Left(cctv[i].x, cctv[i].y);
+				Top(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 3) {
+				Top(cctv[i].x, cctv[i].y);
+				Right(cctv[i].x, cctv[i].y);
+			}
+		}
+		else if (cctv[i].camNum == 4) {
+			if (cctv[i].dir == 0) {
+				Left(cctv[i].x, cctv[i].y);
+				Top(cctv[i].x, cctv[i].y);
+				Right(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 1) {
+				Top(cctv[i].x, cctv[i].y);
+				Right(cctv[i].x, cctv[i].y);
+				Down(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir == 2) {
+				Right(cctv[i].x, cctv[i].y);
+				Down(cctv[i].x, cctv[i].y);
+				Left(cctv[i].x, cctv[i].y);
+			}
+			else if (cctv[i].dir = 3) {
+				Down(cctv[i].x, cctv[i].y);
+				Left(cctv[i].x, cctv[i].y);
+				Top(cctv[i].x, cctv[i].y);
+			}
+		}
+		else if (cctv[i].camNum == 5) {
+			Right(cctv[i].x, cctv[i].y);
+			Down(cctv[i].x, cctv[i].y);
+			Left(cctv[i].x, cctv[i].y);
+			Top(cctv[i].x, cctv[i].y);
+		}
+	}
+
+	int cnt = 0;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			if (copyMap[i][j] == 0) cnt++;
+		}
+	}
+
+	res = min(res, cnt);
+}
+void FixDirection(int index, vector<CCTV> cctv) {
+	if (index == cctvNum) {
+		CountSavezone(cctv);
+		return;
+	}
+
+	cctv[index].dir = 0; //오른쪽
+	FixDirection(index + 1, cctv);
+
+	cctv[index].dir = 1; //아래
+	FixDirection(index + 1, cctv);
+
+	cctv[index].dir = 2; //왼쪽
+	FixDirection(index + 1, cctv);
+
+	cctv[index].dir = 3; //위쪽
+	FixDirection(index + 1, cctv);
+}
+
+int main() {
+	scanf("%d %d", &N, &M);
+	vector<CCTV> cctv;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			scanf("%d", &map[i][j]);
+			if (map[i][j] != 0 && map[i][j] != 6) {
+				cctv.push_back({ i,j,0,map[i][j] });
+			}
+		}
+	}
+	
+	//cctv의 수 
+	cctvNum = (int)cctv.size();
+	FixDirection(0, cctv);
+	printf("%d\n", res);
+}
