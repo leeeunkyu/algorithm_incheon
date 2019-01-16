@@ -1,0 +1,33 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+#include <math.h>
+using namespace std;
+int N;
+int res = 0;
+int col[15];
+bool isPossible(int q) {
+	for (int i = 0; i < q; i++) {
+		if (col[i] == col[q] || (q-i == abs(col[q]-col[i]))) {
+			return false;
+		}
+	}
+
+	return true;
+}
+void isQueen(int q) {
+	if (q == N) {
+		res += 1;
+		return;
+	}
+	for (int i = 0; i < N; i++) {
+		col[q] = i;
+		if (isPossible(q)) {
+			isQueen(q + 1);
+		}
+	}
+}
+int main() {
+	scanf("%d", &N);
+	isQueen(0);
+	printf("%d", res);
+}
