@@ -57,8 +57,8 @@ public class Main_15683 {
 		}
 		Cctv cctv = cctyList.get(i);
 		int type = cctv.getType();
+		backUp1(visited);
 		for (int j = 0; j < rotSize[type]; j++) {
-			backUp(visited, arr);
 			if(type == 0) {
 				update(j, cctv);
 			}else if(type == 1) {
@@ -82,15 +82,33 @@ public class Main_15683 {
 
 			}
 			dfs(++i);
-			backUp(arr, visited);
+			backUp2(visited);
 
+		}
+		
+		for (int j = 0; j < arr.length; j++) {
+			for (int j2 = 0; j2 < arr[j].length; j2++) {
+				System.out.print(arr[j][j2]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		System.out.println("=======================");
+		System.out.println();
+	}
+	
+	private static void backUp1(int[][] visited) {
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				visited[i][j] = arr[i][j];
+			}
 		}
 	}
 	
-	private static void backUp(int[][] a1, int[][] a2) {
+	private static void backUp2(int[][] visited) {
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < M; j++) {
-				a1[i][j] = a2[i][j];
+				arr[i][j] = visited[i][j];
 			}
 		}
 	}
@@ -102,25 +120,25 @@ public class Main_15683 {
 		// 오른쪽으로
 			for (int i = x + 1; i < M; i++) {
 				if(arr[y][i] == 6) break;
-				arr[y][i] = -1;
+				arr[y][i] = 9;
 			}
 		}else if(dir == 1) {
 			// 위쪽으로
 			for (int i = y - 1; i >= 0; i--) {
 				if(arr[i][x] == 6) break;
-				arr[i][x] = -1;
+				arr[i][x] = 9;
 			}
 		}else if(dir == 2) {
 			// 왼쪽으로
 			for (int i = x - 1; i >= 0; i--) {
 				if(arr[y][i] == 6) break;
-				arr[y][i] = -1;
+				arr[y][i] = 9;
 			}
 		}else if(dir == 3) {
 			// 아래로
 			for (int i = y + 1; i < N; i++) {
 				if(arr[i][x] == 6) break;
-				arr[i][x] = -1;
+				arr[i][x] = 9;
 			}
 		}
 	}

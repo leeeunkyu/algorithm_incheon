@@ -1,0 +1,74 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_9663 {
+	
+	static int arr[][];
+	static int n;
+	//퀸은 8방향 공격 가능
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		dfs(0, 0);
+	}
+
+	private static void dfs(int x, int y) {		
+				
+		for (int i = 0; i < n; i++) {
+			if(check(x, y, 1)) {
+				
+			}
+			if(check(x, y, 2)) {
+				
+			}
+			if(check(x, y, 3)) {
+				
+			}
+			if(check(x, y, 4)) {
+				
+			}
+			if(check(x, y, 5)) {
+				
+			}
+			if(check(x, y, 6)) {
+				
+			}
+			if(check(x, y, 7)) {
+				
+			}
+			if(check(x, y, 8)) {
+				
+			}
+			
+
+
+
+
+			
+			arr[y][x] = -1;
+		}
+	}
+
+	private static boolean check(int x, int y, int type) {
+		
+		while(x >= 0 && x < n) {
+			if(arr[y][x] != -1) {
+				x += 1;
+			}
+		}
+		
+		
+		
+		return false;
+	}
+}
