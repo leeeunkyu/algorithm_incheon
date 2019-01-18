@@ -1,0 +1,13 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Main_2661 {
+	//숫자는 1,2,3 세개로만 이루어져있음
+	//나쁜 수열은 수열이 반복될경우 ex) 123123213 
+	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+	}
+}

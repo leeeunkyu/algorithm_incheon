@@ -67,7 +67,22 @@ public class Main_1260 {
 		}
 	}
 	
-	public static void bfs(int[][] a, boolean[] c, int v, boolean flag) {
+	public static void bfs(int[][] a, boolean[] c, int v) {
 		Queue<Integer> queue = new LinkedList<>();
+		int n = a.length - 1;
+		
+		queue.add(v);
+		
+		while (!queue.isEmpty()) {
+			v = queue.poll(); //¾Õ¿¡²¨ »Ì°í Á¦°Å
+			System.out.println(v+ " ");
+			for (int i = 0; i <= n; i++) {
+				if(a[v][i] == 1 && !c[i]) {
+					queue.add(i);
+					c[i] = true;
+				}
+			}
+		}
+		
 	}
 }

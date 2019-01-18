@@ -57,6 +57,8 @@
 		<item value="10" key="LimitValue"/>
 	</section>
 	<section name="quick_assist_proposal_size">
+		<item value="1040" key="size.y"/>
+		<item value="355" key="size.x"/>
 	</section>
 	<section name="completion_proposal_size">
 	</section>
