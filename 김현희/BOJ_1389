@@ -1,0 +1,84 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <cstdio>
+#include <queue>
+using namespace std;
+int N, M;
+int mn = 987654321;
+int ans = 0;
+int map[101][101];
+int copyMap[101][101];
+int visited[100];
+void Copy(int (*map1)[101], int (*map2)[101]) {
+	for (int i = 1; i <= N; i++) {
+		for (int j = 1; j <= N; j++) {
+			map2[i][j] = map1[i][j];
+		}
+	}
+}
+void reset(int *map) {
+	for (int i = 0; i <= N; i++) {
+		visited[i] = 0;
+	}
+}
+void FindCavinNum(int index) {
+	queue<int> q;
+	int cnt = 1;
+	for (int i = 1; i <= N; i++) {
+		if (copyMap[index][i] == 1 && visited[i] == 0) {
+			//printf("index: %d i: %d\n", index, i);
+			q.push(i);
+			copyMap[index][i] = 0;
+			copyMap[i][index] = 0;
+			visited[i] = cnt;
+			/*for (int i = 1; i <= N; i++) {
+				for (int j = 1; j <= N; j++) {
+					printf("%d ", copyMap[i][j]);
+				}
+				printf("\n");
+			}
+			printf("visitd: ");
+			for (int i = 1; i <= N; i++) {
+				printf("%d ", visited[i]);
+			}*/
+		}
+	}
+	while (!q.empty()) {
+		int x = q.front();
+		q.pop();
+		for (int i = 1; i <= N; i++) {
+			if (copyMap[x][i] == 1 && visited[i] == 0) {
+				q.push(i);
+				copyMap[x][i] = 0;
+				copyMap[i][x] = 0;
+				visited[i] = visited[x]+1;
+
+			}
+		}
+	}
+	int res = 0;
+	for (int i = 1; i <= N; i++) {
+		res += visited[i];
+	}
+	//printf("%d의 케빈수: %d\n", index, res);
+	if (mn > res) {
+		mn = res;
+		ans = index;
+	}
+}
+int main() {
+	scanf("%d %d", &N, &M);
+	for (int i = 0; i < M; i++) {
+		int tmp1, tmp2;
+		scanf("%d %d", &tmp1, &tmp2);
+		map[tmp1][tmp2] = 1;
+		map[tmp2][tmp1] = 1;
+	}
+
+	for (int i = 1; i <= N; i++) {
+		Copy(map, copyMap);
+		reset(visited);
+		FindCavinNum(i);
+	}
+
+	printf("%d\n", ans);
+}
