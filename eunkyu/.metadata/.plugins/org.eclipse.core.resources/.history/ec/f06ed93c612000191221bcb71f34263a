@@ -1,0 +1,51 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_1697 {
+	static int n;	//수빈이 위치
+	static int k; 	//동생
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		k = Integer.parseInt(str[1]);
+		bfs();
+	}
+	
+	private static void bfs() {
+		int dx[] = {1, -1};
+		int cnt = 0;
+		int visited[] = new int [2*k];
+		Queue<Integer> q = new LinkedList<Integer>();
+		if(n == k) {
+			System.out.println(cnt);
+			return;
+		}
+		
+		for (int i = 0; i < dx.length + 1; i++) {
+			int nextN = n;
+			if(i == dx.length)
+				nextN = 2 * nextN;
+			else
+				nextN = n + dx[i];
+			if(nextN < 2*k && )
+			
+			
+		}
+		
+		
+	}
+
+	private static void walk(int idx) {
+		
+	}
+	
+	private static void teleport() {
+		
+	}
+}

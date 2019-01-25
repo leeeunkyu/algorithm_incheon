@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;algorithm.Shark&apos; to &apos;Shark2&apos;&#x0D;&#x0A;- Original project: &apos;algorithm&apos;&#x0D;&#x0A;- Original element: &apos;algorithm.Shark&apos;&#x0D;&#x0A;- Renamed element: &apos;algorithm.Shark2&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Shark&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;algorithm{Main_16236_Temp.java[Shark" matchStrategy="1" name="Shark2" qualified="false" references="true" similarDeclarations="false" stamp="1548333210461" textual="false" version="1.0"/>
+</session>
