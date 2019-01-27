@@ -24,38 +24,28 @@ public class Main_1697 {
 		int dx[] = {1, -1};
 		int cnt = 0;
 		int visited[] = new int [100001];
-		
-		for (int i = 0; i < visited.length; i++) {
-			visited[i] = 99999;
-		}
-		
+		visited[n] = 1;
 		Queue<Integer> q = new LinkedList<Integer>();
 		q.add(n);
 		
 		while(!q.isEmpty()) {
 			int tempN = q.poll();			
 			for (int i = 0; i < dx.length + 1; i++) {
-				int nextN = tempN;
+				int nextN;
 				if(i == dx.length) {
-					cnt = visited[nextN];
-					if(cnt == 99999)
-						cnt = 0;
-					nextN = 2 * nextN;
+					cnt = visited[tempN];
+					nextN = 2 * tempN;
 				}
 				else {
-					cnt = visited[nextN];
-					if(cnt == 99999)
-						cnt = 0;
-					nextN = nextN + dx[i];
+					cnt = visited[tempN];
+					nextN = tempN + dx[i];
 				}
-				if(nextN >= 0 && nextN < 100001 && visited[nextN] == 99999) {
-					cnt++;
-					if(visited[nextN] > cnt) 
-						visited[nextN] = cnt;
+				if(nextN >= 0 && nextN < 100001 && visited[nextN] == 0) {
+					visited[nextN] = ++cnt;
 					q.add(nextN);
 				}
 				if(nextN == k) {
-					System.out.println(visited[k]);
+					System.out.println(visited[k] - 1);
 					return;
 				}
 			}	

@@ -28,16 +28,10 @@ public class Main_7562 {
 			int x2 = Integer.parseInt(str[0]);
 			int y2 = Integer.parseInt(str[1]);
 			arr[y2][x2] = -1; //나이트가 이동해야할 위치
-			bfs(x, y);
-			int cnt = 0;
-	/*		for (int j = 0; j < visitied.length; j++) {
-				for (int j2 = 0; j2 < visitied.length; j2++) {
-					if(visitied[j][j2])
-						cnt++;
-					visitied[j][j2] = false;
-				}
-			}*/
-			sb.append("-------------------------------------\n");
+			if(x == x2 && y == y2)
+				sb.append(0  + "\n");
+			else
+				bfs(x, y);
 		}
 		System.out.println(sb);
 	}
@@ -45,24 +39,21 @@ public class Main_7562 {
 		Queue<Point> q = new LinkedList<Point>();
 		int dx[] = {1, 2, 2, 1, -1, -2, -2, -1};
 		int dy[] = {-2, -1, 1, 2, 2, 1, -1, -2};
-		int min = 300 * 300;
-		q.add(new Point(x, y));
+		q.add(new Point(x, y, 0));
 		visitied[y][x] = true;
-		int temp = 1;
-		int cnt = 1;
 		while(!q.isEmpty()) {
 			Point p = q.poll();
 			for (int i = 0; i < 8; i++) {
 				int nextX = p.getX() + dx[i];
 				int nextY = p.getY() + dy[i];
+				int step = p.getStep() + 1;
 				if(nextX >= 0 && nextX < l && nextY >= 0 && nextY < l) {
 					if(arr[nextY][nextX] == -1) {
-						sb.append(cnt+"\n");
-						sb.append(temp+"\n");
+						sb.append(step + "\n");
 						return ;
 					}
 					if(!visitied[nextY][nextX]) {
-						q.add(new Point(nextX, nextY));
+						q.add(new Point(nextX, nextY, step));
 						visitied[nextY][nextX] = true;
 					}	
 				}
@@ -76,11 +67,13 @@ class Point {
 	
 	int x;
 	int y;
+	int step;
 	
-	public Point(int x, int y) {
+	public Point(int x, int y, int step) {
 		super();
 		this.x = x;
 		this.y = y;
+		this.step = step;
 	}
 	
 	public int getX() {
@@ -95,5 +88,12 @@ class Point {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
 }
