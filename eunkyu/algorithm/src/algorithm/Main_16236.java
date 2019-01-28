@@ -14,8 +14,7 @@ public class Main_16236 {
 	static int m;	//m마리 물고기 1마리 아기상어
 	static int arr[][];
 	static ArrayList<Fish> fishSort;
-	static boolean visited[][];
-	static int path = 0;
+	static int visited[];
 	/*
 	 * 아기 상어 크기는 2
 	 * 1초에 상하좌우로 한칸씩 이동가능
@@ -32,7 +31,7 @@ public class Main_16236 {
 		n = Integer.parseInt(br.readLine());
 		arr = new int[n][n];
 		fishSort = new ArrayList<Fish>();
-		visited = new boolean[n][n];
+		visited = new int[1000000];
 		int x = 0;
 		int y = 0;
 		
@@ -43,6 +42,7 @@ public class Main_16236 {
 				if(arr[i][j] == 9) {
 					x = j;
 					y = i;
+					arr[i][j] = 0;
 				}else if(arr[i][j] != 0 ) {
 					fishSort.add(new Fish(j, i, arr[i][j]));
 				}
@@ -68,21 +68,21 @@ public class Main_16236 {
 		
 	}
 	private static void bfs(int x, int y) {
-		int dx[] = {0, -1, 0, 1};
-		int dy[] = {-1, 0, 1, 0};
+		int dx[] = {0, -1, 1, 0};
+		int dy[] = {-1, 0, 0, 1};
 		
 		Shark s = new Shark(x, y, 2, 0);
 		Queue<Shark> q = new LinkedList<>();
 		ArrayList<Fish> fishList = new ArrayList<>();
-		boolean isFish = false;
 		int sizeCnt = 0;
 		int pointX = x;
 		int pointY = y;
 		
 		q.add(s);
 		
+		//1 -> (0~4) -> (4~16) -> 
 		while(!q.isEmpty()) {
-			
+			int size = q.size();
 			Shark tempShark = q.poll();
 			int sharkX = tempShark.getX();
 			int sharkY = tempShark.getY();
@@ -94,22 +94,22 @@ public class Main_16236 {
 			}
 			
 			fishList.clear();
-			
-			for (int i = 0; i < 4; i++) {			
-				int nextX = sharkX + dx[i];
-				int nextY = sharkY + dy[i];
-				int nextStep = sharkStep + 1;
-				if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n 
-						&& arr[nextY][nextX] <= sharkSize) {
-					//이동 할 수 있는 범위 측정
-					if(arr[nextY][nextX] > 0 && arr[nextY][nextX] < sharkSize) {
-						//먹을 수 있는 물고기란 소리
-						fishList.add(new Fish(nextX, nextY, arr[nextY][nextX]));
+			for (int cnt = 0; cnt < size; cnt++) {
+				for (int i = 0; i < 4; i++) {			
+					int nextX = sharkX + dx[i];
+					int nextY = sharkY + dy[i];
+					int nextStep = sharkStep + 1;
+					if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n 
+							&& arr[nextY][nextX] <= sharkSize) {
+						//이동 할 수 있는 범위 측정
+						if(arr[nextY][nextX] > 0 && arr[nextY][nextX] < sharkSize) {
+							//먹을 수 있는 물고기란 소리
+							fishList.add(new Fish(nextX, nextY, arr[nextY][nextX]));
+						}
+						q.add(new Shark(nextX, nextY, sharkSize, nextStep));
 					}
-					q.add(new Shark(nextX, nextY, sharkSize, nextStep));
-				}
+				}	
 			}
-			path++;
 			
 			if (fishList.size() > 0) {
 				int minDistIdx = dist(sharkX, sharkY, fishList);
@@ -124,19 +124,19 @@ public class Main_16236 {
 				fishSort.remove(0);
 				pointX = fish.getX();
 				pointY = fish.getY();
-				arr[pointY][pointX] = -1;
+				arr[pointY][pointX] = 0;
 				System.out.println();
 				System.out.println("====================================");
 				for (int i = 0; i < arr.length; i++) {
 					for (int j = 0; j < arr.length; j++) {
 						if(arr[i][j] == -1)
-							System.out.print(9+" ");
+							System.out.print("#"+" ");
 						else
 							System.out.print(arr[i][j]+" ");
 					}
 					System.out.println();
 				}
-				System.out.println("상어 size: "+sharkSize);
+				System.out.println("상어 size: "+sharkSize + "Cnt: "+sizeCnt);
 				System.out.println("이동한 step: "+ (sharkStep + 1));
 			}
 		}
@@ -149,7 +149,8 @@ public class Main_16236 {
 			if(fishList.get(minDistIdx).getY() > fishList.get(i).getY()) {
 				//지금께 y축이 더 높다?
 				minDistIdx = i;
-			}else if(fishList.get(i).getY() == fishList.get(minDistIdx).getY() && fishList.get(minDistIdx).getX() > fishList.get(i).getX()) {
+			}else if(fishList.get(i).getY() == fishList.get(minDistIdx).getY() 
+					&& fishList.get(minDistIdx).getX() > fishList.get(i).getX()) {
 				//y축 거리가 같은데 x축이 더 왼쪽에 가깝다?
 				minDistIdx = i;
 			}

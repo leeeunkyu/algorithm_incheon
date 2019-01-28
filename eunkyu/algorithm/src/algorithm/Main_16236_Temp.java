@@ -1,186 +1,129 @@
 package algorithm;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
-
+import java.util.Scanner;
+ 
 public class Main_16236_Temp {
-	static int n;	//n크기 공간에
-	static int m;	//m마리 물고기 1마리 아기상어
-	static int arr[][];
-	static ArrayList<Fish> fish;
-	static boolean visited[][];
-	static int printCnt = 0;
-	/*
-	 * 아기 상어 크기는 2
-	 * 1초에 상하좌우로 한칸씩 이동가능
-	 * 자기보다 크기가 작은 물고기만 먹을 수 있고 같으면 이동은 가능
-	 * 
-	 * 이동방식
-	 * 1. 먹을 물고기가 없으면 엄마상어에 도움 요청
-	 * 2. 1마리면 그 물고기를 먹으러 출발
-	 * 3. 1마리보다 많으면 가장 가까운 물고기를 먹으러 감
-	 * 4. 크기 수 만큼 물고기를 먹으면 크기 1 증가
-	 */
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		n = Integer.parseInt(br.readLine());
-		arr = new int[n][n];
-		fish = new ArrayList<Fish>();
-		visited = new boolean[n][n];
-		int x = 0;
-		int y = 0;
-		
-		for (int i = 0; i < n; i++) {
-			String str[] = br.readLine().split(" ");
-			for (int j = 0; j < n; j++) {
-				arr[i][j] = Integer.parseInt(str[j]);
-				if(arr[i][j] == 9) {
-					x = j;
-					y = i;
-				}else if(arr[i][j] != 0 ) {
-					fish.add(new Fish(j, i, arr[i][j]));
-				}
-					
-			}
-		}
-		
-		fish.sort(new Comparator<Fish>() {
-			@Override
-			public int compare(Fish o1, Fish o2) {
-				return o1.getSize() - o2.getSize();
-			}		
-		});
-		/*for (int i = 0; i < fish.size(); i++) {
-			System.out.println("x: "+fish.get(i).getX() + " y: "+ fish.get(i).getY() + " size: "+ fish.get(i).getSize());
-		}*/
-		System.out.println();
-		System.out.println();
-		
-		bfs(x, y);
-		
-		System.out.println();
-		System.out.println();
-		
-		/*for (int i = 0; i < arr.length; i++) {
-			for (int j = 0; j < arr.length; j++) {
-				System.out.print(arr[i][j]+" ");
-			}
-			System.out.println();
-		}*/
-	}
-	private static void bfs(int x, int y) {
-		int dx[] = {0, 0, 1, -1};
-		int dy[] = {1, -1, 0, 0};
-		Shark s = new Shark(x, y, 2, 0);
-		//Queue<Shark> q = new LinkedList<>();
-		PriorityQueue<Shark> q = new PriorityQueue<Shark>();
-		q.add(s);
-		int cnt = 0;
-		int path = 0;
-		int preX = x;
-		int preY = y;
-		ArrayList<Integer> distArray = new ArrayList<Integer>();
-		int res = 0;
-		System.out.println("preX: "+preX+" preY: "+preY+" VAL:"+arr[preX][preY]);
-
-		loop:
-		while(!q.isEmpty()) {
-			//우선순위가 가장 큰 애를 뽑는다
-			Shark tempShark = q.poll();
-
-			for (int i = 0; i < 4; i++) {
-				int nextX = tempShark.getX() + dx[i];
-				int nextY = tempShark.getY() + dy[i];				
-				
-				if(fish.isEmpty() ||fish.get(0).getSize() >= tempShark.getSize()) {
-					//더이상 잡을 물고기가 없거나 남은 물고기 사이즈가 지금 내 사이즈보다 크가나 같을때 종료
-					break loop;
-				}
-				
-				int dist = Math.abs(nextX - preX) + Math.abs(nextY - preY);
-				//상어가 이동한 거리를 계산
-							
-				if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n) {
-					//기준에 맞는 가장 가까운 물고기 인덱스를 찾는다.
-					int minIndex = checkPrior(nextX, nextY, tempShark.getSize());
-					
-					if(nextX == fish.get(minIndex).getX()  && nextY == fish.get(minIndex).getY() 
-							&& arr[nextY][nextX] < tempShark.getSize()) {
-						System.out.println("nextX: "+nextX+" nextY: "+nextY+" VAL:"+arr[nextY][nextX]+ " minIndex: "+minIndex);
-						printCnt++;
-						cnt++;
-						path++;
-						arr[nextY][nextX] = 0;
-						fish.remove(minIndex);	//잡아먹은 물고리를 물고기리스트에서 삭제
-						preX = nextX;
-						preY = nextY;
-						distArray.add(dist);
-						
-						System.out.println("=======================================");
-						for (int k = 0; k < arr.length; k++) {
-							for (int j = 0; j < arr.length; j++) {
-								System.out.print(arr[k][j]+" ");
-							}
-							System.out.println();
-						}
-						System.out.println("=======================================");
-
-						
+    static int n,x,y;
+    static int[][] arr;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        n = sc.nextInt();
+        arr = new int[n][n];
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++) {
+                arr[i][j] = sc.nextInt();
+                // 아기 상어 최초 위치
+                if(arr[i][j]==9) {
+                    x=i;y=j;
+                }
+            }
+        }
+        // 먹이 탐색할 때 중복 제거
+        visited = new boolean[n][n];
+        solve();
+    }
+    
+    // 최적의 먹이를 먹고 다시 먹이 탐색할 때
+    private static void init() {
+        for(int i=0;i<n;i++) {
+            for(int j=0;j<n;j++)
+                visited[i][j] = false;
+        }
+    }
+    
+    static boolean[][] visited;
+    static int[][] dir = {{1,0},{0,1},{-1,0},{0,-1}};
+    private static void solve() {
+        Queue<Pair> queue = new LinkedList<>();
+        // 초기 크기 2
+        queue.add(new Pair(x,y,2,0,0));
+        visited[x][y] = true;
+        // 걸린 시간
+        int result = 0;
+        while(!queue.isEmpty()) {
+            int eatX=99,eatY=99; // 먹이감 발견시 그 위치
+            int eat=0,big=0,cnt=0; // for문으로 한 cnt씩 봐주므로, t를 밖에서 사용하기 위해
+            int size = queue.size();
+            // 최소로 도달하면 거기서 부터 다시 탐색을 해야하기 때문에
+            // 같은 cnt씩 묶어서 봐준다.
+            for(int j=0;j<size;j++) {
+                Pair t = queue.poll();
+                for(int i=0;i<4;i++) {
+                    int tx = t.x+dir[i][0];
+                    int ty = t.y+dir[i][1];
+                    if(tx<0 || ty<0 || tx>=n || ty>=n) continue;
+                    if(visited[tx][ty]) continue;
+                    // 현 몸집부다 크면 못 지나감
+                    if(arr[tx][ty]>t.big) continue;
+                    visited[tx][ty]=true;
+                    queue.add(new Pair(tx,ty,t.big,t.eat,t.cnt+1));
+                    // 아기 상어보다 작은 먹이를 발견하면
+                    if(arr[tx][ty]!=0&& arr[tx][ty]!=t.big) {
+                        // 조건에 따라서 위쪽  & 왼쪽이 우선권
+                        if(tx<eatX) {
+                            eatY = ty;
+                            eatX = tx;
+                            eat = t.eat;
+                            big = t.big;
+                            cnt = t.cnt+1;
+                        }else if(tx==eatX) {
+                            if(ty<eatY) {
+                                eatY = ty;
+                                eatX = tx;
+                                eat = t.eat;
+                                big = t.big;
+                                cnt = t.cnt+1;
+                            }
+                        }
+                    }
+                }
+            }
+            // eatX가 바뀌었다는것은 이번 cnt에서 먹을것이 있다는 뜻.
+            if(eatX!=99) {
+                eat++; // 아그작 먹자
+                // 크기 커지기
+                if(eat==big) {
+                    big++;
+                    eat=0;
+                }
+                // 현 먹이 먹은 곳으로 아기 상어 이동
+                arr[x][y] = 0;
+                arr[eatX][eatY] = 9;
+                result += cnt; // 거기까지의 탐색 거리
+                x = eatX; y = eatY; // 아기 상어 위치 이동
+                init(); // 재 탐색을 위한 방문 초기화
+                queue.clear(); // 탐색하던 것들은 필요 없으므로 제거
+                visited[eatX][eatY] = true;
+                // 현 위치에서 아기상어 다시 탐색
+				System.out.println();
+				System.out.println("====================================");
+				for (int i = 0; i < arr.length; i++) {
+					for (int j = 0; j < arr.length; j++) {
+						if(arr[i][j] == 9)
+							System.out.print("#"+" ");
+						else
+							System.out.print(arr[i][j]+" ");
 					}
-					System.out.println(path);
-					q.add(new Shark(nextX, nextY, tempShark.getSize(), path));
+					System.out.println();
 				}
-				//System.out.println("cnt: "+cnt+" tempShark.getSize(): "+tempShark.getSize());
-				if(cnt == tempShark.getSize()) {
-					cnt = 0;
-					tempShark.setSize(tempShark.getSize() + 1);
-				}
-					
-			}
-
-
-		}
-		for (int i = 0; i < distArray.size(); i++) {
-			System.out.print(distArray.get(i)+" ");
-			res += distArray.get(i);
-		}
-		System.out.println();
-		System.out.println(res);
-	}
-	
-	//위쪽먼저 그다음 왼쪽
-	private static int checkPrior(int preX, int preY, int size) {
-		int min = 9999999;
-		int minIndex = 0;
-		for (int i = 0; i < fish.size(); i++) {
-			if(fish.get(i).getSize() < size && arr[preX][preY] != 0) {
-				int dist = Math.abs((fish.get(i).getX() - preX) + Math.abs(fish.get(i).getY() - preY));
-				if(min >= dist) {
-					//위쪽, 왼쪽
-					if(min == dist) {
-						//작은게 더 위쪽
-						if(fish.get(i).getY() < fish.get(minIndex).getY()) {
-							minIndex = i;		
-						//높이가 똑같다면? 왼쪽꺼
-						}else if(fish.get(i).getX() < fish.get(minIndex).getX()){
-							minIndex = i;		
-						}
-						min = dist;
-					}else {
-						minIndex = i;
-						min = dist;
-
-					}
-				}
-				
-			}
-		}
-		return minIndex;
-	}
+				System.out.println("상어 size: "+big + "Cnt: "+eat);
+				System.out.println("이동한 step: "+ (cnt + 1));
+                queue.add(new Pair(eatX,eatY,big,eat,0));
+            }
+        }
+        System.out.println(result);
+    }
+    
+    static class Pair{
+        int x,y,big,eat,cnt;
+        Pair(int x,int y,int big,int eat,int cnt){
+            this.x = x;
+            this.y = y;
+            this.big = big;
+            this.eat = eat;
+            this.cnt = cnt;
+        }
+    }
 }
