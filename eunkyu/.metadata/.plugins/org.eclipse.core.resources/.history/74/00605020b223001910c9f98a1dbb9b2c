@@ -1,0 +1,23 @@
+package algorithm;
+
+public class TestClass {
+	public static void main(String[] args) {
+		String str = "testString";
+		int length = str.length();
+		System.out.println(str.substring(length - 1, length));
+		System.out.println(str.substring(length - 2, length - 1));
+		int idx = 1;
+		System.out.println(4 % idx);
+		++idx;
+		System.out.println(4 % idx);
+		++idx;
+		System.out.println(4 % idx);
+		++idx;
+		System.out.println(4 % idx);
+		++idx;
+		System.out.println(4 % idx);
+		++idx;
+		System.out.println(4 % idx);
+
+	}
+}

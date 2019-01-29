@@ -1,0 +1,43 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2661 {
+	static int n;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		dfs(1 ,sb);
+		System.out.println(sb);
+	}
+	//
+	static boolean dfs(int idx ,StringBuilder sb) {
+		idx = idx % 3;
+		if(idx == 0) idx = 3;
+		//idx´Â 1, 2, 3¹Ýº¹...
+		if(sb.length()==n) 
+			return true;
+		for (int i = idx; i < 4; i++) {
+			sb.append(i);
+			if(check_sequence(sb)) {
+				if(dfs(idx, sb))
+					return true;
+			}
+			sb.deleteCharAt(sb.length()-1);
+		}
+		return false;
+	}
+	static boolean check_sequence(StringBuilder sb) {
+		int size =sb.length();
+		int half_size = size/2;
+		for (int i = 1; i < half_size+1; i++) {
+			String s1 = sb.substring(size-i*2, size-i);
+			String s2 = sb.substring(size-i, size);
+			if(s1.equals(s2)) return false;
+		}
+		return true;
+	}
+}

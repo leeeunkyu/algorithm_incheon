@@ -1,0 +1,10 @@
+package algorithm;
+
+public class TestClass {
+	public static void main(String[] args) {
+		String str = "testString";
+		int length = str.length();
+		System.out.println(str.substring(length - 1, length));
+		System.out.println(str.substring(length - 2, length - 1));
+	}
+}
