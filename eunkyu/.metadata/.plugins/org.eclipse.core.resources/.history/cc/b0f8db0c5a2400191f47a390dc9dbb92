@@ -1,0 +1,64 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.swing.InputMap;
+
+public class Solution {
+	static int idx = 0;
+	static boolean type = true;
+	static int res = 0;
+	static int cnt = 0;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	
+		
+		int numbers[] = new int[5];
+		for (int i = 0; i < numbers.length; i++) {
+			numbers[i] = Integer.parseInt(br.readLine());
+		}
+		
+		int target = Integer.parseInt(br.readLine());
+		System.out.println(solution(numbers, target));
+	}
+	
+	public static int solution(int[] numbers, int target) {
+		int answer = 0;
+		//더하기 빼기만 가능
+		for(int i = idx; i < numbers.length; i++) {
+			if(type) {
+				res += numbers[i];
+				type = true;
+			}
+			else {
+				res -= numbers[i];
+				type = false;
+			}
+			System.out.println("res: "+res+"  idx:"+idx);
+			if(numbers.length - 1 == idx) {
+				System.out.println("length == idx");
+				if(target == res)
+					return 1;
+				if(type) {
+					res -= numbers[idx - 1];
+					type = false;
+				}
+				else {
+					res += numbers[idx - 1];
+					type = true;
+				}
+				--idx;
+				cnt ++;
+				idx -= cnt;
+				System.out.println("res: "+res+"  idx:"+idx);
+			}	
+			idx = idx + 1;
+			if(idx < 0)
+				return 0;
+			answer += solution(numbers, target);
+		}
+		return answer;
+	}
+}

@@ -15,12 +15,13 @@ public class Main_1759 {
 	static int c;
 	static char type[] = {'a', 'e', 'i', 'o', 'u'};
 	static char constArray[];
+	static boolean visited[];
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String str[] = br.readLine().split(" ");
 		l = Integer.parseInt(str[0]); //l 개의 암호문자
 		c = Integer.parseInt(str[1]); //c 개의 예상문자
-		
+		visited = new boolean[26];
 		
 		char temp[] = br.readLine().toCharArray();
 		cryptoList = new char[c];
@@ -50,30 +51,28 @@ public class Main_1759 {
 		
 		constArray = tempStr.toCharArray(); //모음 집합
 		cnt = 0;
-		for (int i = 0; i < c; i++) {
-			dfs(i, 0, 0, "");			
-		}
+		/*for (int i = 0; i < c - l; i++) {
+			dfs(i, "");			
+		}*/
+		StringBuilder sb = new StringBuilder();
+		dfs(0, "");
 	}
 	//b c d e f i
 	//b c d # f #
 	//e i
-	private static void dfs(int idx, int vowel, int consonant, String str) {
-		if (str.length() == l) {
-			if (vowel >=1 && consonant >= 2) {
-				System.out.println(str);
-			} 
+	private static void dfs(int idx, String str) {
+		visited[idx] = true;
+		
+		if(str.length() == l) {
+			System.out.println("답: "+str);
 			return;
 		}
-		if(idx == c) {
-			return;
+		for (int i = idx; i < l; i++) {
+			
+			str += cryptoList[i];
+			dfs(++idx, str);	
+			str = str.substring(0, str.length() - 1);
 		}
-		
-		if (check(cryptoList[idx])) {
-			dfs(idx+1, vowel +1, consonant, str + cryptoList[idx]);
-		} else {
-			dfs(idx+1, vowel, consonant + 1, str + cryptoList[idx]);
-		}
-		
 	}
 	private static boolean check(char val) {
 		if (val == 'a' || val == 'e'  || val == 'i'  || val == 'o'  || val == 'u' ) {

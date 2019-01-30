@@ -6,44 +6,50 @@ import java.io.InputStreamReader;
 
 public class Main_9663 {
 	
-	static int ans, N;
+	static int ans, n;
 	static int[] col;
 	//n이 주어지면 nxn 크기의 채스판에 n개의 퀸이 놓여진다.
 	public static void main(String args[]) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	    int N = Integer.parseInt(br.readLine());
-		col = new int[15];
-	    
-	    for (int i = 1; i <= N; i++) {
-	        col[1] = i;
-	        search(1);
+	    n = Integer.parseInt(br.readLine());
+		//채스판의 최대 크기는 15
+	    for (int i = 1; i <= n; i++) {
+			col = new int[n + 1];
+			col[1] = i;
+			dfs(1);
 	    }
 	    System.out.println(ans);
+
 	}
-	public static void search(int x) {
-	    if (x == N) { //x 가 N과 같으면 끝까지 Queen을 배치한것
-	        ans++;
-	    } else {
-	        for (int i = 1; i <= N; i++) {
-	            col[x + 1] = i;
-	            if (check(x + 1)) {
-	                search(x + 1);
-	            } else {
-	                col[x + 1] = 0;    
-	            }
+	public static void dfs(int row) {
+		if(row == n) {
+			++ans;
+		}else {
+			for (int i = 1; i <= n; i++) {
+				col[row + 1] = i;
+				if(isPossible(row + 1)) {
+					dfs(row + 1);
+				}
+			}
+		}
+	}
+	 
+	public static boolean isPossible(int c) {
+	    // col[1]의 의미는 1행 *열이다.
+	    // col[1] = 1 => 1행 1열, col[2] = 3 => 2행 3열
+	 
+	    // 이전 열들을 탐색하면서 배치 가능 여부 확인
+	    for (int i = 1; i < c; i++) {
+	        // 같은 행, 열
+	        if (col[i] == col[c]) {
+	            return false;
 	        }
-	    }
-	    col[x] = 0;
-	    
-	}
-	public static boolean check(int x) {
-	    for (int i = 1; i < x; i++) {
-	        if (col[i] == col[x])  //같은 세로 줄인지 확인
+	        // 대각선
+	        if (Math.abs(col[i] - col[c]) == Math.abs(i - c)) {
 	            return false;
-	        
-	        if (Math.abs(i - x) == Math.abs(col[i] - col[x])) //대각선 확인. 값 음수 방지하기위해 절대값으로
-	            return false;
+	        }
 	    }
 	    return true;
 	}
+
 }

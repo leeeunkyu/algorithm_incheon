@@ -1,0 +1,40 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.swing.InputMap;
+
+public class Solution {
+	
+	static int answer = 0;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	
+		
+		int numbers[] = new int[5];
+		for (int i = 0; i < numbers.length; i++) {
+			numbers[i] = Integer.parseInt(br.readLine());
+		}
+		
+		int target = Integer.parseInt(br.readLine());
+		System.out.println(solution(numbers, target));
+	}
+	
+	public static int solution(int[] numbers, int target) {
+		dfs(numbers, target, 0, 0);
+		return answer;
+	}
+	
+	public static void dfs(int[] numbers, int target, int idx, int res) {
+		int type[] = {1 ,-1};
+		//더하기 빼기만 가능
+		for(int i = 0; i < 2; i++) {
+			dfs(numbers, target, idx, res + (numbers[i] + type[i]));
+		}
+	}
+	
+	
+}
