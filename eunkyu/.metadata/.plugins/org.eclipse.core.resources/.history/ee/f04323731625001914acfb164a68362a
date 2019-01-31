@@ -1,0 +1,58 @@
+package algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution {
+   static Queue<coffee> q = new LinkedList<coffee>();
+   static Queue<Integer> ans = new LinkedList<Integer>();
+   public static void main(String args[]) {
+      int N = 1;
+      int spot[] = new int[N];
+      
+      int[] ct = {100,1,5,1,1};
+      
+      coff(N, ct);
+      System.out.println(ans);
+   }
+
+   static void coff(int n , int ct[]) {
+      int i;
+      for (i = 1 ; i <= n ; i++) {
+         q.add(new coffee(i, ct[i-1]));
+      }
+      
+      coffee co[] = new coffee[n];
+      while (!q.isEmpty()) {
+         for (int j = 0 ; j < n; j++ ) {
+            co[j] = q.poll();
+            try {
+            int sec = co[j].sec;
+            if (sec -1 == 0) {
+               if (i <= ct.length) {
+                  q.add(new coffee(i, ct[i-1]));
+                  i++;
+               }
+               ans.add(co[j].num);
+            } else {
+               q.add(new coffee(co[j].num, co[j].sec-1));
+            }
+            }catch (Exception e) {}
+         }
+         
+         
+         
+      }
+      
+   }
+   
+
+   static class coffee{
+      int num;
+      int sec;
+      public coffee(int num, int sec) {
+         this.num = num;
+         this.sec = sec;
+      }
+   }
+}

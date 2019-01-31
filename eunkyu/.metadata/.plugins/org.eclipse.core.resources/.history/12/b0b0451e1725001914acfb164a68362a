@@ -1,0 +1,87 @@
+package algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution {
+   static Queue<Coffee> q = new LinkedList<Coffee>();
+   static Queue<Integer> ans = new LinkedList<Integer>();
+   public static void main(String args[]) {
+      int N = 1;
+      int spot[] = new int[N];
+      
+      int[] ct = {100,1,5,1,1};
+      
+      solution(N, ct);
+      
+      
+   }
+
+   public int[] solution(int n, int[] coffee_times) {
+	   int[] answer = new int [coffee_times.length];
+	   coffe(n, coffee_times);
+	   int i = 0;
+	   while (!ans.isEmpty()) {
+		answer[i++] = ans.poll();
+	   }
+	   return answer;
+   }
+   
+   static void coffe(int n , int ct[]) {
+	  int i;
+      for (i = 1 ; i <= n ; i++) {
+         q.add(new Coffee(i, ct[i-1]));
+      }
+      
+      Coffee co[] = new Coffee[n];
+      while (!q.isEmpty()) {
+         for (int j = 0 ; j < n; j++ ) {
+            co[j] = q.poll();
+            try {
+            int sec = co[j].getMakeTime();
+            if (sec -1 == 0) {
+               if (i <= ct.length) {
+                  q.add(new Coffee(i, ct[i-1]));
+                  i++;
+               }
+               ans.add(co[j].num);
+            } else {
+               q.add(new Coffee(co[j].num, co[j].getMakeTime()-1));
+            }
+            }catch (Exception e) {}
+         }
+         
+         
+         
+      }
+      
+   }
+   
+
+	static class Coffee{
+		
+	int num;
+	int makeTime;
+
+	public Coffee(int num, int makeTime) {
+		super();
+		this.num = num;
+		this.makeTime = makeTime;
+	}
+	
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+	public int getMakeTime() {
+		return makeTime;
+	}
+	public void setMakeTime(int makeTime) {
+		this.makeTime = makeTime;
+	}
+      
+      
+   }
+}

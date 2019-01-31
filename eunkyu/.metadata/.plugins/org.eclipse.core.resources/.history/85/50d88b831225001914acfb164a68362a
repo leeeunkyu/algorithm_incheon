@@ -1,0 +1,54 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/*
+[U, U, R, D, L, L, L, U, R, D, D, D, L, U, R, R, R, D, L, U]
+URDL, RDLU, DLUR, LURD,
+RULD, ULDR, LDRU, DRUL, 
+ */
+public class Solution {
+	public static void main(String[] args) {
+		String[] moves = {"R","D","L","U",  "U",  "U","R","D","L"};
+		solution(moves);
+	}
+	public static int solution(String[] moves) {
+		int answer = 0;
+		
+		String cycleMove[] = {"URDL", "RDLU", "DLUR", "LURD", "RULD", "ULDR", "LDRU", "DRUL"};
+		
+		String str = "";
+		for (int i = 0; i < moves.length; i++) {
+			str += moves[i];
+		}
+		
+		String temp = "";
+		String temp2 = "";
+		while (true) {
+			if(4 < str.length() - 1) {
+				System.out.println("ss");
+				temp = str.substring(0, 4);
+				if(temp == null && temp.equals(temp2)) {
+					str = str.replaceFirst(temp, "");
+					continue;
+				}
+				System.out.println("temp:"+temp);
+				for (int j = 0; j < cycleMove.length; j++) {
+					if(cycleMove[j].equals(temp)) {
+						++answer;
+						str = str.replaceFirst(temp, "");
+						System.out.println("str: "+str);
+						temp2 = temp;
+					}
+				}
+			} else {
+				break;
+			}
+		}
+		System.out.println(str);
+
+		return answer;
+	}
+}

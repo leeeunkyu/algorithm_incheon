@@ -1,0 +1,50 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+/*
+[U, U, R, D, L, L, L, U, R, D, D, D, L, U, R, R, R, D, L, U]
+URDL, RDLU, DLUR, LURD,
+RULD, ULDR, LDRU, DRUL, 
+ */
+public class Solution {
+	public static void main(String[] args) {
+		String[] moves = {"U","R","D","L"};
+		solution(moves);
+	}
+	public static int solution(String[] moves) {
+		int answer = 0;
+		
+		String cycleMove[] = {"URDL", "RDLU", "DLUR", "LURD", "RULD", "ULDR", "LDRU", "DRUL"};
+		
+		String str = "";
+		for (int i = 0; i < moves.length; i++) {
+			str += moves[i];
+		}
+		
+		String temp = "";
+		String temp2 = "";
+		for (int i = 0; i < str.length(); i++) {
+			if(i + 3 < str.length()) {
+				temp = str.substring(i, i+4);
+				if(temp == null && temp.equals(temp2)) {
+					str = str.replaceFirst(temp, "");
+					i = -1;
+					continue;
+				}
+				for (int j = 0; j < cycleMove.length; j++) {
+					if(cycleMove[j].equals(temp)) {
+						++answer;
+						str = str.replaceFirst(temp, "");
+						temp2 = temp;
+						i = -1;
+					}
+				}
+			}
+		}
+		System.out.println(answer);
+		return answer;
+	}
+}
