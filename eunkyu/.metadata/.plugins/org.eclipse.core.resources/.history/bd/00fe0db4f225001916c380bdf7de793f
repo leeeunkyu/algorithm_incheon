@@ -1,0 +1,51 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_1966 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		
+		int testCase = Integer.parseInt(br.readLine());
+		int n; // 문서의수
+		int m; // 출력할 문서 위치
+		int p = 0; // 출력할 문서 중요도
+		for (int i = 0; i < testCase; i++) {
+			String str2[] = br.readLine().split(" ");
+			n = Integer.parseInt(str2[0]);
+			m = Integer.parseInt(str2[1]);
+			String str[] = br.readLine().split(" ");
+			Queue<Integer> q = new LinkedList<Integer>();
+			for (int j = 0; j < n; j++) {
+				if(j == m)
+					p = Integer.parseInt(str[j]);
+				q.add(Integer.parseInt(str[j]));
+			}
+			
+			print(q, p, sb);
+		}
+	}
+
+	private static void print(Queue<Integer> q, int p, StringBuilder sb) {
+		Queue<Integer> temp = new LinkedList<Integer>();
+		Queue<Integer> temp2 = new LinkedList<Integer>();
+		int size = q.size();
+		int pivot = q.poll();
+		for (int i = 0; i < size; i++) {
+			if(!q.isEmpty() && q.peek() > pivot) {
+				temp.add(pivot);
+				pivot = q.poll();
+			}else {
+				temp2.add(pivot);
+				pivot = q.poll();
+			}
+		}
+		
+		
+	}
+}

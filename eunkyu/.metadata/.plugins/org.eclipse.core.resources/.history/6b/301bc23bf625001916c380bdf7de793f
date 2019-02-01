@@ -1,0 +1,65 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main_1966 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		
+		int testCase = Integer.parseInt(br.readLine());
+		int n; // 문서의수
+		int m; // 출력할 문서 위치
+		int p = 0; // 출력할 문서 중요도
+		int val = 0;
+		for (int i = 0; i < testCase; i++) {
+			String str2[] = br.readLine().split(" ");
+			n = Integer.parseInt(str2[0]);
+			m = Integer.parseInt(str2[1]);
+			String str[] = br.readLine().split(" ");
+			Queue<Integer> q = new LinkedList<Integer>();
+			PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
+			for (int j = 0; j < n; j++) {
+				val = Integer.parseInt(str[j]);
+				if(val == m)
+					p = j;
+				q.add(val);
+				pq.add(val);
+			}
+			
+			print(q, pq, p, sb);
+		}
+	}
+	//1 2 3 4
+	//1 1 9 1 1 1 [1 1 - 9 1 1 1 1 1  - 9 1 1 1 - 9 1 1 1 1 ]
+	//9 1 1 1 1 1
+	private static void print(Queue<Integer> q, PriorityQueue<Integer> pq, int p, StringBuilder sb) {
+		int cnt = 0;
+		int n = q.size();
+		while(!q.isEmpty()) {
+			int pivot = q.poll();
+			if(pq.peek() == pivot) {
+				if(p == 0) {
+					sb.append(cnt);
+				}
+				cnt++;
+			} else {
+				if(p != 0) {
+					--p;
+				}else {
+					p = n - 1;
+				}
+				cnt++;
+				q.add(pivot);
+			}
+			
+		}
+		
+		
+	}
+}
