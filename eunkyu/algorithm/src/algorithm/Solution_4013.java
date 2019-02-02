@@ -15,7 +15,7 @@ public class Solution_4013 {
 		
 		int testCase = Integer.parseInt(br.readLine());
 		
-		for (int i = 0; i < testCase; i++) {
+		for (int i = 1; i <= testCase; i++) {
 			Queue<Integer> q = new LinkedList<Integer>();
 			Gear gear[] = new Gear[4];
 			GearMeet[] gearMeet = new GearMeet[4];
@@ -38,37 +38,79 @@ public class Solution_4013 {
 			
 			intit(gear, gearMeet);
 			rotate(gear, gearMeet, rInfo);
-			print(gear, gearMeet);
+			int sum = sumTop(gear);
+			sb.append("#"+ i + " " + sum+"\n");
 		}
+		System.out.println(sb);
+	}
+	
+	private static int sumTop(Gear[] gear) {
+		int sum = 0;
+		for (int i = 0; i < gear.length; i++) {
+			Deque<Integer> dq = gear[i].getDq();
+			int val = dq.pollFirst();
+			if(val == 1) {
+				if(i == 0)
+					sum += 1;
+				if(i == 1)
+					sum += 2;
+				if(i == 2)
+					sum += 4;
+				if(i == 3)
+					sum += 8;
+			}
+		}
+		
+		return sum;
 	}
 
 	private static void rotate(Gear[] gear, GearMeet[] gearMeet, String[] rInfo) {
 		for (int i = 0; i < rInfo.length; i++) {
-			String str[] = rInfo[0].split(" ");
-			int gearNum = Integer.parseInt(str[0]);
+			String str[] = rInfo[i].split(" ");
+			int gearNum = Integer.parseInt(str[0]) - 1;
 			int dir = Integer.parseInt(str[1]);
-			boolean check = gearMeet[1].getRight() == gearMeet[2].getLeft();
-			for (int d = 0; d < gearMeet.length; d++) {
-				//dir + d = 1, 2, 3, 4
-				int nearDir = (gearNum - 1) % 2;
-
-				if(gearMeet[d].getRight() != gearMeet[d].getLeft()) {
-					
-					if(nearDir == 0) {
-						if(dir == 1) {
-							System.out.println("??");
-							rRotate(gear, gearMeet, d);
-						}else {
-							System.out.println("??");
-							lRotate(gear, gearMeet, d);
+			int n = gear.length;
+			if(dir == 1) {
+				rRotate(gear, gearMeet, gearNum);
+				//왼쪽 보기
+				if(gearNum - 1>= 0 && gearMeet[gearNum].left != gearMeet[gearNum - 1].right) {
+					lRotate(gear, gearMeet, gearNum - 1);
+					if(gearNum - 2>= 0 && gearMeet[gearNum - 1].left != gearMeet[gearNum - 2].right) {
+						rRotate(gear, gearMeet, gearNum - 2);
+						if(gearNum - 3>= 0 && gearMeet[gearNum - 2].left != gearMeet[gearNum - 3].right) {
+							lRotate(gear, gearMeet, gearNum - 3);
 						}
-					}else {
-						if(dir == 1) {
-							System.out.println("??");
-							lRotate(gear, gearMeet, d);
-						}else {
-							System.out.println("??");
-							rRotate(gear, gearMeet, d);
+					}
+				}
+				//오른쪽 보기
+				if(gearNum + 1 < n && gearMeet[gearNum].right != gearMeet[gearNum + 1].left) {
+					lRotate(gear, gearMeet, gearNum + 1);
+					if(gearNum + 2 < n && gearMeet[gearNum + 1].right != gearMeet[gearNum + 2].left) {
+						rRotate(gear, gearMeet, gearNum + 2);
+						if(gearNum + 3 < n && gearMeet[gearNum + 2].right != gearMeet[gearNum + 3].left) {
+							lRotate(gear, gearMeet, gearNum +3);
+						}
+					}
+				}
+			}else {
+				lRotate(gear, gearMeet, gearNum);
+				//왼쪽보기
+				if(gearNum - 1>= 0 && gearMeet[gearNum].left != gearMeet[gearNum - 1].right) {
+					rRotate(gear, gearMeet, gearNum - 1);
+					if(gearNum - 2>= 0 && gearMeet[gearNum - 1].left != gearMeet[gearNum - 2].right) {
+						lRotate(gear, gearMeet, gearNum - 2);
+						if(gearNum - 3>= 0 && gearMeet[gearNum - 2].left != gearMeet[gearNum - 3].right) {
+							rRotate(gear, gearMeet, gearNum - 3);
+						}
+					}
+				}
+				//오른쪽 보기
+				if(gearNum + 1 < n && gearMeet[gearNum].right != gearMeet[gearNum + 1].left) {
+					rRotate(gear, gearMeet, gearNum + 1);
+					if(gearNum + 2 < n && gearMeet[gearNum + 1].right != gearMeet[gearNum + 2].left) {
+						lRotate(gear, gearMeet, gearNum + 2);
+						if(gearNum + 3 < n && gearMeet[gearNum + 2].right != gearMeet[gearNum + 3].left) {
+							rRotate(gear, gearMeet, gearNum +3);
 						}
 					}
 				}
