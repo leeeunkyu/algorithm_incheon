@@ -44,7 +44,8 @@ public class Main_1966 {
 		}
 		System.out.println(sb);
 	}
-
+	//1 2 3 4 5
+	//5 4
 	private static void print(Queue<Integer> q, PriorityQueue<Integer> pq, int p, StringBuilder sb) {
 		int n = q.size();
 		while(!q.isEmpty()) {
