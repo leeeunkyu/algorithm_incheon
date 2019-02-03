@@ -1,0 +1,101 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution_5658 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		Queue<Character> sideList[] = new Queue[4];
+		int sideNumList[] = null;
+		for (int i = 1; i <= testCase; i++) {
+			String str[] = br.readLine().split(" ");
+			int n = Integer.parseInt(str[0]); //num길이
+			int k = Integer.parseInt(str[1]); //k번째로 큰 숫자
+			String num = br.readLine(); //4의 배수 8~28 사이 각각 0이상 f이하
+			
+			int sideNum = num.length() / 4;//한변에 들어갈 수 있는 숫자길이
+			
+			sideNumList = new int[16]; //sideNum이 나올수 있는 최대 경우의 수는 한 변이 가질수 있는 경우의수 * 4
+			
+			System.out.println(sideNum);
+			
+			for (int j = 0; j < sideList.length; j++) {
+				Queue<Character> side = new LinkedList<Character>();
+				for (int l = 0; l < sideNum; l++) {
+					side.add(num.charAt(l + (j*sideNum)));
+				}
+				sideList[j] = side;
+			}
+			for (int j = 0; j < sideList.length; j++) {
+				System.out.println(sideList[j]);
+			}
+			selectSumVal(sideList, sideNumList, sideNum);
+		}
+		
+		for (int i = 0; i < sideList.length; i++) {
+			System.out.println(sideList[i]);
+		}
+		for (int i = 0; i < sideNumList.length; i++) {
+			System.out.println(sideNumList[i]);
+		}
+	}
+
+	private static void selectSumVal(Queue<Character>[] sideList, int[] sideNumList, int sideNum) {
+		for (int i = 0; i < sideNumList.length; i++) {
+			int sideVal = selectSideVal(sideList[i % sideNum]);
+			sideNumList[i] = sideVal;
+			if(i % (4) == 0) {
+				//시계방향으로 이동
+				rotate(sideList);
+			}
+		}
+	}
+
+	private static void rotate(Queue<Character>[] sideList) {
+		char front[] = new char[sideList.length];
+		for (int i = 0; i < sideList.length; i++) {
+			Queue<Character> q = sideList[i];
+			front[i] =  q.poll();
+		}
+		
+		int length = front.length - 1;
+		for (int i = 0; i < sideList.length; i++) {
+			Queue<Character> q = sideList[i];
+			if(i != 0)
+				q.add(front[i - 1]);
+			else
+				q.add(front[length]);
+		}
+		System.out.println("----------------------------------------");
+		for (int i = 0; i < sideList.length; i++) {
+			System.out.println(sideList[i]);
+		}
+		System.out.println("----------------------------------------");
+
+	}
+
+	private static int selectSideVal(Queue<Character> queue) {
+		int sum = 0;
+		int size = queue.size();
+		int val = 0;
+		for (int i = 0; i < size; i++ ) {
+			char temp = queue.peek();
+			if(queue.peek() >= 65 && queue.peek() <= 90)
+				val = queue.poll() - 'A' + 10; //문자일경우
+			else
+				val = queue.poll() - '0'; //숫자일경우
+			if(i == 0)
+				sum += val;
+			else
+				sum += (val * (16 * i));
+			queue.add(temp);
+		}
+		return sum;
+	}
+}

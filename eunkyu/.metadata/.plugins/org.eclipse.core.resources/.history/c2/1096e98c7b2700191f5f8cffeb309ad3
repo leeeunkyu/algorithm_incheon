@@ -1,0 +1,35 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution_5658 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		Queue<Character> sideList[] = new Queue[4];
+		for (int i = 1; i <= testCase; i++) {
+			String str[] = br.readLine().split(" ");
+			int n = Integer.parseInt(str[0]); //num길이
+			int k = Integer.parseInt(str[1]); //k번째로 큰 숫자
+			String num = br.readLine(); //4의 배수 8~28 사이 각각 0이상 f이하
+			
+			int sideNum = num.length() / 4;//한변에 들어갈 수 있는 숫자길이
+			for (int j = 0; j < sideList.length; j++) {
+				Queue<Character> side = new LinkedList<Character>();
+				for (int l = 0; l < sideNum; l++) {
+					side.add(num.charAt(l + (j*4)));
+				}
+				sideList[j] = side;
+			}
+		}
+		
+		for (int i = 0; i < sideList.length; i++) {
+			System.out.println(sideList[i]);
+		}
+	}
+}
