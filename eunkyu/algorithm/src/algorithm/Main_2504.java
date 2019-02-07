@@ -17,46 +17,94 @@ public class Main_2504 {
 		BufferedReader br = 
 				new BufferedReader(
 						new InputStreamReader(System.in));
-		char c[] = br.readLine().toCharArray();
-		
+		String c[] = br.readLine().split("");
+//		for (int i = 0; i < c.length; i++) {
+//			System.out.println(c[i]);
+//		}
 		check(c);
 	}
+	//char를 int로 바꿀려면 - '0' 을
+	//int를 char로 바꿀려면 (char) + '0'을
+	
+	private static void check(String[] c) {
+		String aType[] = {"(", ")"};
+		String bType[] = {"[", "]"};
+		Stack<String> stack = new Stack<String>();
+		for (int i = 0; i < c.length; i++) {
+			String val = c[i]+"";
+			//여는거
+			if (val.equals(aType[0]) || val.equals(bType[0]))
+				stack.push(c[i]);	
+			//닫는거
+			else {
+				if (stack.isEmpty()) {
+					System.out.println(0);
+					return;
+				}
+				String top = stack.pop();
+				if (!top.equals(aType[0]) && !top.equals(bType[0])) {
+					//정수라는 뜻
+					int tempTop = Integer.parseInt(top);
+					
+					while (!stack.isEmpty() && !stack.peek().equals(aType[0]) && !stack.peek().equals(aType[1])
+							&& !stack.peek().equals(bType[0]) && !stack.peek().equals(bType[1])) {
+						
+						tempTop += Integer.parseInt(stack.pop());
+					}
+					if (stack.isEmpty()) {
+						System.out.println(0);
+						return;
+					}
+					top = stack.pop();						
+					if (val.equals(aType[1])) {
+						if(!top.equals(aType[0])) {
+							System.out.println(0);
+							return;
+						}
+						tempTop *= 2;
+						
+					} else {
+						if(!top.equals(bType[0])) {
+							System.out.println(0);
+							return;
+						}
+						tempTop *= 3;
+					}
+					stack.push(tempTop+"");
 
-	private static void check(char[] c) {
-		Stack<Character> a = new Stack<Character>();
-		Stack<Character> b = new Stack<Character>();
-		
-		int cntA = 0;
-		int cntB = 0;
-		int cntC = 0;
-		int cntD = 0;
-		
-		int size = c.length / 2; // 항상 짝수
-		for (int i = 0; i < size; i++) {
-			a.add(c[i]);
-			b.add(c[size - i]);
+				} else {
+					if (top.equals(aType[0])) {
+						if(val.equals(aType[1])) {
+							stack.push("2");
+						} else {
+							System.out.println(0);
+							return;
+						}
+					} else {
+						if(val.equals(bType[1])) {
+							stack.push("3");	
+						} else {
+							System.out.println(0);
+							return;
+						}
+					}
+				}
+			}
 		}
-		while(!a.isEmpty()) {
-			char aTop = a.pop();
-			char bTop = b.pop();
-			
-			if(aTop == '(' && a.peek() == ')') {
-				++cntA;
-			} else if(aTop == '[' && b.peek() == ']') {
-				++cntB;
-			} else {
-				++cntD;
+		int sum = 0;
+		while (!stack.isEmpty()) {
+			String val = stack.pop();
+			if(val.equals(aType[0]) || val.equals(aType[1]) || 
+					val.equals(bType[0]) || val.equals(bType[1])) {
+				System.out.println(0);
+				return;
 			}
-			if(bTop == '(' && b.peek() == ')') {
-				++cntA;
-			} else if(aTop == '[' && a.peek() == ']') {
-				++cntB;
-			} else {
-			}
-			
+			sum += Integer.parseInt(val);
 			
 		}
-
+		
+		System.out.println(sum);
+		
 	}
 	
 }

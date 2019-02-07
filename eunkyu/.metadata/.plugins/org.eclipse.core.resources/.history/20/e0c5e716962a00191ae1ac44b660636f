@@ -1,0 +1,69 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+
+/*
+ * () = 2
+ * [] = 3
+ * ([]) = 2 * 3
+ * ()[] = 2 + 3
+ */
+public class Main_2504 {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = 
+				new BufferedReader(
+						new InputStreamReader(System.in));
+		//char c[] = br.readLine().toCharArray();
+		//char abc[] = br.readLine().toCharArray();
+		Stack<Character> stack = new Stack<Character>();
+		stack.push('1');
+		stack.push('2');
+		int a = stack.pop() - '0';
+		int b = stack.pop() - '0';
+		System.out.println(a+" "+ b+" "+ (a+b));
+		char c = '2';
+		stack.push(c);
+		int d = stack.pop() - '0';
+		d = d*3;
+		System.out.println(d);
+		char e = (char) (d + '0');
+		System.out.println(e);
+		stack.push((char)(d - '0'));
+		System.out.println(stack.pop());
+		
+		//check(c);
+	}
+
+	private static void check(char[] c) {
+		char aType[] = {'(', ')'};
+		char bType[] = {'[', ']'};
+		Stack<Character> stack = new Stack<Character>();
+		for (int i = 0; i < c.length; i++) {
+			int val = c[i];
+			if (val == aType[0] || val == bType[0])
+				stack.push(c[i]);	
+			else {
+				char top = stack.pop();
+				if (top != aType[1] && top != bType[1]) {
+					//정수라는 뜻
+					if (val == ']') {
+						int tempTop = top - '0';
+						tempTop *= 3;
+						stack.push((char) tempTop);
+					}
+				} else {
+					if (top == aType[1])
+						stack.push('2');
+					else
+						stack.push('3');
+				}
+			}
+		}
+		
+	}
+	
+}

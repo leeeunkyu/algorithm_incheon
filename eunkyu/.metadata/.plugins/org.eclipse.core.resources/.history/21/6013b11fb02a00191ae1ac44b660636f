@@ -1,0 +1,107 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Stack;
+
+/*
+ * () = 2
+ * [] = 3
+ * ([]) = 2 * 3
+ * ()[] = 2 + 3
+ */
+public class Main_2504 {
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = 
+				new BufferedReader(
+						new InputStreamReader(System.in));
+		char c[] = br.readLine().toCharArray();	
+		check(c);
+	}
+	//char를 int로 바꿀려면 - '0' 을
+	//int를 char로 바꿀려면 (char) + '0'을
+	
+	private static void check(char[] c) {
+		char aType[] = {'(', ')'};
+		char bType[] = {'[', ']'};
+		Stack<Character> stack = new Stack<Character>();
+		for (int i = 0; i < c.length; i++) {
+			char val = c[i];
+			//여는거
+			if (val == aType[0] || val == bType[0])
+				stack.push(c[i]);	
+			//닫는거
+			else {
+				if (stack.isEmpty()) {
+					System.out.println(0);
+					return;
+				}
+				char top = stack.pop();
+				if (top != aType[0] && top != bType[0]) {
+					int tempTop = top - '0';
+					
+					while (stack.peek() != aType[0] 
+							&& stack.peek() != bType[0]) {
+						
+						tempTop += (stack.pop() - '0');
+						if (stack.isEmpty()) {
+							System.out.println(0);
+							return;
+						}
+					}					
+					//정수라는 뜻
+					if (val == ']') {
+						tempTop *= 3;
+						if (stack.isEmpty()) {
+							System.out.println(0);
+							return;
+						}
+						stack.pop();
+						stack.push((char)(tempTop + '0'));
+						
+					} else {
+						tempTop *= 2;
+						if (stack.isEmpty()) {
+							System.out.println(0);
+							return;
+						}
+						stack.pop();
+						stack.push((char)(tempTop + '0'));
+						
+					}
+				} else {
+					if (top == aType[0]) {
+						if(val != aType[0]) {
+							System.out.println(0);
+							return;
+						}
+						stack.push('2');
+					} else {
+						if(val != bType[0]) {
+							System.out.println(0);
+							return;
+						}
+						stack.push('3');
+					}
+				}
+			}
+		}
+		int sum = 0;
+		while (!stack.isEmpty()) {
+			char val = stack.pop();
+			if(val == '[' || val == ']' || val == '(' || val == ')') {
+				System.out.println("val: "+val);
+				System.out.println(0);
+				return;
+			}
+			sum += ( val - '0' );
+			
+		}
+		
+		System.out.println(sum);
+		
+	}
+	
+}
