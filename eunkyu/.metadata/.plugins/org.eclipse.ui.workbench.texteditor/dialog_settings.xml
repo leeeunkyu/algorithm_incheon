@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="=="/>
 			<item value="Coffee"/>
 			<item value="fish.remove(0)"/>
 			<item value="-1"/>

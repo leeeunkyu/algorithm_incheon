@@ -20,7 +20,6 @@ public class Main_1966 {
 		int testCase = Integer.parseInt(br.readLine());
 		int n; // 문서의수
 		int m; // 출력할 문서 위치
-		int p = 0; // 출력할 문서 중요도
 		int val = 0;
 		for (int i = 0; i < testCase; i++) {
 			String str2[] = br.readLine().split(" ");
@@ -28,7 +27,7 @@ public class Main_1966 {
 			m = Integer.parseInt(str2[1]);
 			String str[] = br.readLine().split(" ");
 			Queue<Integer> q = new LinkedList<Integer>();
-			PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+			PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder()); //내림 차순
 			for (int j = 0; j < n; j++) {				
 				val = Integer.parseInt(str[j]);
 				if(j == m) {
@@ -59,7 +58,7 @@ public class Main_1966 {
 				pq.poll();
 			} else {
 				if(p != 0) {
-					--p;
+					--p; //출력할 문서 위치
 				}else {
 					p = n - 1;
 				}
