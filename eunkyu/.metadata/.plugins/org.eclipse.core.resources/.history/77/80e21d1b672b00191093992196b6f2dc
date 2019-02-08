@@ -32,10 +32,10 @@ public class Main_2504 {
 		Stack<String> stack = new Stack<String>();
 		for (int i = 0; i < c.length; i++) {
 			String val = c[i]+"";
-			//val이 여는거---------------------------------------------------------------------------
+			//여는거---------------------------------------------------------------------------
 			if (val.equals(aType[0]) || val.equals(bType[0]))
 				stack.push(c[i]);	
-			//val이 닫는거---------------------------------------------------------------------------
+			//닫는거---------------------------------------------------------------------------
 			else {
 				if (stack.isEmpty()) {
 					//닫아야 하는데 여는게 stack에 없다면? -> 잘못된 괄호!
@@ -49,46 +49,38 @@ public class Main_2504 {
 					while (!stack.isEmpty() && !stack.peek().equals(aType[0]) && !stack.peek().equals(aType[1])
 							&& !stack.peek().equals(bType[0]) && !stack.peek().equals(bType[1])) {
 						tempTop += Integer.parseInt(stack.pop());
-						//정수가 없을때까지 pop 하면서 정수값을 더해준다!
 					}
-					
 					if (stack.isEmpty()) {
 						System.out.println(0);
-						//다 빼봤는데 stack에 값이 없으면 잘못된괄호 -> 최소한 여는괄호 하나는 있어야 함.
 						return;
 					}
-					
 					top = stack.pop();						
-					if (val.equals(aType[1])) { //val이 ) 인데 
-						if(!top.equals(aType[0])) { //top이 (이게 아니면
-							System.out.println(0); //짝이 안맞는다.
+					if (val.equals(aType[1])) {
+						if(!top.equals(aType[0])) {
+							System.out.println(0);
 							return;
 						}
-						//짝이맞으면 ( )안에 있다는 소리니깐  *2
 						tempTop *= 2;
 						
-					} else {//val이 ]인데
-						if(!top.equals(bType[0])) { //top이 [ 이게 아니면 
-							System.out.println(0); //짝이 안맞는다
+					} else {
+						if(!top.equals(bType[0])) {
+							System.out.println(0);
 							return;
 						}
-						//짝이 맞으면 [ ] 안에 있다는 소리니깐 *3
 						tempTop *= 3;
 					}
-					//구한 값을 push
 					stack.push(tempTop+"");
-					
+
 				} else {
-					//top 이 정수가 아닐경우
 					if (top.equals(aType[0])) {
-						if(val.equals(aType[1])) { //짝이 맞다면 push
+						if(val.equals(aType[1])) {
 							stack.push("2");
 						} else {
 							System.out.println(0);
 							return;
 						}
 					} else {
-						if(val.equals(bType[1])) { //짝이 맞다면 push
+						if(val.equals(bType[1])) {
 							stack.push("3");	
 						} else {
 							System.out.println(0);
