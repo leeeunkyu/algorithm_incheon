@@ -53,7 +53,7 @@ public class Solution_5658 {
 		for (int i = 0; i < sideNumList.length; i++) { // 4바퀴 * 각 변이 가지는 num의 수 = 나올수 있는 크기의 수 만큼 회전
 			int sideVal = selectSideVal(sideList[i % 4]);  //각 변마다 값의 합계를 저장 sideList는 4개의 큐(변)를 담음
 			sideNumList[i] = sideVal; //1 2 / 3 4 / 5 6 / 7 8
-			if((i+1) % (4) == 0 && i != sideNumList.length - 1) { //한바퀴 탐색을 다 하면 회전 rotate를 몇번 시키냐 결정!
+			if((i+1) % (4) == 0 && i != sideNumList.length - 1) { //한바퀴 탐색을 다 하면 회전 
 				//시계방향으로 이동
 				rotate(sideList);
 			}
@@ -63,20 +63,16 @@ public class Solution_5658 {
 	private static void rotate(Queue<String>[] sideList) {
 		String rear[] = new String[sideList.length];
 		Queue<String> temp[] = new Queue[sideList.length];
-		
-		//sideList 복사를 위한 temp queue 생성
 		for (int i = 0; i < temp.length; i++) {
 			temp[i] = new LinkedList<String>();
 		}
-		
-		
 		for (int i = 0; i < sideList.length; i++) {
 			Queue<String> q = sideList[i];
 			while (!q.isEmpty()) {
 				if(q.size() == 1) {
-					rear[i] =  q.poll();		//가장 끝 부분을 추출
+					rear[i] =  q.poll();		
 				}else {
-					temp[i].add(q.poll());	//가장 끝 부분을 제외한 값을 복사
+					temp[i].add(q.poll());	
 				}
 			}
 		}
@@ -87,10 +83,10 @@ public class Solution_5658 {
 			if(i != 0) {
 				q.add(""+rear[i - 1]);
 				while(!temp[i].isEmpty()) {
-					q.add(""+temp[i].poll()); //복사한 값을 다시 넣는다.
+					q.add(""+temp[i].poll());
 				}
 			} else {
-				q.add(""+rear[length]); //끝 부분을 맨 처음으로 넣는다.
+				q.add(""+rear[length]);
 				while(!temp[i].isEmpty()) {
 					q.add(""+temp[i].poll());
 				}
@@ -98,8 +94,7 @@ public class Solution_5658 {
 		}
 		
 	}
-	
-	//각 변의 값(원소들의 합)을 구하는 함수
+
 	private static int selectSideVal(Queue<String> queue) {
 		int sum = 0;
 		int size = queue.size() - 1;
@@ -114,7 +109,7 @@ public class Solution_5658 {
 				sum += val;
 			else {
 				for (int j = i; j > 0; j--) {
-					val *= 16; //16진수 값을 구하기 위해 16씩 계속 곱해나간다.
+					val *= 16;
 				}
 				sum += val;
 			}
