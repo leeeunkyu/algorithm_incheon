@@ -1,0 +1,22 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_16234 {
+
+	static int n;	//땅의 크기
+	static int l;	//인구차이가 L명 이상 R명 이하이면 두 나라가 공유하는
+			//국경선을 하루동안 연다.
+	static int r;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = br.readLine().split(" ");		
+		n = Integer.parseInt(str[0]);
+		l = Integer.parseInt(str[1]);
+		r = Integer.parseInt(str[2]);
+
+	}
+}

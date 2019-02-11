@@ -18,15 +18,24 @@ public class TestClass {
 		double start;
 		double end;	
 		
-		int arr[] = new int[1000000];
-		
+		Stack<Integer> stack = new Stack<>();
 		start = System.currentTimeMillis();
-		for (int i = 0; i < 1000000; i++) {
-			arr[i] = 0;
+		for (int i = 0; i < 100; i++) {
+			stack.add(0);
 		}
-		for (int i = 0; i < 1000000; i++) {
-			int a = arr[i];
-		} 
+		String str[] = new String[100];
+		System.out.println("--");
+		for (int i = 0; i < 100; i++) {
+			stack.add(0);
+		}
+		String str2[] = new String[100];
+		System.out.println("--");
+		for (int i = 0; i < 100; i++) {
+			stack.add(0);
+		}
+		String str3[] = new String[100];
+		System.out.println("--");
+		
 		end = System.currentTimeMillis();
 		System.out.println("array: " + (end - start));
 	}

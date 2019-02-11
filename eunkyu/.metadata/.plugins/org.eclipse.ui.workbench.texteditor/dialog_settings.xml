@@ -8,11 +8,14 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="Character"/>
+			<item value="char"/>
+			<item value="chae"/>
+			<item value="cha"/>
+			<item value="ch"/>
 			<item value="=="/>
 			<item value="Coffee"/>
 			<item value="fish.remove(0)"/>
-			<item value="-1"/>
-			<item value="01"/>
 		</list>
 		<list key="replacehistory">
 		</list>

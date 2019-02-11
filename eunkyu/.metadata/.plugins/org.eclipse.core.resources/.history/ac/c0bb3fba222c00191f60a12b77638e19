@@ -1,0 +1,63 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_16234 {
+
+	static int n;	//땅의 크기
+	static int l;	//인구차이가 L명 이상 R명 이하이면 두 나라가 공유하는
+			//국경선을 하루동안 연다.
+	static int r;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str[] = br.readLine().split(" ");		
+		n = Integer.parseInt(str[0]);
+		l = Integer.parseInt(str[1]);
+		r = Integer.parseInt(str[2]);
+		int arr[][] = new int[n][n];
+		
+		for (int i = 0; i < arr.length; i++) {
+			String str2[] = br.readLine().split(" ");
+			for (int j = 0; j < arr[i].length; j++) {
+				arr[i][j] = Integer.parseInt(str2[j]); 
+			}
+		}
+		
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+		bfs(arr);
+	}
+
+	private static void bfs(int[][] arr) {
+		int dx[] = {0, 0, 1, -1};
+		int dy[] = {1, -1, 0, 0};
+		Queue<Integer> q = new LinkedList<Integer>();
+		int visted[][] = new int [arr.length][arr.length];
+		
+		while(!q.isEmpty()) {
+			
+			for (int i = 0; i < 4; i++) {
+				
+			}
+		}
+	}
+}
+
+class Country {
+	int x;
+	int y;
+	ArrayList<Country> neighbor;
+	
+	
+}
