@@ -38,9 +38,9 @@ public class Solution_4014 {
 		boolean slopeArr [][] = new boolean [n][n];
 		for (int i = 0; i < n; i++) {
 			//가로줄.. arr[n][n] - arr[n][n+1] - arr[n][n+2} - ..
-			boolean dir = true; //왼쪽 오른쪽 방향 결정 변수
-			slopeArr = new boolean [n][n]; //경사로 설치 변수
 			
+			boolean dir = true;
+			slopeArr = new boolean [n][n];
 			for (int j = 0; j < n; j++) {
 				sub = 0;
 				if(j + 1 < n)
