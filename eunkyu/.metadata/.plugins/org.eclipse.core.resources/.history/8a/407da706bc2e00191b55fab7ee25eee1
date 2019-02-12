@@ -1,0 +1,44 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import javax.swing.InputMap;
+
+public class Main_2023 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		int primeNumber [] = {2, 3, 5, 7};
+		for (int i = 0; i < primeNumber.length; i++) {
+			sb.append(primeNumber[i]);
+			dfs(n, sb);	
+		}
+	}
+
+	private static void dfs(int n, StringBuilder sb) {
+		if(sb.length() == n) {
+			return;
+		}
+		for (int i = 0; i < 9; i++) {
+			sb.append(i);
+			if (checkPrime(sb)) {
+				dfs(n, sb);
+			} else {
+				sb.delete(sb.length() - 1, sb.length());
+			}
+		}
+	}
+
+	private static boolean checkPrime(StringBuilder sb) {
+		int val = Integer.parseInt(sb.toString());
+		for (int i = 1; i <= Math.sqrt(val); i++) {
+			if(val % i == 0) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
