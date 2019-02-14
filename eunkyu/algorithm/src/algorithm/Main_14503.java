@@ -56,8 +56,8 @@ public class Main_14503 {
 		
 		loop:
 		while (true) {
-			int temp = dir;
-			if (dir == 0) {
+			int temp = dir; //4방향 모두 검사를 하고 후진을 위해 미리 현재방향을 저장해놓는다.
+			if (dir == 0) { //북쪽 방향이라면
 				nextY = y - 1;
 				nextX = x;
 				if (nextY >= 0 && arr[nextY][nextX] != 1 && !visited[nextY][nextX]) {
@@ -66,7 +66,7 @@ public class Main_14503 {
 					dir = leftDir[dir];
 					++dirCnt;
 				}
-			} else if (dir == 1) {
+			} else if (dir == 1) { //동쪽 방향이라면
 				nextY = y;
 				nextX = x + 1;
 				if (nextX < m  && arr[nextY][nextX] != 1 && !visited[nextY][nextX]) {
@@ -75,7 +75,7 @@ public class Main_14503 {
 					dir = leftDir[dir];
 					++dirCnt;
 				}
-			} else if (dir == 2) {
+			} else if (dir == 2) { //남쪽 방향이라면
 				nextY = y + 1;
 				nextX = x;
 				if (nextY < n && arr[nextY][nextX] != 1 && !visited[nextY][nextX]) {
@@ -84,7 +84,7 @@ public class Main_14503 {
 					dir = leftDir[dir];
 					++dirCnt;
 				}
-			} else if (dir == 3) {
+			} else if (dir == 3) { //서쪽방향이라면..
 				nextY = y;
 				nextX = x - 1;
 				if (nextX >= 0 && arr[nextY][nextX] != 1 && !visited[nextY][nextX]) {
@@ -94,7 +94,7 @@ public class Main_14503 {
 					++dirCnt;
 				}
 			}
-			if (isClean) {
+			if (isClean) { //조건에 부합하다면 청소를 한다.
 				dir = leftDir[dir];
 				y = nextY;
 				x = nextX;
@@ -102,9 +102,9 @@ public class Main_14503 {
 				cleanBot.setCleanNum(cleanNum);
 				visited[y][x] = true;
 				isClean = false;
-				dirCnt = 0;
+				dirCnt = 0; 
 			} else {
-				if(dirCnt >= 4) {
+				if(dirCnt >= 4) { //4방향 모두 벽이거나 이미 청소를 했다면 후진을 한다.
 					if(temp == 0) {
 						//북 쪽 뒤는 남
 						if((y + 1 < n) && arr[y + 1][x] != 1) {
@@ -144,6 +144,7 @@ public class Main_14503 {
 		System.out.println(cleanNum);
 	}
 
+	//청소기가 지나가는 자리 확인하는 용도
 	private static void print(int[][] arr, CleanBot cleanBot, int dir, boolean[][] visited) {
 		int x = cleanBot.getX();
 		int y = cleanBot.getY();
@@ -201,7 +202,4 @@ class CleanBot {
 	public void setCleanNum(int cleanNum) {
 		this.cleanNum = cleanNum;
 	}
-	
-
-	
 }
