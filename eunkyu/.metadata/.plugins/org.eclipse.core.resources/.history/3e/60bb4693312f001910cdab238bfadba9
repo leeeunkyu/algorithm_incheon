@@ -1,0 +1,22 @@
+package algorithm;
+
+public class Solution_2 {
+	public static void main(String[] args) {
+		int A [] = {5, 4, 0, 3, 1, 6, 2};
+		solution(A);
+	}
+	public static int solution(int[] A) {
+		for (int i = 0; i < A.length; i++) {
+			int init = A[i];
+			int cnt = 0;
+			
+			int val = A[init];
+			if(val == init) {
+				System.out.println(cnt);
+			}
+			cnt++;	
+		}
+		
+		return 0;
+	}
+}

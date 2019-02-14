@@ -1,0 +1,34 @@
+package algorithm;
+
+import java.util.Arrays;
+
+public class Solution_01 {
+	public static void main(String[] args) {
+		int [] ranks = {3, 4, 3, 0, 2, 2, 3, 0, 0};
+		System.out.println(solution(ranks));
+	}
+	public static int solution(int[] ranks) {
+		Arrays.sort(ranks);
+		//0, 0, 0, 2, 2, 3, 3, 4
+		int cnt = 0;
+		int duplication = 0;
+		int temp = ranks[0];
+		for (int i = 0; i < ranks.length - 1; i++) {
+			if(temp == ranks[i]) {
+				duplication++;
+				System.out.println("duplication: "+ duplication+" i: "+i);
+			} else if(temp + 1 == ranks[i]){
+				cnt += duplication;
+				temp = ranks[i];
+				duplication = 1;
+				System.out.println("cnt: "+cnt +"ranks[i]: "+ranks[i]+" ranks[i+1]: "+ranks[i+1]);
+			}
+			else if (temp + 1 < ranks[i]) {
+	             temp = ranks[i];
+	             cnt = 1;
+	        }
+		}
+		return cnt;
+        // write your code in Java SE 8
+    }
+}

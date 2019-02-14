@@ -1,0 +1,35 @@
+package algorithm;
+
+import java.util.PriorityQueue;
+
+public class Solution_2 {
+	PriorityQueue<Integer> pq;
+	
+	public static void main(String[] args) {
+		int A [] = {5, 4, 0, 3, 1, 6, 2};
+		new Solution_2().solution(A);
+	}
+	public int solution(int[] A) {
+		int size = A.length;
+		
+		boolean visited [] = new boolean [size];
+		pq = new PriorityQueue<Integer>();
+		
+		for (int i = 0; i < size; i++) {
+			if(!visited[i]) {
+				visited[i] = true;
+				dfs(i, i, 0, A);
+			}
+		}
+		
+		return 0;
+	}
+	private static void dfs(int start, int now, int length, int[] A) {
+		int next = A[now];
+		length += 1;
+		if (start == next) {
+			
+		}
+		
+	}
+}
