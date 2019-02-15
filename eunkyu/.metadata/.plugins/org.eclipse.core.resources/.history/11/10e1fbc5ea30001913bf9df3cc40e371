@@ -1,0 +1,106 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_2382 {
+
+	static int n; //셀 갯수
+	static int m; //격리 시간
+	static int k; //군집 갯수
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			n = Integer.parseInt(str[0]);
+			m = Integer.parseInt(str[1]);
+			k = Integer.parseInt(str[2]);
+			int[][] arr = new int[n][n];
+			VirusGrp[] grpList = new VirusGrp[k];
+			for (int i = 0; i < k; i++) {
+				String virusInfo[] = br.readLine().split(" ");
+				grpList[i] = new VirusGrp(
+						Integer.parseInt(virusInfo[0]), //세로
+						Integer.parseInt(virusInfo[1]), //가로
+						Integer.parseInt(virusInfo[2]), //미생물 수
+						Integer.parseInt(virusInfo[3]),
+						false); //이동방향 
+			}
+			for (int i = 0; i < m; i++) {
+				goVirus(arr, grpList);
+			}
+		}
+	}
+
+	private static void goVirus(int[][] arr, VirusGrp[] grpList) {
+		int safeArr = n - 1;
+		for (int i = 0; i < grpList.length; i++) {
+			VirusGrp virusGrp = grpList[i];
+			if(!virusGrp.isDie()) {
+				int x = virusGrp.getX();
+				int y = virusGrp.getY();
+				int dir = virusGrp.getDir();
+				if(x >= 1 && x < safeArr && y >= 1 && y < safeArr) {
+					
+				} else {
+					virusGrp.setVirusNum(virusGrp.getVirusNum() / 2);
+					virusGrp.setDir((dir + 1) % 2);
+				}
+			}
+		}
+	}
+}
+
+class VirusGrp {
+	private int y;
+	private int x;
+	private int virusNum;
+	private int dir;//상, 하, 좌, 우  - 1, 2, 3, 4
+	private boolean isDie;
+	
+	public VirusGrp(int y, int x, int virusNum, int dir, boolean isDie) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.virusNum = virusNum;
+		this.dir = dir;
+		this.isDie = isDie;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getVirusNum() {
+		return virusNum;
+	}
+	public void setVirusNum(int virusNum) {
+		this.virusNum = virusNum;
+	}
+	public int getDir() {
+		return dir;
+	}
+	public void setDir(int dir) {
+		this.dir = dir;
+	}
+	public boolean isDie() {
+		return isDie;
+	}
+
+	public void setDie(boolean isDie) {
+		this.isDie = isDie;
+	}
+	
+}
