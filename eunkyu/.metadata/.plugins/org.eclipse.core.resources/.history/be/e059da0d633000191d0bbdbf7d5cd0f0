@@ -135,7 +135,6 @@ public class Main_14503 {
 						}
 					}
 					dirCnt = 0;
-					dir = leftDir[temp];
 				}
 			}
 			cleanBot.setX(x);

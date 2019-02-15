@@ -24,7 +24,7 @@ public class Main_14503 {
 		int r = Integer.parseInt(str2[0]); //y
 		int c = Integer.parseInt(str2[1]); //x
 		int d = Integer.parseInt(str2[2]); //0 - ºÏ, 1 - µ¿, 2 - ³², 3 - ¼­
-		CleanBot cleanBot = new CleanBot(c, r, d, 1);//x, y, dir, num
+		CleanBot cleanBot = new CleanBot(c, r, d, 1);
 		
 		for (int i = 0; i < n; i++) {
 			String[] str3 = br.readLine().split(" ");
@@ -135,7 +135,6 @@ public class Main_14503 {
 						}
 					}
 					dirCnt = 0;
-					dir = leftDir[temp];
 				}
 			}
 			cleanBot.setX(x);
