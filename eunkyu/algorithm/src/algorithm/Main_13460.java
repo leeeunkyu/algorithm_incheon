@@ -3,163 +3,157 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 
 public class Main_13460 {
 	final static int MAX_COUNT = 10;
-	static int count = 0;
+	static int n;
+	static int m;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String str[] = br.readLine().split(" ");
-		int a = Integer.parseInt(str[0]); //세로
-		int b = Integer.parseInt(str[1]); //가로
-		char bord[][] = new char[a][b];
-		RedBall rBall = new RedBall();
-		BlueBall bBall = new BlueBall();
-		Ball ball = new Ball();
-		initSetting(br, bord, rBall, bBall, ball, a);
-		int min = 999;
-		int temp = 0;
-		while(true) {		
-			moveBallRight(bord, rBall, bBall, ball);
-			if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-				temp = MAX_COUNT - count;
-				System.out.println("r");
-				break;
-			}
-			moveBallUp(bord, rBall, bBall, ball);
-			if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-				temp = MAX_COUNT - count;
-				System.out.println("u");
-				break;
-			}
-			moveBallLeft(bord, rBall, bBall, ball);
-			if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-				temp = MAX_COUNT - count;
-				System.out.println("l");
-				break;
-			}
-			moveBallDown(bord, rBall, bBall, ball);
-			if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-				temp = MAX_COUNT - count;
-				System.out.println("d");
-				break;
-			}
-			if(count == MAX_COUNT) {
-				System.out.println(-1);
-				break;
+		n = Integer.parseInt(str[0]); //세로
+		m = Integer.parseInt(str[1]); //가로
+		char bord[][] = new char[n][m];
+		RedBall redBall = new RedBall(0, 0, 0);
+		BlueBall blueBall = new BlueBall(0, 0);
+		for (int i = 0; i < n; i++) {
+			char[] temp = br.readLine().toCharArray();
+			for (int j = 0; j < m; j++) {
+				char val = temp[j];
+				bord[i][j] = val;
+				if (val == 'R') {
+					redBall = new RedBall(j, i, 0); 
+				} else if (val == 'B') {
+					blueBall = new BlueBall(j, i);
+				}
 			}
 		}
-		System.out.println(temp);
+
+		
+		new Main_13460().bordGame(bord, redBall, blueBall);
+
 	}
-	
-	public static void initSetting(BufferedReader br, char bord[][], RedBall rBall, BlueBall bBall, Ball ball, int a) throws IOException {
-		for (int i = 0; i < a; i++) {
-			char set[] =  br.readLine().toCharArray();
-			for (int j = 0; j < set.length; j++) {
-				bord[i][j] = set[j];
-				if(set[j] == 'O') {
-					ball.setX(j);
-					ball.setY(i);;
+	private void bordGame(char[][] bord, RedBall redBall, BlueBall blueBall) {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		int safeLineX = m - 1;
+		int safeLineY = n - 1;
+
+		Queue<RedBall> redBalls = new LinkedList<RedBall>();
+		Queue<BlueBall> blueBalls = new LinkedList<BlueBall>();
+		
+		redBalls.add(redBall);
+		blueBalls.add(blueBall);
+		boolean isGoal = false;
+		int goalCnt = 0;
+		Stack<Integer> s;
+		while(true) {
+			if(redBalls.isEmpty() && blueBalls.isEmpty())
+				break;
+			if(!redBalls.isEmpty())
+				redBall = redBalls.poll();
+			
+			int rx = redBall.getX();
+			int ry = redBall.getY();
+			int cnt = redBall.getCnt();
+			if(!blueBalls.isEmpty())
+				blueBall = blueBalls.poll();
+			
+			int bx = blueBall.getX();
+			int by = blueBall.getY();
+			System.out.println("rx: "+rx+" ry:"+ry+" cnt: "+cnt);
+			loop:
+			for (int i = 0; i < 4; i++) {
+				int nextRX = rx + dx[i];
+				int nextRY = ry + dy[i];
+				int nextBX = bx + dx[i];
+				int nextBY = by + dy[i];
+				int rCnt = 0;
+				int bCnt = 0;
+				isGoal = false;
+				goalCnt = -1;
+				while (true) {
+					boolean r = false;
+					boolean b = false;
+					if(nextBX >= 1 && nextBX < safeLineX && nextBY >= 1 && nextBY < safeLineY
+							 && bord[nextBY][nextBX] != '#') {
+						if(bord[nextBY][nextBX] == 'O') {
+							isGoal = false;
+							goalCnt = -1;
+							continue loop;
+						}
+						nextBX += dx[i];
+						nextBY += dy[i];
+						b = true;
+						++bCnt;
+					}					
+					if(nextRX >= 1 && nextRX < safeLineX && nextRY >= 1 && nextRY < safeLineY
+							 && bord[nextRY][nextRX] != '#') {
+						if(bord[nextRY][nextRX] == 'O') {
+							isGoal = true;
+							if(goalCnt == -1)
+								goalCnt = cnt + 1;
+							//System.out.println(cnt + 1);
+							//return;
+						}
+						nextRX += dx[i];
+						nextRY += dy[i];
+						r = true;
+						++rCnt;
+					}
+					
+					if(nextBX == nextRX && nextBY == nextRY) {
+						if(rCnt > bCnt) {
+							nextRX -= dx[i];
+							nextRY -= dy[i];
+						} else {
+							nextBX -= dx[i];
+							nextBY -= dy[i];
+						}
+						break;
+					}
+
+					if(!r && !b) {
+						break;
+					}
 				}
-				if(set[j] == 'R') {
-					rBall.setX(j);
-					rBall.setY(i);
-				}
-				if(set[j] == 'B') {
-					bBall.setX(j);
-					bBall.setY(i);
-				}
+				nextBX -= dx[i];
+				nextBY -= dy[i];
+				nextRX -= dx[i];
+				nextRY -= dy[i];
+				blueBalls.add(new BlueBall(nextBX, nextBY));
 				
+				redBalls.add(new RedBall(nextRX, nextRY, cnt + 1));	
+
 			}
-		}		
-	}
-	
-	public static void moveBallRight(char bord[][], RedBall rBall, BlueBall bBall, Ball ball) {
-		//오른쪽으로 굴려라
-		for (int i = 0; rBall.getX()+i < bord[rBall.getY()].length; i++) {
-			System.out.println("r");
-			if(bord[rBall.getY()][rBall.getX()+i] != '#') {
-				rBall.setX(rBall.getX()+1);
-				if(bBall.getX()+i < bord[rBall.getY()].length) {
-					if(bord[bBall.getY()][bBall.getX()+i] != '#') {
-						bBall.setX(bBall.getX()+1);
-					}	
-				}
-				count++;
-				if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-					break;
-				}
-			}else {
-				break;
+			if(isGoal) {
+				System.out.println(goalCnt);
+				return;
+			}
+			if(cnt == MAX_COUNT) {
+				System.out.println(-1);
+				return;
 			}
 		}
-	}
-	
-	public static void moveBallLeft(char bord[][], RedBall rBall, BlueBall bBall, Ball ball) {
-		//왼쪽으로 굴려라
-		for (int i = 0; 0 < rBall.getX()-i ; i++) {
-			if(bord[rBall.getY()][rBall.getX()-i] != '#') {
-				rBall.setX(rBall.getX()-1);
-				if(0 < bBall.getX()-i) {
-					if(bord[bBall.getY()][bBall.getX()-i] != '#') {
-						bBall.setX(bBall.getX()-1);
-					}
-				}
-				count++;
-				if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-					break;
-				}
-			}else {
-				break;
-			}
-		}
-	}
-	
-	public static void moveBallUp(char bord[][], RedBall rBall, BlueBall bBall, Ball ball) {
-		//위로 굴려라
-		for (int i = 0; 0 < rBall.getY()-i ; i++) {
-			if(bord[rBall.getY()-i][rBall.getX()] != '#') {
-				rBall.setY(rBall.getY()-1);
-				if(0 < bBall.getY()-i) {
-					if(bord[bBall.getY()-i][bBall.getX()] != '#') {
-						bBall.setY(bBall.getY()-1);
-					}
-				}
-				count++;
-				if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-					break;
-				}
-			}else {
-				break;
-			}
-		}
-	}
-	
-	public static void moveBallDown(char bord[][], RedBall rBall, BlueBall bBall, Ball ball) {
-		//아래로 굴려라
-		for (int i = 0; rBall.getY()+i < bord.length; i++) {
-			if(bord[rBall.getY()+i][rBall.getX()] != '#') {
-				rBall.setY(rBall.getY()+1);
-				if(bBall.getY()+i < bord.length) {
-					if(bord[bBall.getY()+i][bBall.getX()] != '#') {
-						bBall.setY(bBall.getY()+1);
-					}
-				}
-				count++;
-				if(bord[ball.getX()][ball.getY()] == bord[rBall.getX()][rBall.getY()]) {
-					break;
-				}
-			}else {
-				break;
-			}
-		}
+		System.out.println(-1);
 	}
 }
 
 class RedBall {
 	int x;
 	int y;
-	
+	int cnt;
+
+	public RedBall(int x, int y, int cnt) {
+		super();
+		this.x = x;
+		this.y = y;
+		this.cnt = cnt;
+	}
+
 	public int getX() {
 		return x;
 	}
@@ -172,16 +166,11 @@ class RedBall {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("RedBall [x=");
-		builder.append(x);
-		builder.append(", y=");
-		builder.append(y);
-		builder.append("]");
-		return builder.toString();
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 }
 
@@ -189,6 +178,12 @@ class BlueBall {
 	int x;
 	int y;
 	
+	public BlueBall(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+	
 	public int getX() {
 		return x;
 	}
@@ -200,45 +195,6 @@ class BlueBall {
 	}
 	public void setY(int y) {
 		this.y = y;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("BlueBall [x=");
-		builder.append(x);
-		builder.append(", y=");
-		builder.append(y);
-		builder.append("]");
-		return builder.toString();
 	}
 }
 
-class Ball {
-	int x;
-	int y;
-	
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
-	public int getY() {
-		return y;
-	}
-	public void setY(int y) {
-		this.y = y;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Ball [x=");
-		builder.append(x);
-		builder.append(", y=");
-		builder.append(y);
-		builder.append("]");
-		return builder.toString();
-	}
-}

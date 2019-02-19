@@ -1,0 +1,63 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_14500 {
+	
+	static int n;
+	static int m;
+	static boolean[][] visited;
+	static int max;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		int[][] arr = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			String[] info = br.readLine().split(" ");
+			for (int j = 0; j < m; j++) {
+				arr[i][j] = Integer.parseInt(info[j]);
+			}
+		}
+		int a = 0;
+		int b = 0;
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr.length; j++) {
+				visited = new boolean[n][m];
+				visited[i][j] = true;
+				int val = dfs(arr, i, j, 1, arr[i][j]);	
+				if(max < val) {
+					a = i;
+					b = j;
+					max = val;
+				}
+			}
+		}
+		System.out.println(max + " y: "+ a+ " x: "+ b);
+	}
+
+	private static int dfs(int[][] arr, int i, int j, int num, int val) {
+		if(num == 4) {
+			return val;
+		}
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		int data = 0;
+		
+		for (int idx = 0; idx < 4; idx++) {
+			int nextX = j + dx[idx];
+			int nextY = i + dy[idx];
+			if(nextX >= 0 && nextX < m && nextY >= 0 && nextY < n
+					&& !visited[nextY][nextX]) {
+				visited[nextY][nextX] = true;
+				data = Math.max(dfs(arr, nextY, nextX, (num + 1), (val + arr[nextY][nextX])), val);
+				visited[nextY][nextX] = false;
+			}
+		}
+		return data;
+	}
+}

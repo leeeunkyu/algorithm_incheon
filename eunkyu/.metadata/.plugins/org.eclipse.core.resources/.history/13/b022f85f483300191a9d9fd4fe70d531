@@ -1,0 +1,97 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_14499 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]); 	//세로크기 n
+		int m = Integer.parseInt(str[1]);	//가로크기 m
+		int y = Integer.parseInt(str[2]);	//주사위 놓을곳 y
+		int x = Integer.parseInt(str[3]);	//주사위 놓을곳 x
+		int k = Integer.parseInt(str[4]);	//명령어 갯수 k
+		int[][] arr = new int[n][m];
+		int[] orderList = new int[k];
+		
+		for (int i = 0; i < n; i++) {
+			String[] temp = br.readLine().split(" ");
+			for (int j = 0; j < m; j++) {
+				arr[i][j] = Integer.parseInt(temp[j]);
+			}
+		}
+		
+		String[] temp2 = br.readLine().split(" ");
+		for (int i = 0; i < k; i++) {
+			orderList[i] = Integer.parseInt(temp2[i]);
+		}
+		
+		new Main_14499().rolling(arr, orderList);
+	}
+
+	private void rolling(int[][] arr, int[] orderList) {
+		int[][] dice = {{-1, 0, -1},{0, 0, 0}, {-1, 0, -1}, {-1, 0, -1}};
+		int[][] copy = {{-1, 0, -1},{0, 0, 0}, {-1, 0, -1}, {-1, 0, -1}};
+		for (int i = 0; i < orderList.length; i++) {
+			switch (orderList[i]) {
+			//동 1오, 서2왼, 북3위, 남4아
+			case 1:
+				right(dice, copy);
+				copy(dice, copy);
+				break;
+			case 2:
+				left(dice, copy);
+				break;
+			case 3:
+				up(dice, copy);
+				break;
+			case 4:
+				down(dice, copy);
+				break;
+
+				
+			default:
+				break;
+			}
+		}
+	}
+	
+	private void copy(int[][] dice, int[][] copy) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 3; j++) {
+				dice[i][j] = copy[i][j];
+			}
+		}
+	}
+
+	private void left(int[][] dice, int[][] copy) {
+		//1,0 <- 3,1  1,1 <- 1,0 1,2 <- 1,1 3,1 <- 1,2
+		copy[1][0] = dice[3][1];
+		copy[3][1] = dice[1][2];
+		copy[1][2] = dice[1][1];
+		copy[1][1] = dice[1][0];
+	}
+	private void right(int[][] dice, int[][] copy) {
+		//1,0 <- 1,1  1,1 <- 1,2 1,2 <- 3,1 3,1 <- 1,1
+		copy[1][0] = dice[1][1];
+		copy[1][1] = dice[1][2];
+		copy[1][2] = dice[3][1];
+		copy[3][1] = dice[1][0];
+	}
+	private void up(int[][] dice, int[][] copy) {
+		//0,1 <- 3,1 1,1 <- 0,1 2,1 <- 1,1 3,1 <- 2,1
+		copy[0][1] = dice[3][1];
+		copy[1][1] = dice[0][1];
+		copy[2][1] = dice[1][1];
+		copy[3][1] = dice[2][1];
+	}
+	private void down(int[][] dice, int[][] copy) {
+		//0,1 <- 3,1 1,1 <- 0,1 2,1 <- 1,1 3,1 <- 2,1
+		copy[0][1] = dice[1][1];
+		copy[1][1] = dice[2][1];
+		copy[2][1] = dice[3][1];
+		copy[3][1] = dice[0][1];
+	}
+}
