@@ -1,0 +1,35 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_1003 {
+	static int a; //0
+	static int b; //1
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int testCase = Integer.parseInt(br.readLine());
+		for (int i = 0; i < testCase; i++) {
+			int n = Integer.parseInt(br.readLine());
+			a = 0;
+			b = 0;
+			fibonacci(n);
+			sb.append(a+" "+b);
+		}
+	}
+
+	private static int fibonacci(int n) {
+		 if (n == 0) {
+			 	a++;
+		        return 0;
+		    } else if (n == 1) {
+		    	b++;
+		        return 1;
+		    } else {
+		        return fibonacci(n-1) + fibonacci(n-2);
+		    }
+	}
+}

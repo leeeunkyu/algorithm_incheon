@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.util.Scanner"/>
-<fullyQualifiedTypeName name="java.io.InputStream"/>
-<fullyQualifiedTypeName name="org.ietf.jgss.Oid"/>
-<fullyQualifiedTypeName name="javax.swing.plaf.basic.BasicScrollPaneUI.VSBChangeListener"/>
 <fullyQualifiedTypeName name="algorithm.Cctv"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="algorithm.Node"/>
@@ -31,9 +27,7 @@
 <fullyQualifiedTypeName name="algorithm.Stair"/>
 <fullyQualifiedTypeName name="algorithm.Solution_2"/>
 <fullyQualifiedTypeName name="java.lang.Character"/>
-<fullyQualifiedTypeName name="algorithm.Solution_3"/>
 <fullyQualifiedTypeName name="algorithm.Bot"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="algorithm.CleanBot"/>
 <fullyQualifiedTypeName name="java.lang.VirtualMachineError"/>
 <fullyQualifiedTypeName name="algorithm.Main_16235"/>
@@ -47,17 +41,23 @@
 <fullyQualifiedTypeName name="java.time.temporal.Temporal"/>
 <fullyQualifiedTypeName name="algorithm.Main_2178"/>
 <fullyQualifiedTypeName name="algorithm.Bot_2178"/>
-<fullyQualifiedTypeName name="javax.swing.InputMap"/>
 <fullyQualifiedTypeName name="algorithm.Main_14499"/>
-<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="algorithm.VirusGrp"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="algorithm.BlueBall"/>
 <fullyQualifiedTypeName name="algorithm.RedBall"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="algorithm.Cell_5653"/>
+<fullyQualifiedTypeName name="algorithm.Solution_3"/>
+<fullyQualifiedTypeName name="algorithm.Solution_5653"/>
+<fullyQualifiedTypeName name="algorithm.ConsultInfo"/>
+<fullyQualifiedTypeName name="javax.swing.InputMap"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="algorithm.House_1149"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>
