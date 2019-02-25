@@ -1,0 +1,60 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+
+public class Solution_5656 {
+	
+	static int n;
+	static int w;
+	static int h;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] info = br.readLine().split(" ");
+			n = Integer.parseInt(info[0]);
+			w = Integer.parseInt(info[1]);
+			h = Integer.parseInt(info[2]);
+			int[][] arr = new int[h][w];
+			PriorityQueue<Stones_5656> stones = new PriorityQueue<Stones_5656>();
+			for (int i = 0; i < h; i++) {
+				String[] stoneInfo = br.readLine().split(" ");
+				for (int j = 0; j < w; j++) {
+					arr[i][j] = Integer.parseInt(stoneInfo[j]);
+				}
+			}
+			
+		}
+		System.out.println(sb);
+	}
+}
+
+class Stones_5656 {
+	int x;
+	int num;
+	
+	public Stones_5656(int x, int num) {
+		super();
+		this.x = x;
+		this.num = num;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+}

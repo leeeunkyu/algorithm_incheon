@@ -1,0 +1,49 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_4811 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int n;
+		while(true) {
+			//약을꺼내서 한개짜리면 바로먹고 
+			n = Integer.parseInt(br.readLine());
+			if(n == 0)
+				break;
+			if(n <= 2) {
+				sb.append(n+"\n");
+				continue;
+			}
+			int[] dp = new int[n + 1];
+			dp[1] = 0;
+			dp[2] = 2;
+			for (int i = 3; i <= n; i++) {
+				int sum = 0;
+				int pivot = i / 2;
+				for (int j = 0; pivot - j >= 1; j++) {
+					if((pivot % 2) != 0) {
+						int val = (dp[pivot - j] + dp[pivot + j + 1]) * 2;	
+						sum += val;
+						sum += (i - 2);
+						System.out.println(sum);
+					} else {
+						int val = (dp[pivot - j] + dp[pivot + j]);
+						System.out.println("dp["+(pivot - j)+"]: "+dp[pivot - j]+" dp["+(pivot + j)+"]: "+dp[pivot + j]);
+						if(j != 0) {
+							val *= 2;
+						}
+						System.out.println("val: "+val);
+						sum += (val);					
+					}
+				}
+				dp[i] = sum;
+			}
+			sb.append(dp[n]+"\n");
+		}
+		System.out.println(sb);
+	}
+}

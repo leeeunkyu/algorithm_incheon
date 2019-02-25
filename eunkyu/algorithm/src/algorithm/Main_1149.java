@@ -8,54 +8,24 @@ public class Main_1149 {
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int n = Integer.parseInt(br.readLine());
-		int[] dp = new int[n];
-		House_1149[] houses = new House_1149[n];
-		String[] houseInfo = br.readLine().split(" ");
-		
+		int[][] dp = new int[n][3];
+		int[][] houses = new int[n][3];
 		for (int i = 0; i < n; i++) {
-			houses[i] = 
-					new House_1149(
-							Integer.parseInt(houseInfo[0]),
-							Integer.parseInt(houseInfo[1]),
-							Integer.parseInt(houseInfo[2]));
+			String[] houseInfo = br.readLine().split(" ");
+			for (int j = 0; j < houseInfo.length; j++) {				
+				houses[i][j] = Integer.parseInt(houseInfo[j]);	
+			}
+		}
+		dp[0][0] = houses[0][0];
+		dp[0][1] = houses[0][1];
+		dp[0][2] = houses[0][2];
+		for (int i = 1; i < n; i++) {
+			dp[i][0] = Math.min(dp[i - 1][1], dp[i - 1][2]) + houses[i][0];
+			dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][2]) + houses[i][1];
+			dp[i][2] = Math.min(dp[i - 1][0], dp[i - 1][1]) + houses[i][2];
 		}
 		
-		for (int i = 0; i < n; i++) {
-			//dp[i] = dp[i-1] + max(houses[i], dp[i-1] 과 겹치지 않는)
-		}
+		System.out.println(Math.min(Math.min(dp[n - 1][0], dp[n - 1][1]),dp[n - 1][2]));
 	}
 }
 
-class House_1149 {
-	int red;
-	int green;
-	int blue;
-	
-	public House_1149(int red, int green, int blue) {
-		super();
-		this.red = red;
-		this.green = green;
-		this.blue = blue;
-	}
-	
-	public int getRed() {
-		return red;
-	}
-	public void setRed(int red) {
-		this.red = red;
-	}
-	public int getGreen() {
-		return green;
-	}
-	public void setGreen(int green) {
-		this.green = green;
-	}
-	public int getBlue() {
-		return blue;
-	}
-	public void setBlue(int blue) {
-		this.blue = blue;
-	}
-	
-	
-}

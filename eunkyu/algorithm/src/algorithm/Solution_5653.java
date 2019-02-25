@@ -13,7 +13,7 @@ import java.util.Queue;
 //1시간동안 상 하 좌 우 번식
 //번식하는 방향에 이미 세포가 있으면 추가적으로 번식X
 public class Solution_5653 {
-	
+	final static int MAX_SIZE = 400;
 	static int n;
 	static int m;
 	static int k;
@@ -31,14 +31,14 @@ public class Solution_5653 {
 			k = Integer.parseInt(info[2]); //시간
 			PriorityQueue<Cell_5653> cells = new PriorityQueue<Cell_5653>();
 			
-			int[][] arr = new int[400][400];
+			int[][] arr = new int[MAX_SIZE][MAX_SIZE];
 			for (int i = 0; i < n; i++) {
 				String[] arrInfo = br.readLine().split(" ");
 				for (int j = 0; j < m; j++) {
 					int val = Integer.parseInt(arrInfo[j]);
-					arr[i + 400/2][j + 400/2] = val;
+					arr[i + MAX_SIZE/2][j + MAX_SIZE/2] = val;
 					if (val != 0) {
-						cells.add(new Cell_5653(i + 400/2, j+ 400/2, 0, 1, val));
+						cells.add(new Cell_5653(i + MAX_SIZE/2, j+ MAX_SIZE/2, 0, 1, val));
 					}
 				}
 			}
@@ -114,6 +114,10 @@ public class Solution_5653 {
 			int nextX = x + dx[i];
 			int nextY = y + dy[i];
 			if(arr[nextY][nextX] == 0) {
+				/*
+				 * 1 2
+				 * 1 2
+				 */
 				temps.add(new Cell_5653(nextY, nextX, 0, 1, arr[y][x]));
 				arr[nextY][nextX] = arr[y][x];
 			}
