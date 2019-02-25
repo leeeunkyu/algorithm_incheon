@@ -24,7 +24,7 @@ void check_move() {
 	
 }
 void move_left(int num) {
-	int tmp = gear[num][0];
+	int tmp = gear[num][1];
 	for (int i = 1; i < 8; i++) {
 		gear[num][i] = gear[num][i + 1];
 	}
@@ -48,12 +48,10 @@ void move_gear(int num, int dir) {
 		move_left(num);
 	
 	if (isMove[num-1] && !visited[num-1] && num-1 >= 1) { //왼쪽
-		printf("왼 move : %d\n", num - 1);
 		move_gear(num - 1, next);
 	}
 
 	if (isMove[num] && !visited[num+1] && num+1 <= T) { //오른쪽
-		printf("오 move : %d\n", num + 1);
 		move_gear(num + 1, next);
 	}
 }
@@ -74,18 +72,7 @@ int main() {
 		//m_gear.push_back(make_pair(num, dir)); //p번 q방향
 		reset();
 		check_move();
-		printf("checkMove: ");
-		for (int i = 1; i <= T-1; i++) {
-			printf("%d ", isMove[i]);
-		}
-		printf("\n");
 		move_gear(num, dir);
-		for (int i = 1; i <= T; i++) {
-			for (int j = 1; j <= 8; j++) {
-				printf("%d ", gear[i][j]);
-			}
-			printf("\n");
-		}
 	}
 
 	int res = 0;
