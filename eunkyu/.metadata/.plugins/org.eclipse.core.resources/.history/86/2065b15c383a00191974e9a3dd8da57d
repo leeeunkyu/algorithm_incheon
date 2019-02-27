@@ -67,7 +67,7 @@ public class Main_15661 {
 			isMember = new boolean[n];
 			for(int i=0; i<index; i++) {
             	isMember[combArr[i]] = true;//01 02 03 12 13 23..
-			}
+		}
         	subScore(isMember);
         }else if(target == n){ 
             return ;
