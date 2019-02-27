@@ -1,0 +1,119 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_15653 {
+	
+	static int n;
+	static int m;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Ball_15653[] ball = new Ball_15653[2];
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]); //세로
+		m = Integer.parseInt(str[1]); //가로
+		char[][] arr = new char[n][m];
+		boolean[][] visited = new boolean[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			String arrInfo = br.readLine();
+			for (int j = 0; j < m; j++) {
+				char val = arrInfo.charAt(j);
+				if(val == 'R') {
+					ball[0] = new Ball_15653(i, j, 1);
+				} else if(val == 'B') {
+					ball[1] = new Ball_15653(j, i, 2);
+				}
+				arr[i][j] = val;
+			}
+		}
+		
+		dfs(arr, ball, visited,0);
+	}
+
+	private static int dfs(char[][] arr, Ball_15653[] ball, boolean[][] visited, int cnt) {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		
+		Ball_15653 redBall = ball[0];
+		Ball_15653 blueBall = ball[1];
+		int redX = redBall.getX();
+		int redY = redBall.getY();
+		
+		int blueX = blueBall.getX();
+		int blueY = blueBall.getY();
+		
+		visited[redY][redX] = true;
+
+		for (int i = 0; i < 2; i++) {			
+			if(arr[redY][redX] == 'O') {
+				if(arr[blueY][blueX] == 'O') {
+					return -1;
+				} else {
+					return cnt;
+				}
+			}
+		}
+		
+		for (int i = 0; i < 4; i++) {
+			
+			int nextRedX = redX + dx[i];
+			int nextRedY = redY + dy[i];
+			int nextBlueX = blueX + dx[i];
+			int nextBlueY = blueY + dy[i];
+			if(nextRedX >= 1 && nextRedX < m-1 && nextRedY >= 1 && nextRedY < n-1
+					&& arr[nextRedY][nextRedX] != '#'  && arr[nextBlueY][nextBlueX] != 'B'
+					&& !visited[nextRedY][nextRedX]) {
+				visited[nextRedY][nextRedX] = true;
+				redBall.setY(nextRedY);
+				redBall.setX(nextRedX);
+				if(nextBlueX >= 1 && nextBlueX < m-1 && nextBlueY >= 1 && nextBlueY < n-1
+						&& arr[nextBlueY][nextBlueX] != '#' && arr[nextBlueY][nextBlueX] != 'R') {
+					blueBall.setY(nextBlueY);
+					blueBall.setX(nextBlueX);
+				}
+				cnt = Math.min(dfs(arr, ball, visited, cnt + 1), cnt);
+			}
+			visited[nextRedY][nextRedX] = false;
+		
+		}
+		return cnt;
+	}
+}
+
+class Ball_15653 {
+	int y;
+	int x;
+	int type; //1. red 2.blue
+	
+	public Ball_15653(int y, int x, int type) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.type = type;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	
+}

@@ -1,0 +1,170 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main_15661 {
+	
+	static int n;	//사람 수
+	static int[][] arr;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		
+		arr = new int[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String[] arrInfo = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(arrInfo[j]);
+			}
+		}
+		
+		System.out.println(goGame(arr));
+		
+		
+	}
+
+	//팀 인원수는 1보다 크기만 하면된다.
+	//능력치 차이가 최소가 되면 된다.
+	
+	private static int goGame(int[][] arr) {
+		//i, j 의 능력치 합 = arr[i][j] + arr[j][i];
+		//1
+		Queue<Team_15661> teams = new LinkedList<Team_15661>();
+		for (int i = 0; i < n; i++) {
+			for (int j = i + 1; j < n; j++) {
+				int val = arr[i][j] + arr[j][i];
+				teams.add(new Team_15661(i, j, val));
+			}
+		}
+		System.out.println(teams.size());
+		int min = Integer.MAX_VALUE;
+		for (int i = 0; i < teams.size(); i++) {
+			int res = selectMember(teams);			
+			if(res < min)
+				min = res;
+			teams.add(teams.poll());
+		}
+		return min;
+	}
+
+	private static int selectMember(Queue<Team_15661> teams) {
+		Queue<Team_15661> temp = new LinkedList<Team_15661>();
+		boolean[] isMember = new boolean[n];
+		int teamA = 0;
+		int teamB = 0;
+		
+		for (int i = 1; i <= n-i; i++) {
+			teamA = sumScore(i, teams);
+		}
+		
+		
+		
+		while (!teams.isEmpty()) {
+			Team_15661 team = teams.poll();
+			temp.add(team);
+			int a = team.getA();
+			int b = team.getB();
+			if(isMember[a] || isMember[b])
+				continue;
+			isMember[a] = true;
+			isMember[b] = true;
+			//i N-i
+			//1 N-1
+			//2 N-2
+			//3 N-3.... i =< n-i
+			
+			
+			
+			if(teamA <= teamB) {
+				teamA += team.getScore();
+				System.out.println("teamA: "+a+" / "+b);
+			} else {
+				teamB += team.getScore();
+				System.out.println("teamB: "+a+" / "+b);
+			}
+			System.out.println("teamA: "+teamA+" teamB: "+teamB);
+		}
+		while (!temp.isEmpty()) {
+			teams.add(temp.poll());
+		}
+		int res = teamA - teamB;
+		if(res < 0) {
+			res = res * -1;
+		}
+		System.out.println("res: "+res);
+		return res;
+	}
+
+	private static int sumScore(int i, Queue<Team_15661> teams) {
+		int size = teams.size();
+		int teamA = 0;
+		int teamB = 0;
+		boolean[] isMember = new boolean[n];
+		for (int idx = 0; idx < n; idx++) {
+			for (int j = idx; j < i + idx && i + idx < n; j++) {
+				isMember[j] = true;
+			}	
+		}
+		
+		for (int j = 0; j < n; j++) {
+			for (int j2 = 0; j2 < n; j2++) {
+				if(isMember[j] && isMember[j2]) {
+					teamA += arr[j][j2];
+				}
+			}
+		}
+		
+		for (int j = 0; j < n; j++) {
+			for (int j2 = 0; j2 < n; j2++) {
+				if(!isMember[j] && !isMember[j2]) {
+					teamB += arr[j][j2];
+				}
+			}
+		}
+		int res = teamA - teamB;
+		if(res < 0) {
+			res = res * -1;
+		}
+		return res;
+	}
+}
+
+
+class Team_15661 {
+	int a;
+	int b;
+	int score;
+	
+	public Team_15661(int a, int b, int score) {
+		super();
+		this.a = a;
+		this.b = b;
+		this.score = score;
+	}
+	
+	public int getA() {
+		return a;
+	}
+	public void setA(int a) {
+		this.a = a;
+	}
+	public int getB() {
+		return b;
+	}
+	public void setB(int b) {
+		this.b = b;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
+	
+}
