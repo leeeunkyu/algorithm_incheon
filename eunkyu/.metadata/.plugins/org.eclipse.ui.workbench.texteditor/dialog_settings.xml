@@ -9,13 +9,13 @@
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
 			<item value="tp"/>
+			<item value="선발 뽑는 수:"/>
+			<item value="min: 2"/>
+			<item value="min"/>
 			<item value="dir=0"/>
 			<item value="Character"/>
 			<item value="char"/>
 			<item value="chae"/>
-			<item value="cha"/>
-			<item value="ch"/>
-			<item value="=="/>
 		</list>
 		<list key="replacehistory">
 		</list>

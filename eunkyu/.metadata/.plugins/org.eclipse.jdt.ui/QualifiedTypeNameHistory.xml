@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="algorithm.Shark"/>
-<fullyQualifiedTypeName name="algorithm.Fish"/>
-<fullyQualifiedTypeName name="algorithm.Solution.Coffee"/>
 <fullyQualifiedTypeName name="algorithm.Solution"/>
 <fullyQualifiedTypeName name="algorithm.Solution_4"/>
 <fullyQualifiedTypeName name="algorithm.Student"/>
@@ -26,7 +23,6 @@
 <fullyQualifiedTypeName name="algorithm.Main_16235"/>
 <fullyQualifiedTypeName name="java.util.Collections"/>
 <fullyQualifiedTypeName name="java.util.Collection"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="algorithm.Tree"/>
 <fullyQualifiedTypeName name="java.time.temporal.Temporal"/>
 <fullyQualifiedTypeName name="algorithm.Main_2178"/>
@@ -47,17 +43,21 @@
 <fullyQualifiedTypeName name="java.util.StringTokenizer"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
-<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
-<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="algorithm.Apple_3190"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="algorithm.Snake_3190"/>
 <fullyQualifiedTypeName name="algorithm.Order_3190"/>
 <fullyQualifiedTypeName name="algorithm.Team_15661"/>
 <fullyQualifiedTypeName name="java.net.Inet4Address"/>
+<fullyQualifiedTypeName name="javax.swing.JEditorPane"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="algorithm.Battery_5644"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="algorithm.Point_5644"/>
 </qualifiedTypeNameHistroy>

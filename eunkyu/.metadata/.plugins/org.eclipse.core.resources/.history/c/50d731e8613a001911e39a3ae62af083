@@ -1,0 +1,221 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution_5644 {
+	
+	static final int MAP_SIZE = 11;//맵 사이즈
+	static int m;	//총 이동시간
+	static int a;	//bc의 갯수
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] info = br.readLine().split(" ");
+			m = Integer.parseInt(info[0]);
+			a = Integer.parseInt(info[1]);
+			Battery_5644[] batterys = new Battery_5644[a];
+			int[] walkA = new int[m];
+			int[] walkB = new int[m];
+			
+			String[] walkInfoA = br.readLine().split(" ");
+			for (int i = 0; i < m; i++) {
+				walkA[i] = Integer.parseInt(walkInfoA[i]);
+			}
+			
+			String[] walkInfoB = br.readLine().split(" ");
+			for (int i = 0; i < m; i++) {
+				walkB[i] = Integer.parseInt(walkInfoB[i]);
+			}
+			
+			for (int i = 0; i < a; i++) {
+				String[] batteryInfo = br.readLine().split(" ");
+				//x,y   c,  p
+				batterys[i] = new Battery_5644(
+						Integer.parseInt(batteryInfo[0]),
+						Integer.parseInt(batteryInfo[1]),
+						Integer.parseInt(batteryInfo[2]),
+						Integer.parseInt(batteryInfo[3]),
+						i);
+			}
+			//겹치는걸 어떻게 처리
+			//500이상숫자로 처리하면 어떨까
+			/*
+			 * a b c d e f g h
+			 * a b c d e f g h
+			 * ....
+			 * a b c d e f g h
+			 */
+			int[][][] valueMap = new int[MAP_SIZE][MAP_SIZE][8];
+			int[][] map = new int[MAP_SIZE][MAP_SIZE];
+			init(map, batterys, valueMap);
+			goWalk(map, batterys, valueMap, walkA, walkB);
+		}
+	}
+
+	private static void goWalk(int[][] map, Battery_5644[] batterys, int[][][] valueMap, int[] walkA, int[] walkB) {
+		int ax = 0;
+		int ay = 0;
+		int bx = 0;
+		int by = 0;
+		int[] dx = {0, 0, 1, 0, -1};
+		int[] dy = {0, -1, 0, 1, 0};
+		int sumA = 0;
+		int sumB = 0;
+		for (int i = 0; i < m; i++) {
+			int a = walkA[i];
+			int b = walkB[i];
+			ax += dx[a];
+			ay += dy[a];
+			
+			bx += dx[b];
+			by += dy[b];
+			
+			if(ax == bx && ay == by) {
+				
+			} else {
+				int val = map[ay][ax];
+				if(val > 500) {
+					
+				} else {
+					sumA += val;
+				}
+				val = map[by][bx];
+				if(val > 500) {
+					
+				} else {
+					sumB += val;
+				}
+			}
+		}
+	}
+
+	private static void init(int[][] map, Battery_5644[] batterys, int[][][] valueMap) {
+		for (int i = 0; i < a; i++) {
+			Battery_5644 battery = batterys[a];
+			int x = battery.getX();
+			int y = battery.getY();
+			int c = battery.getC();
+			int p = battery.getP();
+			int num = battery.getNum();
+			if(map[y][x] == 0){
+				map[y][x] = p;
+				bfs(map, valueMap, y, x, c, p, num);
+			} else {
+				map[y][x] = Integer.parseInt(""+5+y+x+num);
+				valueMap[y][x][num] = p;
+				bfs(map, valueMap, y, x, c, p, num);
+			}
+		}
+	}
+
+	private static void bfs(int[][] map, int[][][] valueMap, int y, int x, int c, int p, int num) {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		boolean[][] visited = new boolean[MAP_SIZE][MAP_SIZE];
+		Queue<Point_5644> points = new LinkedList<Point_5644>();
+		points.add(new Point_5644(x, y));
+		visited[y][x] = true;
+		while(!points.isEmpty()) {
+			Point_5644 point = points.poll();
+			int px = point.getX();
+			int py = point.getY();
+			for (int i = 0; i < 4; i++) {
+				int nextX = px + dx[i];
+				int nextY = py + dy[i];
+				if(nextX >= 1 && nextX < MAP_SIZE && nextY >= 1 && nextY <10
+						&& !visited[nextY][nextX] && nextX > x-c && nextX < x+c
+						&& nextY > y-c && nextY < y+c) {
+					visited[nextY][nextX] = true;
+					if(map[y][x] == 0) {
+						map[y][x] = p;
+					} else {
+						map[y][x] = Integer.parseInt(""+5+y+x+num);
+						valueMap[y][x][num] = p;
+					}
+				}
+			}	
+		}
+		
+	}
+}
+
+class Battery_5644 {
+	int y;
+	int x;
+	int c;
+	int p;
+	int num;
+	
+	public Battery_5644(int x, int y, int c, int p, int num) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.c = c;
+		this.p = p;
+		this.num = num;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getC() {
+		return c;
+	}
+	public void setC(int c) {
+		this.c = c;
+	}
+	public int getP() {
+		return p;
+	}
+	public void setP(int p) {
+		this.p = p;
+	}
+
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+}
+
+class Point_5644 {
+	int x;
+	int y;
+	
+	public Point_5644(int x, int y) {
+		super();
+		this.x = x;
+		this.y = y;
+	}
+	
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	
+}
