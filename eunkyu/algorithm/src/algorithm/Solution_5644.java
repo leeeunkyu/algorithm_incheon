@@ -22,17 +22,18 @@ public class Solution_5644 {
 			m = Integer.parseInt(info[0]);
 			a = Integer.parseInt(info[1]);
 			Battery_5644[] batterys = new Battery_5644[a];
-			int[] walkA = new int[m];
-			int[] walkB = new int[m];
-			
+			int[] walkA = new int[m + 1];
+			int[] walkB = new int[m + 1];
+			walkA[0] = 0;
+			walkB[0] = 0;
 			String[] walkInfoA = br.readLine().split(" ");
 			for (int i = 0; i < m; i++) {
-				walkA[i] = Integer.parseInt(walkInfoA[i]);
+				walkA[i + 1] = Integer.parseInt(walkInfoA[i]);
 			}
 			
 			String[] walkInfoB = br.readLine().split(" ");
 			for (int i = 0; i < m; i++) {
-				walkB[i] = Integer.parseInt(walkInfoB[i]);
+				walkB[i + 1] = Integer.parseInt(walkInfoB[i]);
 			}
 			
 			for (int i = 0; i < a; i++) {
@@ -53,16 +54,12 @@ public class Solution_5644 {
 			 * ....
 			 * a b c d e f g h
 			 */
-			int[][][] valueMap = new int[MAP_SIZE][MAP_SIZE][8];
+			
+			
+			int[][][] valueMap = new int[MAP_SIZE][MAP_SIZE][1<<8];
 			int[][] map = new int[MAP_SIZE][MAP_SIZE];
 			init(map, batterys, valueMap);
 			
-			for (int i = 0; i < map.length; i++) {
-				for (int j = 0; j < map.length; j++) {
-					System.out.print(map[i][j]+" ");
-				}
-				System.out.println();
-			}
 			
 			System.out.println();
 			int res = goWalk(map, batterys, valueMap, walkA, walkB);
@@ -70,37 +67,44 @@ public class Solution_5644 {
 		}
 	}
 
-	private static int goWalk(int[][] map, Battery_5644[] batterys, int[][][] valueMap, int[] walkA, int[] walkB) {
+	private static int goWalk(int[][] map, Battery_5644[] batterys, int[][][] valueMap, int[] walkA, int[] walkB) {		
 		int ax = 1;
 		int ay = 1;
 		int bx = 10;
 		int by = 10;
 		int[] dx = {0, 0, 1, 0, -1};
 		int[] dy = {0, -1, 0, 1, 0};
-		int sumA = map[ay][ax];
-		int sumB = map[by][bx];
+		int sumA = 0;
+		int sumB = 0;
 		int sum = 0;
 		int res = 0;
-		for (int i = 0; i < m; i++) {
+		for (int i = 0; i < m + 1; i++) {
 			int a = walkA[i];
 			int b = walkB[i];
+			
+			sumA = 0;
+			sumB = 0;
+			
 			ax += dx[a];
 			ay += dy[a];
-			
 			bx += dx[b];
 			by += dy[b];
-			
-			if(ax == bx && ay == by) {
-				int val = map[ay][ax];
-				if(val > 500) {
-					String str = val+"";
-					char[] temp = str.toCharArray();
-					int valueMapY = temp[0] - '0';
-					int valueMapX = temp[1] - '0';
+						
+			if(checkSection(ax, ay, bx, by, map, batterys)) {
+				//같은 베터리 영역안에 있다.
+				int aVal = map[ay][ax];
+				int bVal = map[by][bx];
+				if(aVal <= 500 && bVal <= 500) {
+					sumA += (aVal/2);
+					sumB += (bVal/2);
+				} else if(aVal > 500 && bVal > 500){
+					
+				}
+				/*if(val > 500) {
 					int[] tempMap = new int[8];
 					//y, x, num
-					for (int k = 0; k < valueMap[valueMapY][valueMapX].length; k++) {
-						tempMap[k] = valueMap[valueMapY][valueMapX][k];
+					for (int k = 0; k < valueMap[ay][ax].length; k++) {
+						tempMap[k] = valueMap[ay][ax][k];
 					}
 					Arrays.sort(tempMap);
 					sumA += tempMap[tempMap.length - 1];
@@ -108,19 +112,18 @@ public class Solution_5644 {
 				} 
 				else {
 					sumA += val;
-				}
+				}*/
 				
-			} else {
+			} 
+			
+			
+			else {
 				int val = map[ay][ax];
 				if(val > 500) {
-					String str = val+"";
-					char[] temp = str.toCharArray();
-					int valueMapY = temp[0] - '0';
-					int valueMapX = temp[1] - '0';
 					int[] tempMap = new int[8];
 					//y, x, num
-					for (int k = 0; k < valueMap[valueMapY][valueMapX].length; k++) {
-						tempMap[k] = valueMap[valueMapY][valueMapX][k];
+					for (int k = 0; k < valueMap[ay][ax].length; k++) {
+						tempMap[k] = valueMap[ay][ax][k];
 					}
 					Arrays.sort(tempMap);
 					sumA += tempMap[tempMap.length - 1];
@@ -144,28 +147,58 @@ public class Solution_5644 {
 					sumB += val;
 				}
 			}
+
+			/*System.out.println("sumA: "+sumA);
+			System.out.println("sumB: "+sumB);*/
 			sum = sumA + sumB;
 		}
+
 		res += sum;
 		return res;
 	}
 
+	private static boolean checkSection(int ax, int ay, int bx, int by, int[][] map, Battery_5644[] batterys) {
+		boolean check = false;
+		for (int i = 0; i < batterys.length; i++) {
+			int x = batterys[i].getX();
+			int y = batterys[i].getY();
+			int c = batterys[i].getC();
+			int num = batterys[i].getNum();
+			int subAX = Math.abs(ax - x) + Math.abs(y - ay);
+			int subBX = Math.abs(bx -x ) + Math.abs(y - by);
+			if(subAX <= c * 2) {
+				//a는 이 베터리 안에 있다.
+				//둘은 같은 베터리 안에 있다.
+				if(subBX <= c * 2) {
+					check =  true;					
+				} else {
+					
+				}
+			}
+			
+		}
+		return check;
+	}
+
 	private static void init(int[][] map, Battery_5644[] batterys, int[][][] valueMap) {
+		int cnt = 0;
 		for (int i = 0; i < a; i++) {
 			Battery_5644 battery = batterys[i];
 			int x = battery.getX();
 			int y = battery.getY();
 			int c = battery.getC();
 			int p = battery.getP();
-			int num = battery.getNum();
 			if(map[y][x] == 0){
 				map[y][x] = p;
-				bfs(map, valueMap, y, x, c, p, num);
+				bfs(map, valueMap, y, x, c, p, i);
 			} else {
-				map[y][x] = Integer.parseInt(""+5+y+x+num);
-				valueMap[y][x][num] = p;
-				bfs(map, valueMap, y, x, c, p, num);
+				int temp = map[y][x];
+				map[y][x] = Integer.parseInt(""+5+y+x);
+				valueMap[y][x][1<<i] = p;
+				valueMap[y][x][1<<i-1] = temp;
+				bfs(map, valueMap, y, x, c, p, i);
 			}
+			
 		}
 	}
 
@@ -174,29 +207,43 @@ public class Solution_5644 {
 		int[] dy = {1, -1, 0, 0};
 		boolean[][] visited = new boolean[MAP_SIZE][MAP_SIZE];
 		Queue<Point_5644> points = new LinkedList<Point_5644>();
-		points.add(new Point_5644(x, y));
+		points.add(new Point_5644(x, y, 0));
 		visited[y][x] = true;
 		while(!points.isEmpty()) {
 			Point_5644 point = points.poll();
 			int px = point.getX();
 			int py = point.getY();
+			int cnt = point.getCnt();
 			for (int i = 0; i < 4; i++) {
 				int nextX = px + dx[i];
 				int nextY = py + dy[i];
+				
 				if(nextX >= 1 && nextX < MAP_SIZE && nextY >= 1 && nextY <MAP_SIZE
-						&& !visited[nextY][nextX] && nextX > x-c && nextX < x+c
-						&& nextY > y-c && nextY < y+c) {
+						&& !visited[nextY][nextX] && cnt < c) {
+					
 					visited[nextY][nextX] = true;
-					if(map[y][x] == 0) {
-						map[y][x] = p;
+					if(map[nextY][nextX] == 0) {
+						map[nextY][nextX] = p;
 					} else {
-						map[y][x] = Integer.parseInt(""+5+y+x+num);
-						valueMap[y][x][num] = p;
+						int temp = map[nextY][nextX];
+						map[nextY][nextX] = Integer.parseInt(""+5+nextY+nextX);
+						valueMap[nextY][nextX][1<<num] = p;
+						valueMap[nextY][nextX][1<<num-1] = temp;
 					}
-					points.add(new Point_5644(nextX, nextY));
+					points.add(new Point_5644(nextX, nextY, cnt + 1));
 				}
+				
 			}	
 		}
+		System.out.println();
+		for (int k = 0; k < map.length; k++) {
+			for (int j = 0; j < map.length; j++) {
+				System.out.print(map[k][j]+" ");
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
 		
 	}
 }
@@ -254,11 +301,13 @@ class Battery_5644 {
 class Point_5644 {
 	int x;
 	int y;
+	int cnt;
 	
-	public Point_5644(int x, int y) {
+	public Point_5644(int x, int y, int cnt) {
 		super();
 		this.x = x;
 		this.y = y;
+		this.cnt = cnt;
 	}
 	
 	public int getX() {
@@ -273,5 +322,14 @@ class Point_5644 {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
 	
 }

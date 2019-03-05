@@ -1,0 +1,23 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_5213 {
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		int[][] arr = new int[n][2*n];
+		int line = (n * n) - (n / 2);
+		int cnt = 0;
+		for (int i = 0; i < line; i++) {
+			String[] tailInfo = br.readLine().split(" ");
+			for (int j = 0; j < 2; j++) {
+				arr[i][cnt] = Integer.parseInt(tailInfo[j]);
+				cnt++;
+			}
+			
+		}
+	}
+}

@@ -1,0 +1,166 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_1107 {
+	final static int CURRENT_CH = 100;
+	static int m;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		boolean s = false;
+		String ans = "";
+		int n = Integer.parseInt(br.readLine()); //이동하려는 체널
+		m = Integer.parseInt(br.readLine()); //고장난 버튼 갯수
+		int[] brokenCh = new int[m];
+		if(n == 100) {
+			ans = "0";
+			s = true;
+		}
+		if(m == 0) {
+			ans += (""+n).length();
+			s = true;
+		}
+		String[] brokenChInfo = br.readLine().split(" ");
+		for (int i = 0; i < m; i++) {
+			brokenCh[i] = Integer.parseInt(brokenChInfo[i]);
+		}
+		if(s) {
+			System.out.println(ans);
+			return;
+		}
+		
+		selectCh(n, brokenCh);
+	}
+
+	private static void selectCh(int n, int[] brokenCh) {
+		int size = (""+n).length();
+		int cpN = n;
+		int[] chInfo = new int[size];
+		int pivot = 0;
+		int[] notBroken = new int[10 - m];
+		//0 1 2 3 4 5 6 7 8 9
+		int i2 = 0;
+		int i3 = 0;
+		for (int i = 0; i <= 9; i++) {
+			if(i3 < m && brokenCh[i3] == i) {
+				i3++;
+			} else if(i2 < notBroken.length) {
+				notBroken[i2] = i;
+				i2++;
+			}
+		}
+	
+		if(i2 >= 1) {
+			for (int i = size - 1; i >= 0; i--) {
+				int temp = 1;
+				for (int j = i; j >= 1; j--) {
+					temp *= 10;
+				}
+				chInfo[pivot] = (n / temp) ;
+				n %= temp;
+				++pivot;
+			}
+			int[] caseList = new int[4];
+			caseList[0] = aCaseSelect(cpN, size, chInfo, notBroken); //자리수가 같을경우
+			caseList[1] = bCaseSelect(cpN, size, chInfo, notBroken); //클경우
+			caseList[2] = cCaseSelect(cpN, size, chInfo, notBroken); //작을경우
+			caseList[3] = Math.abs(100 - cpN);
+			int min = Integer.MAX_VALUE;
+			for (int i = 0; i < 4; i++) {
+				System.out.println("i: "+i+" "+caseList[i]);
+				if(min > caseList[i]) {
+					min = caseList[i];
+				}
+			}
+			System.out.println(min);
+		} else {
+			//살아있는 번호버튼이 없는경우
+			System.out.println(n - 100);
+			return;
+		}
+	}
+
+	//자리수가 작을경우
+	private static int cCaseSelect(int n, int size, int[] chInfo, int[] notBroken) {
+		if(size <= 1)
+			return Integer.MAX_VALUE;
+		String num = "";
+		for (int i = 0; i < size - 1; i++) {
+			num += notBroken[notBroken.length - 1];
+		}
+		return (size - 1) + Math.abs(n - Integer.parseInt(num));
+	}
+
+	//자리수가 클 경우
+	private static int bCaseSelect(int n, int size, int[] chInfo, int[] notBroken) {
+		int pivot = 0;
+		String num = "";
+		if(notBroken[0] == 0) {
+			if(notBroken.length == 1) {
+				return n - 100 < n ? n - 100 : n;
+			}
+			++pivot;
+			num += notBroken[1];
+		}
+		
+		for (int i = pivot; i < size + 1; i++) {
+			num += notBroken[0];
+		}
+		
+		return (size + 1) + Math.abs(n - Integer.parseInt(num));
+	}
+
+	//자리수가 같을경우
+	private static int aCaseSelect(int n, int size, int[] chInfo, int[] notBroken) {
+		String num = "";
+		int top = chInfo[0];
+		int topIndex = 0;
+		int topTemp = Integer.MAX_VALUE;
+		boolean c = false;
+		for (int i = 0; i < notBroken.length; i++) {
+			if(top == notBroken[i]) {
+				topIndex = i;
+				c = true;
+				break;
+			} else {
+				int sub = Math.abs(top - notBroken[i]);
+				if(sub < topTemp) {
+					topTemp = sub;
+					topIndex = i;
+				}
+			}
+		}
+		
+		
+		loop:
+		for (int i = 0; i < size; i++) {
+			int val = chInfo[i];
+			int temp = Integer.MAX_VALUE;
+			for (int j = 0; j < notBroken.length; j++) {
+				if(val == notBroken[j]) {
+					num += val;
+					continue loop;
+				} else {
+					int sub = Math.abs(val - notBroken[j]);
+					if(sub < temp) {
+						temp = sub;
+						chInfo[i] = notBroken[j];
+					}
+				}
+			}
+			num += chInfo[i];
+		}
+		
+		String numA = "";
+		String numB = "";
+		for (int i = 0; i < notBroken.length; i++) {
+			
+		}
+		
+		System.out.println("n: "+n+" num:"+num);
+		
+		return size + Math.abs(n - Integer.parseInt(num));
+	}
+}
