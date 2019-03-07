@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="algorithm.Gear"/>
-<fullyQualifiedTypeName name="algorithm.GearMeet"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="javax.swing.plaf.SliderUI"/>
-<fullyQualifiedTypeName name="algorithm.Country"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="java.util.Deque"/>
 <fullyQualifiedTypeName name="algorithm.People"/>
 <fullyQualifiedTypeName name="algorithm.Stair"/>
 <fullyQualifiedTypeName name="algorithm.Solution_2"/>
@@ -42,22 +35,29 @@
 <fullyQualifiedTypeName name="javax.swing.JEditorPane"/>
 <fullyQualifiedTypeName name="algorithm.Battery_5644"/>
 <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
-<fullyQualifiedTypeName name="javax.swing.InputMap"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="algorithm.Core_1767"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="javax.sound.midi.Synthesizer"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="algorithm.Point_5644"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="algorithm.Point_5213"/>
+<fullyQualifiedTypeName name="javax.sql.rowset.CachedRowSet"/>
+<fullyQualifiedTypeName name="algorithm.Main_16236_Temp"/>
+<fullyQualifiedTypeName name="algorithm.Walk_13913"/>
+<fullyQualifiedTypeName name="java.lang.SuppressWarnings"/>
+<fullyQualifiedTypeName name="java.util.Arrays"/>
+<fullyQualifiedTypeName name="algorithm.Main_2580"/>
+<fullyQualifiedTypeName name="algorithm.Point"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="algorithm.Point_2580"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="javax.swing.InputMap"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="javax.sql.rowset.CachedRowSet"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="algorithm.Main_16236_Temp"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="algorithm.Point_1799"/>
+<fullyQualifiedTypeName name="algorithm.Main_1799"/>
 </qualifiedTypeNameHistroy>

@@ -1,0 +1,106 @@
+package algorithm_review;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_14501 {
+	
+	static int n;
+	static int m;
+	static int[][] arr;
+	static int size;
+	static Chicken_14501[] chickens;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] info = br.readLine().split(" ");
+		n = Integer.parseInt(info[0]);
+		m = Integer.parseInt(info[1]);
+		
+		arr = new int[n][n];
+		Queue<Chicken_14501> chickenq =  new LinkedList<Chicken_14501>();
+		
+		for (int i = 0; i < n; i++) {
+			String[] arrInfo = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				int val = Integer.parseInt(arrInfo[j]);
+				arr[i][j] = val;
+				if(val == 2) {
+					chickenq.add(new Chicken_14501(i, j, 0));
+				}
+			}
+		}
+		size = chickenq.size();
+		chickens = new Chicken_14501[size];
+		
+		for (int i = 0; i < chickens.length; i++) {
+			chickens[i] = chickenq.poll();
+		}
+		
+		dfs(0);
+		Arrays.sort(chickens);
+	}
+
+	private static void dfs(int cnt) {
+		if(cnt == size) {
+			return;
+		}
+		
+		Chicken_14501 chicken = chickens[cnt];
+		int y = chicken.getY();
+		int x = chicken.getX();
+		int dir = 0;
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] == 1) {
+					dir += (Math.abs(y - i) + Math.abs(x - j));
+				}
+			}
+		}
+		chicken.setCnt(dir);
+		dfs(cnt + 1);
+		
+	}
+}
+
+class Chicken_14501 implements Comparable<Chicken_14501>{
+	int y;
+	int x;
+	int cnt;
+	
+	public Chicken_14501(int y, int x, int cnt) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.cnt = cnt;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+
+	@Override
+	public int compareTo(Chicken_14501 chicken_14501) {
+		return this.getCnt() - chicken_14501.getCnt();
+	}
+}

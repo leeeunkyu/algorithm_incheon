@@ -1,0 +1,38 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_13913 {
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]); //수빈이 현재 점
+		int k = Integer.parseInt(str[1]); //동생점
+		if(k <= n) {
+			System.out.println(n - k);
+			for (int i = 0; i <= n - k; i++) {
+				System.out.println(n - i);
+			}
+			return;
+		}
+		String walks = "";
+		
+		goWalk(walks+n+"", n, k, 0);
+	}
+
+	private static void goWalk(String walks, int n, int k, int time) {
+		if(n == k) {
+			System.out.println(time);
+			System.out.println(walks);
+		}
+		goWalk(walks + (n + 1), n + 1, k, time + 1);
+		goWalk(walks + (n - 1), n - 1, k, time + 1);
+		goWalk(walks + (2 * n), n * 2, k, time + 1);
+
+	}
+}

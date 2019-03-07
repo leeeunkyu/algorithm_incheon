@@ -1,0 +1,54 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_13913 {
+	
+	
+	static boolean[] visited;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]); //수빈이 현재 점
+		int k = Integer.parseInt(str[1]); //동생점
+		if(k <= n) {
+			System.out.println(n - k);
+			for (int i = 0; i <= n - k; i++) {
+				System.out.println(n - i);
+			}
+			return;
+		}
+		String walks = "";
+		visited = new boolean[2*k + 1];
+		goWalk(walks+n+"", n, k, 0);
+	}
+
+	private static void goWalk(String walks, int n, int k, int time) {
+		if(n == k) {
+			System.out.println(time);
+			System.out.println(walks);
+			return;
+		}
+		
+		int[] dx = {1, -1};
+		for (int i = 0; i < 3; i++) {
+			int nextN;
+			if(i == 2) {
+				nextN = n * 2;
+			}else {
+				nextN = n + dx[i];
+			}
+			if(nextN < 2*k + 1 && visited[nextN] == false) {
+				visited[nextN] = true;
+				goWalk(walks +" "+(nextN), nextN, k, time + 1);
+				visited[nextN] = false;
+			}
+		}
+
+	}
+}

@@ -1,0 +1,14 @@
+package algorithm;
+
+public class BitTest {
+	public static void main(String[] args) {
+		int[] a = {0, 1, 2, 3};
+		int n = a.length;
+		
+		for (int i = 0; i < (1 << n); i++) {
+			for (int j = 0; j < n; j++) {
+				
+			}
+		}
+	}
+}

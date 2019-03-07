@@ -1,0 +1,20 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_13913 {
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		int n = Integer.parseInt(str[0]); //수빈이 현재 점
+		int k = Integer.parseInt(str[1]); //동생점
+		if(k <= n) {
+			System.out.println(n - k);
+			for (int i = 0; i <= n - k; i++) {
+				System.out.println(n - i);
+			}
+		}
+	}
+}

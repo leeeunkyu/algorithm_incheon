@@ -1,0 +1,28 @@
+package algorithm;
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class BitTest {
+	public static void main(String[] args) {
+		String[] arr = {"a", "b", "c", "d"};
+		int n = arr.length;
+		Queue<String> q = new LinkedList<String>();
+		for (int i = 0; i < (1 << n); i++) {
+			if(Integer.bitCount(i) == 2) {
+				String str = Integer.toBinaryString(i);
+				System.out.println(str);
+				q.add(str);
+			}
+		}
+		
+		while (!q.isEmpty()) {
+			String str = q.poll();
+			char[] index = str.toCharArray();
+			for (int i = 0; i < index.length; i++) {
+				System.out.print(arr[index[i] - '0']+" ");
+			}
+			System.out.println();
+		}
+	}
+}

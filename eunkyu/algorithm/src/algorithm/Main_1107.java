@@ -197,16 +197,16 @@ public class Main_1107 {
 			}
 		}
 /*		System.out.println(num+" "+numA+" "+numB);
-*/		if(numA.length() == 0) {
+*/		if(numA.length() == 0) 
 			numA += Integer.MAX_VALUE;
-		} else if(numB.length() == 0) {
+		if(numB.length() == 0) 
 			numB += Integer.MAX_VALUE;
-		}
-		if(num.length() < 1)
+		if(num.length() == 0)
 			num += Integer.MAX_VALUE;
 		int a = Math.abs(n - Integer.parseInt(num));
 		int b = Math.abs(n - Integer.parseInt(numA));
 		int c = Math.abs(n - Integer.parseInt(numB));
+		System.out.println(num+" "+numA+" "+numB);
 		int min;
 		if(a < b) {
 			if(a < c) {
