@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Main_1759 {
@@ -40,20 +39,12 @@ public class Main_1759 {
 				strq.add(text);
 			}
 		}
-		PriorityQueue<String> pq = new PriorityQueue<>();
+		
 		while(!strq.isEmpty()) {
 			String[] temp = strq.poll();
 			if(check(temp)) {
-				String a = "";
-				for (int i = 0; i < temp.length; i++) {
-					a += temp[i];
-				}
-				pq.add(a);
+				
 			}
-		}
-		
-		while (!pq.isEmpty()) {
-			System.out.println(pq.poll());
 		}
 	
 	}
@@ -74,7 +65,7 @@ public class Main_1759 {
 		}
 		
 		if(acnt >=1 && bcnt >= 2) {
-			return true;
+			
 		}
 		return false;
 	}
