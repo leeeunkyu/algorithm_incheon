@@ -13,190 +13,180 @@ public class Main_16236 {
 	static int n;	//n크기 공간에
 	static int m;	//m마리 물고기 1마리 아기상어
 	static int arr[][];
-	static ArrayList<Fish> fishSort;
-	static int visited[];
-	/*
-	 * 아기 상어 크기는 2
-	 * 1초에 상하좌우로 한칸씩 이동가능
-	 * 자기보다 크기가 작은 물고기만 먹을 수 있고 같으면 이동은 가능
-	 * 
-	 * 이동방식
-	 * 1. 먹을 물고기가 없으면 엄마상어에 도움 요청
-	 * 2. 1마리면 그 물고기를 먹으러 출발
-	 * 3. 1마리보다 많으면 가장 가까운 물고기를 먹으러 감
-	 * 4. 크기 수 만큼 물고기를 먹으면 크기 1 증가
-	 */
+
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		PriorityQueue<Integer> pq = new PriorityQueue<Integer>();
 		n = Integer.parseInt(br.readLine());
 		arr = new int[n][n];
-		fishSort = new ArrayList<Fish>();
-		visited = new int[1000000];
-		int x = 0;
-		int y = 0;
-		
+		Shark_16236 shark = new Shark_16236(0, 0, 2, 0, 0);
 		for (int i = 0; i < n; i++) {
-			String str[] = br.readLine().split(" ");
+			String[] str = br.readLine().split(" ");
 			for (int j = 0; j < n; j++) {
-				arr[i][j] = Integer.parseInt(str[j]);
-				if(arr[i][j] == 9) {
-					x = j;
-					y = i;
-					arr[i][j] = 0;
-				}else if(arr[i][j] != 0 ) {
-					fishSort.add(new Fish(j, i, arr[i][j]));
+				int val = Integer.parseInt(str[j]);
+				arr[i][j] = val;
+				if(val == 9) {
+					shark = new Shark_16236(i, j, 2, 0, 0);
+				} else if(val != 0) {
+					pq.add(val);
 				}
-					
 			}
 		}
 		
-		fishSort.sort(new Comparator<Fish>() {
-			@Override
-			public int compare(Fish o1, Fish o2) {
-				return o1.getSize() - o2.getSize();
-			}		
-		});
-		/*for (int i = 0; i < fish.size(); i++) {
-			System.out.println("x: "+fish.get(i).getX() + " y: "+ fish.get(i).getY() + " size: "+ fish.get(i).getSize());
-		}*/
-		System.out.println();
-		System.out.println();
-		
-		bfs(x, y);
-		
-		System.out.println();
+		int size = 2;
+		Shark_16236 tempShark = shark;	
+		while(!pq.isEmpty()) {
+			int remainSize = pq.poll();
+			if(remainSize < size) {
+				arr[tempShark.getY()][tempShark.getX()] = 0;
+				tempShark = bfs(tempShark);
+				size = tempShark.getSize();
+			}
+		}
+				
+		System.out.println(tempShark.getStep());
 		
 	}
-	private static void bfs(int x, int y) {
-		int dx[] = {0, -1, 1, 0};
-		int dy[] = {-1, 0, 0, 1};
-		
-		Shark s = new Shark(x, y, 2, 0);
-		Queue<Shark> q = new LinkedList<>();
-		ArrayList<Fish> fishList = new ArrayList<>();
-		int sizeCnt = 0;
-		int pointX = x;
-		int pointY = y;
-		
-		q.add(s);
-		
-		//1 -> (0~4) -> (4~16) -> 
-		while(!q.isEmpty()) {
-			int size = q.size();
-			Shark tempShark = q.poll();
-			int sharkX = tempShark.getX();
-			int sharkY = tempShark.getY();
-			int sharkSize = tempShark.getSize();
-			int sharkStep = tempShark.getStep();
-			
-			if(fishSort.size() <= 0 || sharkSize <= fishSort.get(0).getSize()) {
-				break;
-			}
-			
-			fishList.clear();
-			for (int cnt = 0; cnt < size; cnt++) {
-				for (int i = 0; i < 4; i++) {			
-					int nextX = sharkX + dx[i];
-					int nextY = sharkY + dy[i];
-					int nextStep = sharkStep + 1;
-					if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n 
-							&& arr[nextY][nextX] <= sharkSize) {
-						//이동 할 수 있는 범위 측정
-						if(arr[nextY][nextX] > 0 && arr[nextY][nextX] < sharkSize) {
-							//먹을 수 있는 물고기란 소리
-							fishList.add(new Fish(nextX, nextY, arr[nextY][nextX]));
-						}
-						q.add(new Shark(nextX, nextY, sharkSize, nextStep));
-					}
-				}	
-			}
-			
-			if (fishList.size() > 0) {
-				int minDistIdx = dist(sharkX, sharkY, fishList);
-				Fish fish = fishList.get(minDistIdx);
-				++sizeCnt;
-				if(sharkSize == sizeCnt) {
-					++sharkSize;
-					sizeCnt = 0;
-				}
-				q.clear();
-				q.add(new Shark(fish.getX(), fish.getY(), sharkSize, sharkStep + 1));
-				fishSort.remove(0);
-				pointX = fish.getX();
-				pointY = fish.getY();
-				arr[pointY][pointX] = 0;
-				System.out.println();
-				System.out.println("====================================");
-				for (int i = 0; i < arr.length; i++) {
-					for (int j = 0; j < arr.length; j++) {
-						if(arr[i][j] == -1)
-							System.out.print("#"+" ");
-						else
-							System.out.print(arr[i][j]+" ");
-					}
-					System.out.println();
-				}
-				System.out.println("상어 size: "+sharkSize + "Cnt: "+sizeCnt);
-				System.out.println("이동한 step: "+ (sharkStep + 1));
-			}
-		}
 	
-	}
-	private static int dist(int sharkX, int sharkY, ArrayList<Fish> fishList) {		
-		int minDistIdx = 0;
+	private static Shark_16236 bfs(Shark_16236 shark) {
+		boolean[][] visited = new boolean[n][n];
+		boolean isEat = false;
+		Queue<Shark_16236> sharks = new LinkedList<Shark_16236>();
+		sharks.add(shark);
+		Queue<Shark_16236> isEatSharks = new LinkedList<Shark_16236>();
+		int maxStep = Integer.MAX_VALUE;
 		
-		for (int i = 0; i < fishList.size(); i++) {
-			if(fishList.get(minDistIdx).getY() > fishList.get(i).getY()) {
-				//지금께 y축이 더 높다?
-				minDistIdx = i;
-			}else if(fishList.get(i).getY() == fishList.get(minDistIdx).getY() 
-					&& fishList.get(minDistIdx).getX() > fishList.get(i).getX()) {
-				//y축 거리가 같은데 x축이 더 왼쪽에 가깝다?
-				minDistIdx = i;
+		while(!sharks.isEmpty()) {
+			shark = sharks.poll();
+			
+			int x = shark.getX();
+			int y = shark.getY();
+			int size = shark.getSize();
+			int eat = shark.getEat();
+			int step = shark.getStep();
+			
+			if(maxStep < step)
+				break;
+			
+			visited[y][x] = true;
+			
+			int[] dx = {0, -1, 1, 0};
+			int[] dy = {-1, 0, 0, 1};
+			
+			for (int i = 0; i < 4; i++) {
+				int nextX = x + dx[i];
+				int nextY = y + dy[i];
+				
+				if(nextX >= 0 && nextX < n && nextY >=0 && nextY < n
+						&& !visited[nextY][nextX] && arr[nextY][nextX] <= size) {
+					visited[nextY][nextX] = true;
+
+					if(arr[nextY][nextX] != 0 && arr[nextY][nextX] < size) {
+						int tempEat = eat + 1;
+						int tempSize = size;
+						if(tempEat >= tempSize) {
+							tempSize += 1;
+							tempEat = 0;
+						}
+						maxStep = step + 1;
+						isEatSharks.add(new Shark_16236(nextY, nextX, tempSize, tempEat, step + 1));
+						isEat = true;
+					} else {
+						sharks.add(new Shark_16236(nextY, nextX, size, eat, step + 1));
+					}
+				}
 			}
 		}
-		return minDistIdx;
-	}
 		
+		if(isEat) {
+			Shark_16236 eatShark = isEatSharks.poll();
+			int ey = eatShark.getY();
+			int ex = eatShark.getX();
+			int eStep = eatShark.getStep();
+			int eSize = eatShark.getSize();
+			
+			while(!isEatSharks.isEmpty()) {
+				Shark_16236 tes = isEatSharks.poll();
+				int tey = tes.getY();
+				int tex = tes.getX();
+				int testep = tes.getStep();
+				if(eStep == testep) {
+					if(ey == tey) {
+						if(ex > tex) {
+							eatShark = tes;
+							ey = eatShark.getY();
+							ex = eatShark.getX();
+							eStep = eatShark.getStep();
+						} else {
+							isEatSharks.poll();
+						}
+					} else if(ey > tey){
+						eatShark = tes;
+						ey = eatShark.getY();
+						ex = eatShark.getX();
+						eStep = eatShark.getStep();
+					} else {
+						isEatSharks.poll();
+					}
+				} else if(eStep > testep) { 
+					eatShark = tes;
+					ey = eatShark.getY();
+					ex = eatShark.getX();
+					eStep = eatShark.getStep();
+				} else{
+					isEatSharks.poll();
+				}					
+			}
+			arr[ey][ex] = eSize;
+
+			return eatShark;
+		}
+		return shark;
+	}		
 }
 
-class Shark {
+class Shark_16236 {
 	
-	int x;
 	int y;
-	static int size;
+	int x;
+	int size;
+	int eat;
 	int step;
 	
-	public Shark(int x, int y, int size, int step) {
+	public Shark_16236(int y, int x, int size, int eat, int step) {
 		super();
-		this.x = x;
 		this.y = y;
+		this.x = x;
 		this.size = size;
+		this.eat = eat;
 		this.step = step;
 	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
+	
 	public int getY() {
 		return y;
 	}
-
 	public void setY(int y) {
 		this.y = y;
 	}
-
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
 	public int getSize() {
 		return size;
 	}
-
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public int getEat() {
+		return eat;
+	}
+
+	public void setEat(int eat) {
+		this.eat = eat;
 	}
 
 	public int getStep() {
@@ -206,43 +196,23 @@ class Shark {
 	public void setStep(int step) {
 		this.step = step;
 	}
-}
 
-class Fish {
-	
-	int x;
-	int y;
-	int size;
-	
-	public Fish(int x, int y, int size) {
-		super();
-		this.x = x;
-		this.y = y;
-		this.size = size;
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Shark_16236 [y=");
+		builder.append(y);
+		builder.append(", x=");
+		builder.append(x);
+		builder.append(", size=");
+		builder.append(size);
+		builder.append(", eat=");
+		builder.append(eat);
+		builder.append(", step=");
+		builder.append(step);
+		builder.append("]");
+		return builder.toString();
 	}
-
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(int size) {
-		this.size = size;
-	}
+		
 	
 }

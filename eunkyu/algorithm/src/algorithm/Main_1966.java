@@ -10,62 +10,53 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class Main_1966 {
-	
-	static int res = 0;
-	
+	/*
+	 * 현재 Queue의 가장 앞에 있는 문서의 ‘중요도’를 확인한다.
+	나머지 문서들 중 현재 문서보다 중요도가 높은 문서가 하나라도 있다면, 
+	이 문서를 인쇄하지 않고 Queue의 가장 뒤에 재배치 한다. 
+	그렇지 않다면 바로 인쇄를 한다.
+	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		
 		int testCase = Integer.parseInt(br.readLine());
-		int n; // 문서의수
-		int m; // 출력할 문서 위치
-		int val = 0;
-		for (int i = 0; i < testCase; i++) {
-			String str2[] = br.readLine().split(" ");
-			n = Integer.parseInt(str2[0]);
-			m = Integer.parseInt(str2[1]);
-			String str[] = br.readLine().split(" ");
+		StringBuilder sb = new StringBuilder();
+		for (int tc = 0; tc < testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			int n = Integer.parseInt(str[0]);
+			int m = Integer.parseInt(str[1]);
+			
 			Queue<Integer> q = new LinkedList<Integer>();
-			PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder()); //내림 차순
-			for (int j = 0; j < n; j++) {				
-				val = Integer.parseInt(str[j]);
-				if(j == m) {
-					res = val;
-				}
+ 			PriorityQueue<Integer> pq = new PriorityQueue<Integer>(Collections.reverseOrder());
+			String info[] = br.readLine().split(" ");
+ 			for (int i = 0; i < n; i++) {
+				int val = Integer.parseInt(info[i]);
 				q.add(val);
 				pq.add(val);
-			}
-			if(q.size() != 1)
-				print(q, pq, m, sb);
-			else
-				sb.append(1+"\n");
-		}
-		System.out.println(sb);
-	}
-	//1 2 3 4 5
-	//5 4
-	private static void print(Queue<Integer> q, PriorityQueue<Integer> pq, int p, StringBuilder sb) {
-		int n = q.size();
-		while(!q.isEmpty()) {
-			int pivot = q.poll();
-			if(pq.peek() == pivot) {
-				q.add(pivot);
-				if(pq.peek() == res) {
-					sb.append((p + 1) +"\n");
-					break;
+ 			}
+			
+			int cnt = 1;
+			while(!q.isEmpty()) {
+				int pqVal = pq.poll();
+				int qVal = q.poll();
+				if(pqVal == qVal) {
+					if(m == 0) {
+						sb.append(cnt+"\n");
+					}
+					m--;
+					cnt++;
+				} else {
+					q.add(qVal);
+					pq.add(pqVal);
+					if(m == 0) {
+						m = q.size() - 1;
+						continue;
+					}
+					m--;
+
 				}
-				pq.poll();
-			} else {
-				if(p != 0) {
-					--p; //출력할 문서 위치
-				}else {
-					p = n - 1;
-				}
-				q.add(pivot);
 			}
 		}
 		
-		
+		System.out.println(sb+"\n");
 	}
 }

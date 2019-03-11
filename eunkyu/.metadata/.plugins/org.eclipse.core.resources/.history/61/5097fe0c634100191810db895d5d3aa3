@@ -1,0 +1,239 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.PriorityQueue;
+import java.util.Queue;
+
+public class Main_16236 {
+	static int n;	//n크기 공간에
+	static int m;	//m마리 물고기 1마리 아기상어
+	static int arr[][];
+	static int visited[];
+	/*
+	 * 아기 상어 크기는 2
+	 * 1초에 상하좌우로 한칸씩 이동가능
+	 * 자기보다 크기가 작은 물고기만 먹을 수 있고 같으면 이동은 가능
+	 * 
+	 * 이동방식
+	 * 1. 먹을 물고기가 없으면 엄마상어에 도움 요청
+	 * 2. 1마리면 그 물고기를 먹으러 출발
+	 * 3. 1마리보다 많으면 가장 가까운 물고기를 먹으러 감
+	 * 4. 크기 수 만큼 물고기를 먹으면 크기 1 증가
+	 * 5. 거리가 가까운 물고기가 많다면, 가장 위에 있는 물고기, 
+	 * 그러한 물고기가 여러마리라면, 가장 왼쪽에 있는 물고기를 먹는다.
+	 */
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n][n];
+		Shark_16236 shark = null;
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				int val = Integer.parseInt(str[j]);
+				arr[i][j] = val;
+				if(val == 9) {
+					shark = new Shark_16236(i, j, 2, 0, 0);
+				}
+			}
+		}
+		
+		int size = 2;
+		Shark_16236 tempShark = shark;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] != 0 && arr[i][j] < size) {
+					arr[tempShark.getY()][tempShark.getX()] = 0;
+					tempShark = bfs(tempShark);
+					size = tempShark.getSize();					
+					i = 0;
+					j = -1;
+					//print();
+
+				}
+				
+			}
+		}
+		
+		System.out.println(tempShark.getStep());
+		
+	}
+	private static void print() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	private static Shark_16236 bfs(Shark_16236 shark) {
+		boolean[][] visited = new boolean[n][n];
+		boolean isEat = false;
+		Queue<Shark_16236> sharks = new LinkedList<Shark_16236>();
+		sharks.add(shark);
+		Queue<Shark_16236> isEatSharks = new LinkedList<Shark_16236>();
+		while(!sharks.isEmpty()) {
+			shark = sharks.poll();
+			
+			int x = shark.getX();
+			int y = shark.getY();
+			int size = shark.getSize();
+			int eat = shark.getEat();
+			int step = shark.getStep();
+			
+			visited[y][x] = true;
+			
+			int[] dx = {0, -1, 1, 0};
+			int[] dy = {-1, 0, 0, 1};
+			
+			for (int i = 0; i < 4; i++) {
+				int nextX = x + dx[i];
+				int nextY = y + dy[i];
+				
+				if(nextX >= 0 && nextX < n && nextY >=0 && nextY < n
+						&& !visited[nextY][nextX] && arr[nextY][nextX] <= size) {
+					visited[nextY][nextX] = true;
+
+					if(arr[nextY][nextX] != 0 && arr[nextY][nextX] < size) {
+						int tempEat = eat + 1;
+						int tempSize = size;
+						if(tempEat >= tempSize) {
+							tempSize += 1;
+							tempEat = 0;
+						}
+						isEatSharks.add(new Shark_16236(nextY, nextX, tempSize, tempEat, step + 1));
+						isEat = true;
+					} else {
+						sharks.add(new Shark_16236(nextY, nextX, size, eat, step + 1));
+					}
+				}
+			}
+			
+		
+		}
+		if(isEat) {
+			Shark_16236 eatShark = isEatSharks.poll();
+			int ey = eatShark.getY();
+			int ex = eatShark.getX();
+			int eStep = eatShark.getStep();
+			
+			while(!isEatSharks.isEmpty()) {
+				//Shark_16236 tes = isEatSharks.poll();
+				/*int tey = tes.getY();
+				int tex = tes.getX();
+				int testep = tes.getStep();*/
+				if(eStep == isEatSharks.peek().getStep()) {
+					if(ey == isEatSharks.peek().getY()) {
+						if(ex > isEatSharks.peek().getX()) {
+							eatShark = isEatSharks.poll();
+							ey = eatShark.getY();
+							ex = eatShark.getX();
+						} else {
+							isEatSharks.poll();
+						}
+					} else if(ey > isEatSharks.peek().getY()){
+						eatShark = isEatSharks.poll();
+						ey = eatShark.getY();
+						ex = eatShark.getX();
+						eStep = eatShark.getStep();
+					} else {
+						isEatSharks.poll();
+					}
+				} else if(eStep > isEatSharks.peek().getStep()) { 
+					eatShark = isEatSharks.poll();
+					ey = eatShark.getY();
+					ex = eatShark.getX();
+					eStep = eatShark.getStep();
+				} else{
+					isEatSharks.poll();
+				}					
+			}
+			arr[ey][ex] = 9;
+
+			return eatShark;
+		}
+		return shark;
+	}
+	
+	/*private static int dist() {		
+		
+	}*/
+		
+}
+
+class Shark_16236 {
+	
+	int y;
+	int x;
+	int size;
+	int eat;
+	int step;
+	
+	public Shark_16236(int y, int x, int size, int eat, int step) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.size = size;
+		this.eat = eat;
+		this.step = step;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getSize() {
+		return size;
+	}
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public int getEat() {
+		return eat;
+	}
+
+	public void setEat(int eat) {
+		this.eat = eat;
+	}
+
+	public int getStep() {
+		return step;
+	}
+
+	public void setStep(int step) {
+		this.step = step;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Shark_16236 [y=");
+		builder.append(y);
+		builder.append(", x=");
+		builder.append(x);
+		builder.append(", size=");
+		builder.append(size);
+		builder.append(", eat=");
+		builder.append(eat);
+		builder.append(", step=");
+		builder.append(step);
+		builder.append("]");
+		return builder.toString();
+	}
+		
+	
+}

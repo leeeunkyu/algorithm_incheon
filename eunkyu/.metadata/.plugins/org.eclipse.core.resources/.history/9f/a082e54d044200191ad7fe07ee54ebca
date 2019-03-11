@@ -1,0 +1,32 @@
+package algorithm_review;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2309 {
+	
+	static final int SIZE = 9;
+	static final int C_SIZE = 7;
+	
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int[] arr = new int[SIZE];
+		
+		for (int i = 0; i < SIZE; i++) {
+			arr[i] = Integer.parseInt(br.readLine());
+		}
+		
+		for (int i = 0; i < (1 << SIZE); i++) {
+			if(Integer.bitCount(i) == C_SIZE) {
+				for (int j = 0; j < SIZE; j++) {
+					if(((1 << j) & i) > 0) {
+						System.out.println(arr[j]);
+					}
+				}	
+			}
+		}
+		
+	}
+}

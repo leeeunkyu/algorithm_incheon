@@ -1,0 +1,25 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_1966 {
+	/*
+	 * 현재 Queue의 가장 앞에 있는 문서의 ‘중요도’를 확인한다.
+	나머지 문서들 중 현재 문서보다 중요도가 높은 문서가 하나라도 있다면, 
+	이 문서를 인쇄하지 않고 Queue의 가장 뒤에 재배치 한다. 
+	그렇지 않다면 바로 인쇄를 한다.
+	 */
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+	
+		for (int tc = 0; tc < testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			int n = Integer.parseInt(str[0]);
+			int m = Integer.parseInt(str[1]);
+			
+		}
+	}
+}

@@ -24,49 +24,43 @@ public class Main_1759 {
 		String str[] = br.readLine().split(" ");
 		l = Integer.parseInt(str[0]); //l 개의 암호문자
 		c = Integer.parseInt(str[1]); //c 개의 예상문자
-		String[] list = br.readLine().split(" ");
-		Queue<String[]> strq = new LinkedList<String[]>();
+		String[] info = br.readLine().split(" ");
+		PriorityQueue<String> pq = new PriorityQueue<>();
 		for (int i = 0; i < (1 << c); i++) {
 			if(Integer.bitCount(i) == l) {
-				String[] text = new String[l];
-				int cnt = 0;
+				String temp = "";
 				for (int j = 0; j < c; j++) {
 					if(((1 << j) & i) > 0) {
-						text[cnt] = list[j];
-						cnt++;
+						temp += info[j];
 					}
+				//System.out.println(temp);
 				}
-				Arrays.sort(text);
-				strq.add(text);
+				if(check(temp)) {
+					char[] c = temp.toCharArray();
+					Arrays.sort(c);
+					temp = "";
+					for (int k = 0; k < c.length; k++) {
+						temp += c[k];
+					}
+					pq.add(temp);					
+				}
 			}
 		}
-		PriorityQueue<String> pq = new PriorityQueue<>();
-		while(!strq.isEmpty()) {
-			String[] temp = strq.poll();
-			if(check(temp)) {
-				String a = "";
-				for (int i = 0; i < temp.length; i++) {
-					a += temp[i];
-				}
-				pq.add(a);
-			}
-		}
-		
-		while (!pq.isEmpty()) {
+		while(!pq.isEmpty()) {
 			System.out.println(pq.poll());
 		}
 	
 	}
-	private static boolean check(String[] temp) {
+	private static boolean check(String temp) {
 	//한개의 모음 두개의 자음
 		//모음 a e i o u
 		int acnt = 0;
 		int bcnt = 0;
-		for (int i = 0; i < temp.length; i++) {
-			String val = temp[i];
+		char[] val = temp.toCharArray();
+		for (int i = 0; i < val.length; i++) {
 			
-			if (val.equals("a") || val.equals("e") || val.equals("i" ) ||
-					val.equals("o") || val.equals("u")) {
+			if (val[i] == 'a' || val[i] == 'e' || val[i] == 'i' ||
+					val[i] == 'o' || val[i] == 'u') {
 				acnt++;
 			} else {
 				bcnt++;

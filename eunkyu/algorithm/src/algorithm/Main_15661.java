@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Inet4Address;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.PriorityQueue;
 import java.util.Queue;
@@ -32,9 +33,38 @@ public class Main_15661 {
 
 	private static void selectMember() {
 		for (int i = 2; i <= n-i; i++) {
+/*	        int[] combArr = new int[n];		
+*/	        //doCombination(combArr, n, i, 0, 0, isMember);
+			
+	        /*for (int idx = 0; idx < (1 << n); idx++) {
+	        	if(Integer.bitCount(idx) == i) {
+	        		for (int j = 0; j < n; j++) {
+						if(((1 << j) & i) > 0) {
+							System.out.println("dd: "+j);
+							isMember[j] = true;
+						}
+					}	
+	        	}
+			}*/
 			boolean[] isMember = new boolean[n];
-	        int[] combArr = new int[n];		
-	        doCombination(combArr, n, i, 0, 0, isMember);
+
+	        for (int idx = 0; idx < (1 << n); idx++) {
+				isMember = new boolean[n];
+	        	if(Integer.bitCount(idx) == i) {
+					for (int j = 0; j < n; j++) {
+						if(((1 << j) & idx) > 0) {
+							isMember[j] = true;
+						}
+					}
+					/*for (int j = 0; j < isMember.length; j++) {
+						System.out.println(j+" "+isMember[j]);
+					}
+					System.out.println();*/
+		        	subScore(isMember);
+	        	}
+			}
+	        
+
 		}
 	}
 	

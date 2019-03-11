@@ -1,0 +1,88 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_5656 {
+
+	static int n;
+	static int w;
+	static int h;
+	static int[][] arr;
+	static int[][] copyMap;
+	static int min;
+	//0은 빈 공간 그 외의 숫자는 벽돌
+	//상 하 좌 우로 숫자 -1 만큼 제거
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+	
+		for (int tc = 0; tc <= testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			
+			n = Integer.parseInt(str[0]);
+			w = Integer.parseInt(str[1]);
+			h = Integer.parseInt(str[2]);
+			
+			arr = new int[h][w];
+			copyMap = new int[h][w];
+			
+			for (int i = 0; i < h; i++) {
+				String[] info = br.readLine().split(" ");
+				for (int j = 0; j < w; j++) {
+					arr[i][j] = Integer.parseInt(info[j]);
+					copyMap[i][j] = Integer.parseInt(info[j]);
+				}
+			}
+			min = Integer.MAX_VALUE;
+			goGame(0);	
+			
+			
+		}
+	}
+	private static void goGame(int cnt) {
+		if(cnt == n) {
+			int blockCnt = 0;
+			for (int i = 0; i < arr.length; i++) {
+				for (int j = 0; j < arr.length; j++) {
+					if(arr[i][j] != 0) {
+						blockCnt += 1;
+					}
+				}
+			}
+			if(min > blockCnt) {
+				min = blockCnt;
+			}
+			return;
+		}
+		for (int i = 0; i < w; i++) {
+			dropBall(i);
+			copy(true);
+			goGame(cnt + 1);
+			copy(false);
+		}
+		
+	}
+	private static void copy(boolean type) {
+		if (type) {
+			for (int i = 0; i < h; i++) {
+				for (int j = 0; j < w; j++) {
+					copyMap[i][j] = arr[i][j];
+				}
+			}
+		} else {
+			for (int i = 0; i < h; i++) {
+				for (int j = 0; j < w; j++) {
+					arr[i][j] = copyMap[i][j];
+				}
+			}
+		}
+	}
+	private static void dropBall(int idx) {
+		for (int i = 0; i < h; i++) {
+			int val = arr[i][idx];
+		}
+	}
+	
+}
