@@ -34,40 +34,9 @@ public class Solution_2383 {
 				}
 			}
 			
-			int size = peoplesq.size();
-			People_2383[] peoples = new People_2383[size];
-			for (int i = 0; i < size; i++) {
-				peoples[i] = peoplesq.poll();
-			}
-			
-			for (int c = 1; c < size; c++) {
-				for (int i = 0; i < (1 << size); i++) {
-					Queue<People_2383> cPeoples = new LinkedList<People_2383>();
-					Queue<People_2383> ncPeoples = new LinkedList<People_2383>();
-					
-					boolean[] visited = new boolean[size];
-					
-					if(Integer.bitCount(i) == c) {
-						//c명을 선택하고
-						for (int j = 0; j < size; j++) {
-							if(((1 << j) & i) > 0) {
-								cPeoples.add(peoples[j]);
-								visited[j] = true;
-							}
-						}
-						//선택받지 못한 사람들
-						for (int j = 0; j < size; j++) {
-							if(!visited[j])
-								ncPeoples.add(peoples[j]);
-						}
-						
-						//선택한 사람들이 계단 1을 가고 선택받지 못한사람이 계단 2를 갈경우				
-					}
-					
-				}	
-			}
-			
-			
+			int size = peoplesq.size()
+			People_2383 peoples = new People_2383[size];
+		
 			sb.append("#"+tc+" "+"\n");
 		
 		}

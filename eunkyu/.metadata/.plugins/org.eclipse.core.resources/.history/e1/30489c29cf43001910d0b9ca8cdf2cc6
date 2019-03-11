@@ -1,0 +1,10 @@
+package algorithm;
+
+public class Main_2573 {
+	
+	static int[][] arr;
+	
+	public static void main(String[] args) {
+		
+	}
+}
