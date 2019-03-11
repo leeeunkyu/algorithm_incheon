@@ -31,6 +31,7 @@ public class Main_11559 {
 
 	private static void boom() {
 		boolean[][] boomList = new boolean[HEIGHT][WEIDTH];
+		boolean isBoom = false;
 		int boomcheck = 1;
 		
 		//한 그룹이라도 터트렸니?
@@ -175,9 +176,7 @@ public class Main_11559 {
 			}
 		}
 		
-		
 		if(cnt < 3) {
-			//같은 문자를 가진애가 4개는 되니?
 			copy(tempBoom, bmap);
 		}		
 		return cnt;

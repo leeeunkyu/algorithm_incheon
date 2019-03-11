@@ -30,14 +30,13 @@ public class Main_11559 {
 	}
 
 	private static void boom() {
+		//가장 밑을 보자.
 		boolean[][] boomList = new boolean[HEIGHT][WEIDTH];
+		boolean isBoom = false;
 		int boomcheck = 1;
-		
-		//한 그룹이라도 터트렸니?
 		while(boomcheck != 0) {
 			boomcheck = 0;
 			
-			//map에 있는것들중에 터트릴만한 애들이있니?
 			if(!check()) {
 				break;
 			}
@@ -49,9 +48,10 @@ public class Main_11559 {
 						visited[i][j] = true;
 						int cnt = bfs(i, j, map[i][j], tempBoom);
 						if(cnt >= 3) {
-							//터트리는 그룹목록 리스트에 저장
+							//터트리는 목록 리스트에 저장
 							tempBoom[i][j] = true;
 							copy(boomList, tempBoom);
+							isBoom = true;
 							boomcheck++;
 						}
 					}
@@ -61,9 +61,11 @@ public class Main_11559 {
 			visited = new boolean[HEIGHT][WEIDTH];
 
 			if(boomcheck != 0) {
-				//터트리는 그룹이 있넹
 				goBoom(boomList);
-				reset();
+				if(isBoom) {
+					reset();			
+				}
+
 			}	
 		}
 			
@@ -175,9 +177,7 @@ public class Main_11559 {
 			}
 		}
 		
-		
 		if(cnt < 3) {
-			//같은 문자를 가진애가 4개는 되니?
 			copy(tempBoom, bmap);
 		}		
 		return cnt;
