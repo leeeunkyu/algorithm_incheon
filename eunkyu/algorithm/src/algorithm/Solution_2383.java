@@ -9,6 +9,7 @@ import java.util.Queue;
 public class Solution_2383 {
 	static int n;
 	static int[][] arr;
+	static int minTime;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,7 +40,7 @@ public class Solution_2383 {
 			for (int i = 0; i < size; i++) {
 				peoples[i] = peoplesq.poll();
 			}
-			
+			minTime = Integer.MAX_VALUE;
 			for (int c = 1; c < size; c++) {
 				for (int i = 0; i < (1 << size); i++) {
 					Queue<People_2383> cPeoples = new LinkedList<People_2383>();
@@ -61,17 +62,42 @@ public class Solution_2383 {
 								ncPeoples.add(peoples[j]);
 						}
 						
-						//선택한 사람들이 계단 1을 가고 선택받지 못한사람이 계단 2를 갈경우				
+						Stair_2383 stair = stairs.poll();
+						int resA = goWalk(stair, cPeoples);
+						Stair_2383 stair2 = stairs.poll();
+						int resB = goWalk(stair2, ncPeoples);
+						
+						stairs.add(stair);
+						stairs.add(stair2);
+						//선택한 사람들이 계단 1을 가고 선택받지 못한사람이 계단 2를 갈경우
+						if(minTime > resA + resB) {
+							minTime = resA + resB;
+						}
 					}
 					
 				}	
 			}
 			
 			
-			sb.append("#"+tc+" "+"\n");
+			sb.append("#"+tc+" "+minTime+"\n");
 		
 		}
 		System.out.println(sb);
+	}
+
+	private static int goWalk(Stair_2383 stair, Queue<People_2383> peoples) {
+		int sx = stair.getX();
+		int sy = stair.getY();
+		int snum = stair.getNum();
+		int dist = 0;
+		while(!peoples.isEmpty()) {
+			People_2383 people = peoples.poll();
+			int x = people.getX();
+			int y = people.getY();
+			
+			dist = Math.abs(x - sx) + Math.abs(y - sy);			
+		}
+		return 2 + dist + snum;
 	}
 }
 
