@@ -3,143 +3,160 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+//10:30 ~ 11:30
 public class Main_16234 {
-
-	static int n;	//땅의 크기
-	static int l;	//인구차이가 L명 이상 R명 이하이면 두 나라가 공유하는
-			//국경선을 하루동안 연다.
-	static int r;
+	static int r;	
+	static int l;	
+	static int n;
+	static int[][] arr;
+	static boolean[][] visited;
+	static int[][] copyMap;
+	static boolean[][] notChange;
+	static Queue<Integer> secq;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String str[] = br.readLine().split(" ");		
+		String[] str = br.readLine().split(" ");
 		n = Integer.parseInt(str[0]);
 		l = Integer.parseInt(str[1]);
 		r = Integer.parseInt(str[2]);
-		int arr[][] = new int[n][n];
-		int cpArr[][] = new int[n][n];
 		
-		
-		for (int i = 0; i < arr.length; i++) {
-			String str2[] = br.readLine().split(" ");
-			for (int j = 0; j < arr[i].length; j++) {
-				int val = Integer.parseInt(str2[j]);
-				arr[i][j] = val;
-				cpArr[i][j] = val;
+		arr = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			String[] info = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(info[j]);
 			}
 		}
-		
 		int cnt = 0;
-		
-		while(true) {
-			int isMove = 0;
-			boolean visted [][] = new boolean [arr.length][arr.length];
-			for (int i = 0; i < arr.length; i++) {
-				for (int j = 0; j < arr[i].length; j++) {
-					if(!visted[i][j]) {
-						isMove += bfs(arr, cpArr, visted, i, j);
-					}
+		secq = new LinkedList<Integer>();
+		boolean conGame = goMoveGame();
+		while (conGame) {
+/*			System.out.println("game");
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					System.out.print(arr[i][j]+" ");
 				}
-			}
-			if(isMove == 0) {
-				break;
-			}
-			for (int i = 0; i < cpArr.length; i++) {
-				for (int j = 0; j < cpArr[i].length; j++) {
-					arr[i][j] = cpArr[i][j];
-				}
-			}
+				System.out.println();
+			}*/
 			cnt++;
+			conGame = goMoveGame();
 		}
 		System.out.println(cnt);
 		
 	}
-
-	private static int bfs(int[][] arr, int[][] cpArr, boolean[][] visted, int i, int j) {
-		int dx[] = {0, 0, 1, -1};
-		int dy[] = {1, -1, 0, 0};
-		int peopleCnt = arr[i][j];
-		int countryCnt = 1;
-		Queue<Country> q = new LinkedList<Country>();
-		q.add(new Country(j, i));
-		visted[i][j] = true;
-		while(!q.isEmpty()) {
-			Country country = q.poll();
-			int x = country.getX();
-			int y = country.getY();
-			for (int idx = 0; idx < 4; idx++) {
-				int nextX = x + dx[idx];
-				int nextY = y + dy[idx];
-				
-				if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && !visted[nextY][nextX]) {					
-					int sub = Math.abs(arr[y][x] - arr[nextY][nextX]); //현 위치와 다음위치간의 절대값 차이
-					if(sub >= l && sub <= r) {
-						q.add(new Country(nextX, nextY));						
-						countryCnt++;
-						peopleCnt += arr[nextY][nextX];
-						visted[nextY][nextX] = true;
+	private static boolean goMoveGame() {
+		int openCnt = 1;
+		boolean isOpen = true;
+		copyMap = new int[n][n];
+		visited = new boolean[n][n];
+		notChange = new boolean[n][n];
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(!visited[i][j]) {
+					if(bfs(i, j, openCnt)) {
+/*						System.out.println("?? i: "+i+" j: "+j);
+*/						openCnt++;
+						isOpen = true;
+					} else {
+/*						System.out.println("i: "+i+" j: "+j);
+*/						notChange[i][j] = true;
+						isOpen = false;
 					}
 				}
 			}
 		}
-		
-		if(countryCnt == 1) {
-			return 0;
+		if(openCnt > 1) {
+			int[] peopleCnt = new int[openCnt + 1];
+			for (int i = 1; i < openCnt; i++) {
+				peopleCnt[i] = secq.poll();
+			}
+			/*for (int i = 0; i < peopleCnt.length; i++) {
+				System.out.print("i: "+i+" val: "+peopleCnt[i]+" ");
+			}
+			System.out.println();
+			for (int i = 0; i < copyMap.length; i++) {
+				for (int j = 0; j < copyMap.length; j++) {
+					System.out.print(copyMap[i][j]+" ");
+				}
+				System.out.println();
+			}*/
+			for (int k = 0; k < n; k++) {
+				for (int k2 = 0; k2 < n; k2++) {
+					if(!notChange[k][k2])
+						arr[k][k2] = peopleCnt[copyMap[k][k2]];
+				}
+			}
+			return true;
 		}
-		moveCountry(cpArr, visted, peopleCnt/countryCnt);
-		return 1;
-
+		return false;
 	}
 
-	private static void moveCountry(int[][] cpArr, boolean[][] visted, int movePeople) {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if(visted[i][j]) {
-					cpArr[i][j] = movePeople;
+	private static boolean bfs(int i, int j, int openCnt) {
+/*		System.out.println("bfs");
+*/		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		int sum = arr[i][j];
+		int num = 1;
+		boolean isOpen = false;
+		visited[i][j] = true;
+		Queue<Point_16234> points = new LinkedList<Point_16234>();
+		points.add(new Point_16234(i, j));
+		
+		while(!points.isEmpty()) {
+			Point_16234 point = points.poll();
+			int x = point.getX();
+			int y = point.getY();
+			for (int idx = 0; idx < 4; idx++) {
+				int nextX = x + dx[idx];
+				int nextY = y + dy[idx];
+				
+				if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n && 
+						!visited[nextY][nextX] 
+								&& l <= Math.abs(arr[nextY][nextX] - arr[y][x])
+								&& r >= Math.abs(arr[nextY][nextX] - arr[y][x])) {
+					visited[nextY][nextX] = true;
+					copyMap[nextY][nextX] = openCnt;
+					sum += arr[nextY][nextX];
+					++num;
+					points.add(new Point_16234(nextY, nextX));
+					isOpen = true;
 				}
 			}
 		}
+		
+		int val = sum/num;
+		if(isOpen) {
+			copyMap[i][j] = openCnt;
+			secq.add(val);
+		}
+		return isOpen;
 	}
 }
 
-class Country {
-	int x;
+class Point_16234 {
 	int y;
+	int x;
 	
-	public Country(int x, int y) {
+	public Point_16234(int y, int x) {
 		super();
-		this.x = x;
 		this.y = y;
+		this.x = x;
 	}
 	
-	public int getX() {
-		return x;
-	}
-	public void setX(int x) {
-		this.x = x;
-	}
 	public int getY() {
 		return y;
 	}
 	public void setY(int y) {
 		this.y = y;
 	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Country [x=");
-		builder.append(x);
-		builder.append(", y=");
-		builder.append(y);
-		builder.append("]");
-		return builder.toString();
+	public int getX() {
+		return x;
 	}
-	
-	
+	public void setX(int x) {
+		this.x = x;
+	}
 }
