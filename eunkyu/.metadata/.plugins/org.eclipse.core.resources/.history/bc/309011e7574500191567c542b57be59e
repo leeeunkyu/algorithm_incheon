@@ -1,0 +1,43 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+//4시30분까지
+public class Main_15684 {
+	
+	static int n;
+	static int m;
+	static int h;
+	static int arr[][];
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		h = Integer.parseInt(str[2]);
+		arr = new int[n + 1][h + 1];
+		
+		for (int i = 0; i < m; i++) {
+			String[] info = br.readLine().split(" ");
+			int a = Integer.parseInt(info[0]);
+			int b = Integer.parseInt(info[1]);
+			arr[a][b] = 1;
+			arr[a][b + 1] = 1;
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
+		goGame();
+	}
+
+	private static void goGame() {
+		
+	}
+}
