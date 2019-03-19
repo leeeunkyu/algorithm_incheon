@@ -132,7 +132,7 @@ public class Main_2933 {
 			}	
 		}
 		
-		char[][] copy = new char[r][c];
+/*		char[][] copy = new char[r][c];
 		
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
@@ -145,12 +145,12 @@ public class Main_2933 {
 					arr[i][j] = '.';
 				}
 			}
-		}
-		for (int i = 0; i < r; i++) {
+		}*/
+		for (int i = r - 1; i >= 0; i--) {
 			for (int j = 0; j < c; j++) {
-				if(visited[i][j]) {
-					char c = copy[i][j];
-					arr[i + tempH][j] = c;
+				if(visited[i][j] && arr[i][j] == 'x') {
+					arr[i + tempH][j] = 'x';
+					arr[i][j] = '.';
 				}
 			}
 		}
