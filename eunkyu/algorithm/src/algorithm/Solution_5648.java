@@ -48,10 +48,7 @@ public class Solution_5648 {
 			boolean isBoom = false;
 			Queue<Integer> boomBio = new LinkedList<Integer>();
 			
-			double minDist = Integer.MAX_VALUE;
-			int sum = 0;
-			
-			for (int j = i + 1; j < bios.length; j++) {
+			for (int j = i + 1; j < n; j++) {
 				Bio_5648 bio2 = bios[j];
 				dist = -1;
 
@@ -101,6 +98,7 @@ public class Solution_5648 {
 		boolean visited[] = new boolean[n];
 		
 		double preDist = -1;
+		double preHead = -1;
 		while(!minDists.isEmpty()) { 
 			Dist_5648 dist = minDists.poll();
 /*			System.out.println(dist.getA()+"  "+dist.getB());
@@ -111,6 +109,7 @@ public class Solution_5648 {
 				visited[a] = true;
 				visited[b] = true;
 				preDist = d;
+				preHead = a;
 				continue;
 			}
 			if(preDist == d) {
