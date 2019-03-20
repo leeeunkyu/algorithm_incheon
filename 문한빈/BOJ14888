@@ -1,0 +1,44 @@
+#include <iostream>
+#include <algorithm>
+#define MAX 1000000001
+
+using namespace std;
+int maxResult = -MAX, minResult = MAX;
+int number[12];
+int Operator[4];
+int N;
+
+void search(int plus, int minus, int multiply, int divide, int cnt, int sum);
+
+int main(void)
+{
+	cin >> N;
+
+	for (int i = 0; i < N; i++)
+		cin >> number[i];
+
+	for (int i = 0; i < 4; i++)
+		cin >> Operator[i];
+
+	search(Operator[0], Operator[1], Operator[2], Operator[3], 1, number[0]);
+
+	cout << maxResult << endl << minResult << endl;
+	return 0;
+}
+void search(int plus, int minus, int mul, int div, int cnt, int sum)
+{
+	if (cnt == N)
+	{
+		maxResult = max(maxResult, sum);
+		minResult = min(minResult, sum);
+	}
+
+	if (plus > 0)
+		search(plus - 1, minus, mul, div, cnt + 1, sum + number[cnt]);
+	if (minus > 0)
+		search(plus, minus - 1, mul, div, cnt + 1, sum - number[cnt]);
+	if (mul > 0)
+		search(plus, minus, mul - 1, div, cnt + 1, sum * number[cnt]);
+	if (div > 0)
+		search(plus, minus, mul, div - 1, cnt + 1, sum / number[cnt]);
+}
