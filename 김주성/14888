@@ -1,0 +1,69 @@
+#define _CRT_SECURE_NO_WARNINGS
+#include <stdio.h>
+#include <vector>
+int a[10000] = {0,};
+int oper[4] = { 0, };
+int op[4] = { 0, };
+int n;
+int min = 100000000000000;
+int max;
+int dfs(int d,int v)
+{
+	//printf("%d %d\n", d, v);
+	if (d == n-1)
+	{
+		if (v < min)
+		{
+			min = v;
+		}
+		if (v > max)
+		{
+			max = v;
+		}
+		return 0;
+	}
+	if (oper[0] >= 1)
+	{
+		oper[0]--;
+		dfs(d + 1,v+a[d+1]);
+		oper[0]++;
+	}
+	if (oper[1] >= 1)
+	{
+		oper[1]--;
+		
+		dfs(d + 1, v- a[d + 1]);
+		oper[1]++;
+	}
+	if (oper[2] >= 1)
+	{
+		oper[2]--;
+		dfs(d + 1, v* a[d + 1]);
+		oper[2]++;
+	}
+	if (oper[3] >= 1)
+	{
+		oper[3]--;
+		dfs(d + 1, v / a[d + 1]);
+		oper[3]++;
+	}
+
+}
+int main()
+{
+	
+	scanf("%d",&n);
+	for (int i = 0; i < n; i++)
+	{
+		scanf("%d",&a[i]);
+	}
+	
+	for (int i = 0; i < 4; i++)
+	{
+		scanf("%d", &oper[i]);
+	}
+	dfs(0, a[0]);
+	printf("%d\n",max);
+	printf("%d\n", min);
+	return 0;
+}
