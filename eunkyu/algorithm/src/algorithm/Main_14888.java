@@ -40,16 +40,12 @@ public class Main_14888 {
 	}
 
 	private static void dfs(int cnt, BigInteger val) {
-/*		System.out.println(val);
-*/		if(n == cnt) {
-/*			System.out.println("gg: "+val);
-*/			if(res1.compareTo(val) == -1) {
+		if(n == cnt) {
+			if(res1.compareTo(val) == -1) {
 				res1 = val;
-				//System.out.println("1. "+res1);
 			}
 			if(res2.compareTo(val) == 1) {
 				res2 = val;
-				//System.out.println("2. "+res2);
 			}
 			return;
 		}
