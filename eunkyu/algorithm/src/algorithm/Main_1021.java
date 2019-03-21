@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-//17:22~
+//17:22~ 18:00
 public class Main_1021 {
 	
 	static int n;
