@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
+import javax.sound.midi.Synthesizer;
+
 public class Solution_7229 {
 	
 	static int n;
@@ -34,12 +36,8 @@ public class Solution_7229 {
 			
 			minRes = Integer.MAX_VALUE;
 			Arrays.sort(cakes);
-			if(cakes[0] - cakes[n - 1] == 0) {
-				sb.append("#"+tc+" "+0+"\n");
-				continue;
-			}
 			dfs(0);
-			sb.append("#"+tc+" "+minRes+"\n");
+			sb.append(minRes+"\n");
 		}
 		System.out.println(sb);
 	}
@@ -53,6 +51,10 @@ public class Solution_7229 {
 			double res = cutCake();
 			if(res < minRes) {
 				minRes = res;
+				System.out.println(minRes);
+				for (int j = 0; j < n; j++) {
+					System.out.println(cut[j]+" ");
+				}
 			}
 			dfs(cnt + 1);
 			--cut[i];

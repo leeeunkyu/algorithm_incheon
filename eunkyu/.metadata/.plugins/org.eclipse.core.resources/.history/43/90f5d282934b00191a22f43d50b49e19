@@ -53,6 +53,11 @@ public class Solution_7229 {
 			double res = cutCake();
 			if(res < minRes) {
 				minRes = res;
+				/*System.out.println("min"+minRes);
+				for (int j = 0; j < n; j++) {
+					System.out.print(cut[j]+" ");
+				}
+				System.out.println();*/
 			}
 			dfs(cnt + 1);
 			--cut[i];

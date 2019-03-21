@@ -34,12 +34,8 @@ public class Solution_7229 {
 			
 			minRes = Integer.MAX_VALUE;
 			Arrays.sort(cakes);
-			if(cakes[0] - cakes[n - 1] == 0) {
-				sb.append("#"+tc+" "+0+"\n");
-				continue;
-			}
 			dfs(0);
-			sb.append("#"+tc+" "+minRes+"\n");
+			sb.append(minRes+"\n");
 		}
 		System.out.println(sb);
 	}

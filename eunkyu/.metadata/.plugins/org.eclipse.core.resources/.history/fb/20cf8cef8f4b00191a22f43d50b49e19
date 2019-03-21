@@ -1,0 +1,39 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_7229 {
+	
+	static int n;
+	static int m;
+	static int[] cakes;
+	static int[] cut;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			cakes = new int[n];
+			cut = new int[n];
+			
+			String[] info = br.readLine().split(" ");
+			for (int i = 0; i < n; i++) {
+				cakes[i] = Integer.parseInt(info[i]);
+			}
+			
+			m = Integer.parseInt(br.readLine());
+			
+			dfs(0);
+		}
+	}
+
+	private static void dfs(int cnt) {
+		if(cnt == m) {
+			return;
+		}
+	}
+}
