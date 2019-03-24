@@ -1,0 +1,31 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_13460 {
+	
+	static int n;
+	static int m;
+	static char[][] arr;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		arr = new char[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			arr[i] = br.readLine().toCharArray();
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
+		}
+	}
+}

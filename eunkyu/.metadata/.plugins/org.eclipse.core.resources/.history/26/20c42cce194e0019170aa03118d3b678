@@ -1,0 +1,131 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_13460 {
+	
+	static int n;
+	static int m;
+	static char[][] arr;
+	static boolean[][][][] visited;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		arr = new char[n][m];
+		visited = new boolean[n][m][n][m];
+		Ball_13460 red = null;
+		Ball_13460 blue = null;
+		for (int i = 0; i < n; i++) {
+			String info = br.readLine();
+			for (int j = 0; j < str.length; j++) {
+				char val = info.charAt(j);
+				arr[i][j] = val;
+				if(val == 'R') {
+					red = new Ball_13460(i, j, true);
+				}
+				if(val == 'B') {
+					blue = new Ball_13460(i, j, false);
+				}
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				System.out.print(arr[i][j]);
+			}
+			System.out.println();
+		}
+		
+		goGame(red, blue);
+	}
+
+	private static void goGame(Ball_13460 red, Ball_13460 blue) {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		Queue<Ball_13460[]> balls = new LinkedList<Ball_13460[]>();
+		
+		int rx = red.getX();
+		int ry = red.getY();
+		int bx = blue.getX();
+		int by = blue.getY();
+		for (int dir = 0; dir < 4; dir++) {
+			int nextRX = rx + dx[dir];
+			int nextRY = ry + dy[dir];
+			int nextBX = bx + dx[dir];
+			int nextBY = by + dy[dir];
+			
+			while (arr[nextRY][nextRX] != '#') {
+				nextRX += dx[dir];
+				nextRY += dy[dir];
+			}
+			nextRX -= dx[dir];
+			nextRY -= dy[dir];
+			
+			while(arr[nextBY][nextBX] != '#') {
+				nextBX += dx[dir];
+				nextBY += dy[dir];
+			}
+			nextBX -= dx[dir];
+			nextBY -= dy[dir];
+			
+			if(nextRX == nextBX && nextRY == nextBY) {
+				int redDist = Math.abs(rx - nextRX) + Math.abs(ry - nextRY);
+				int blueDist = Math.abs(bx - nextBX) + Math.abs(by - nextBY);
+				if(redDist > blueDist) {
+					nextRX -= dx[dir];
+					nextRY -= dy[dir];
+				} else {
+					nextBX -= dx[dir];
+					nextBY -= dy[dir];
+				}
+			}
+			
+			if(!visited[nextRY][nextRX][nextBY][nextBX]) {
+				visited[nextRY][nextRX][nextBY][nextBX] = true;
+				
+			}
+			
+			
+			
+		}
+	}
+}
+
+class Ball_13460 {
+	int y;
+	int x;
+	boolean type;
+	
+	public Ball_13460(int y, int x, boolean type) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.type = type;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public boolean isType() {
+		return type;
+	}
+	public void setType(boolean type) {
+		this.type = type;
+	}
+}

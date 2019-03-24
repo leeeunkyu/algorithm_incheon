@@ -1,0 +1,115 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_2105 {
+	
+	static int n;
+	static int[][] map;
+	static boolean[] visited = new boolean[101];
+	static int res;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			map = new int[20][20];
+			init();
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					map[i][j] = Integer.parseInt(str[j]);
+				}
+			}
+			
+			solve();
+			sb.append("#"+tc+" "+res+"\n");
+			
+		}
+		System.out.println(sb);
+		
+	}
+
+	private static void init() {
+		visitClear();
+		res = -1;
+	}
+
+	private static void solve() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int a = 1; a < n; a++) {
+					for (int b = 1; b < n; b++) {
+						if(j + a <= n - 1 //오른쪽
+								&& i + a+ b <= n - 1 //아래
+								&& j -b >= 0 //왼쪽
+								&& (a + b) * 2 > res) { //이전에 구했던 값보다 크냐
+							visitClear();
+							boolean isAble = true;
+							int curi = i; int curj = j;
+							
+							for (int k = 0; k < a; k++) {
+								curi++; curj++;
+								if(!visited[map[curi][curj]]) {
+									visited[map[curi][curj]] = true;
+								} else {
+									isAble = false;
+									break;
+								}
+							}
+							if(!isAble)
+								continue;
+							
+							for (int k = 0; k < b; k++) {
+								curi++; curj--;
+								if(!visited[map[curi][curj]]) {
+									visited[map[curi][curj]] = true;
+								} else {
+									isAble = false;
+									break;
+								}
+							}
+							if(!isAble)
+								continue;
+							
+							for (int k = 0; k < a; k++) {
+								curi--; curj--;
+								if(!visited[map[curi][curj]]) {
+									visited[map[curi][curj]] = true;
+								} else {
+									isAble = false;
+									break;
+								}
+							}
+							if(!isAble)
+								continue;
+							
+							for (int k = 0; k < b; k++) {
+								curi--; curj++;
+								if(!visited[map[curi][curj]]) {
+									visited[map[curi][curj]] = true;
+								} else {
+									isAble = false;
+									break;
+								}
+							}
+							if(!isAble)
+								continue;
+							res = 2 * (a + b);
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static void visitClear() {
+		for (int i = 0; i < 101; i++) {
+			visited[i] = false;
+		}
+	}
+}

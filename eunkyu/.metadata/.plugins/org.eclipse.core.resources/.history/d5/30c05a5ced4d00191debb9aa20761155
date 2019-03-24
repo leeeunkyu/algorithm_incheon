@@ -1,0 +1,94 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+
+//13:05
+public class Main_1339 {
+	
+	static int n;
+	static char[][] arr;
+	static char[][] words;
+	static Point_1399[] points;
+	static int size;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		HashSet<Character> hs = new HashSet<>();
+		arr = new char[n][n];
+		int l = Integer.MIN_VALUE; 
+		char val = 0;
+		for (int i = 0; i < n; i++) {
+			String str = br.readLine();
+			arr[i] = str.toCharArray();
+			if(arr[i].length > l) {
+				l = arr[i].length;
+				val = arr[i][0];
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < arr[i].length; j++) {
+				hs.add(arr[i][j]);
+			}
+		}
+		size = hs.size();
+		words = new char [size][size];
+		points = new Point_1399[size];
+		int i = 0;
+		for (char a: hs) {
+			if(val == a) {
+				//a = words[0][0];
+				a = points[0].getC();
+				//words[0][0] = a;
+				points[0].setC(a);
+			}
+			words[i][0] = a;
+			points[i].setC(a);
+			i++;
+		}
+		//words[0][1] = 9;
+		points[0].setNum(9);
+		dfs(0);
+	}
+
+	private static void dfs(int cnt) {
+		if(cnt == size - 1) {
+			return;
+		}
+		
+		for (int i = 1; i < size; i++) {
+			for (int j = 8 - (size - 2); j < 9; j++) {
+				//words[i][1] = 8 to 8 - (size - 1)...	
+				words[i][1] = (char) j;
+			}
+		}
+	}
+}
+
+class Point_1399 {
+	char c;
+	int num;
+	
+	public Point_1399(char c, int num) {
+		super();
+		this.c = c;
+		this.num = num;
+	}
+	
+	public char getC() {
+		return c;
+	}
+	public void setC(char c) {
+		this.c = c;
+	}
+	public int getNum() {
+		return num;
+	}
+	public void setNum(int num) {
+		this.num = num;
+	}
+}

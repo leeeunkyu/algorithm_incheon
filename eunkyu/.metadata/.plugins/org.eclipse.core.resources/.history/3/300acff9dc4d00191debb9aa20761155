@@ -1,0 +1,46 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_2105 {
+	
+	static int n;
+	static int[][] map;
+	static boolean[] visited = new boolean[101];
+	static int res;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+	
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			map = new int[n][n];
+			
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					map[i][j] = Integer.parseInt(str[j]);
+				}
+			}
+			
+			solve();
+			
+		}
+		
+	}
+
+	private static void solve() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int a = 1; a < n; a++) {
+					for (int b = 1; b < n; b++) {
+						
+					}
+				}
+			}
+		}
+	}
+}

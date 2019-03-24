@@ -1,0 +1,65 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//4:50
+public class Solution_2105 {
+	
+	static int n;
+	static int[][] arr;
+	static boolean[][] visited;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			arr = new int[n][n];
+			visited = new boolean[n][n];
+			
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					arr[i][j] = Integer.parseInt(str[j]);
+				}
+			}
+			
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					bfs(i, j);
+				}
+			}
+		}
+		
+	}
+
+	private static void bfs(int i, int j) {
+		
+	}
+}
+
+class Point_S_2105 {
+	int y;
+	int x;
+	
+	public Point_S_2105(int y, int x) {
+		super();
+		this.y = y;
+		this.x = x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+}

@@ -1,0 +1,57 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashSet;
+
+//2:45
+public class Main_1339 {
+	
+	static int n;	//1~10
+	static char[][] words;
+	static boolean[] visited;
+	static int[] values;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n =  Integer.parseInt(br.readLine());
+		words = new char[n][8];
+		visited = new boolean[26];
+		HashSet<Character> hs = new HashSet<Character>();
+		String[] str = new String[n];
+		for (int i = 0; i < n; i++) {
+			words[i] = br.readLine().toCharArray();
+			System.out.println(words[i].length);
+			for (int j = 0; j < words[i].length; j++) {
+				hs.add(words[i][j]);
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < words[i].length; j++) {
+				System.out.print(words[i][j]+" ");
+			}
+			System.out.println();
+		}
+		values = new int[26];
+		for(char a: hs) {
+			System.out.println(a);
+			visited[a - 'A'] = true;
+		}
+		
+		dfs();
+		
+		
+	}
+
+	private static void dfs() {
+		int num = 9;
+		for (int i = 0; i < 26; i++) {
+			if(!visited[i])
+				continue;
+			values[i] = num;
+			
+		}
+	}
+}

@@ -1,0 +1,85 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_2105 {
+	
+	static int n;
+	static int[][]arr;
+	static boolean[] visited = new boolean[101];
+	static int res;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			arr = new int[n][n];
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					arr[i][j] = Integer.parseInt(str[j]);
+				}
+			}
+			init();
+			
+			eatTrip();
+			sb.append(res+"\n");
+		}
+		System.out.println(sb);
+	}
+	private static void eatTrip() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				for (int a = 1; a < n; a++) {
+					for (int b = 1; b < n; b++) {
+						if(j + a < n && i + a + b < n && j - b >= 0
+								&& (a + b) * 2 > res) {
+							go(i, j, a, b);
+						}
+					}
+				}
+			}
+		}
+	}
+	private static void go(int i, int j, int a, int b) {
+		int x = j;
+		int y = i;
+		int[] dx = {1, -1, -1, 1};
+		int[] dy = {1, 1, -1, -1};
+		for (int idx = 0; idx < 4; idx++) {
+			for (int idx2 = 0; ;idx2++) {
+				if(idx % 2 == 0) {
+					if(idx2 >= a) {
+						break;
+					}
+				} else {
+					if(idx2 >= b) {
+						break;
+					}
+				}
+				y = y + dy[idx];
+				x = x + dx[idx];
+				if(!visited[arr[y][x]]) {
+					visited[arr[y][x]] = true;
+				} else {
+					return;
+				}	
+			}	
+		}
+		res = (a + b) * 2;
+	}
+	private static void init() {
+		visitClear();
+		res = -1;
+	}
+	private static void visitClear() {
+		for (int i = 0; i < 101; i++) {
+			visited[i] = false;
+		}
+	}
+}

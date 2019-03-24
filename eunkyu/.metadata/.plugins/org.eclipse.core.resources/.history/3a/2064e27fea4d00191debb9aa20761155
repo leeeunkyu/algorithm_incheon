@@ -1,0 +1,11 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+//13:05
+public class Main_1339 {
+	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+	}
+}

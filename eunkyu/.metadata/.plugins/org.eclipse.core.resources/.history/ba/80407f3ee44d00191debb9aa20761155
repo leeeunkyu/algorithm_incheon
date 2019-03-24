@@ -1,0 +1,33 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_2105 {
+	
+	static int n;
+	static int[][]arr;
+	static boolean[] visited = new boolean[101];
+	static int res;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			arr = new int[n][n];
+			
+			init();
+		}
+	}
+	private static void init() {
+		visitClear();
+		res = -1;
+	}
+	private static void visitClear() {
+		for (int i = 0; i < 101; i++) {
+			visited[i] = false;
+		}
+	}
+}
