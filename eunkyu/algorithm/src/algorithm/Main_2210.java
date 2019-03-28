@@ -47,7 +47,6 @@ public class Main_2210 {
 			if(nextX >= 0 && nextX < MAP_SIZE && nextY >= 0 && nextY < MAP_SIZE
 					&& !nums.contains(str+arr[nextY][nextX])) {
 				dfs(nextX, nextY, str+arr[nextY][nextX]);
-				
 			}
 		}
 	}

@@ -5,131 +5,67 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashSet;
 
-//13:05
 public class Main_1339 {
 	
 	static int n;
-	static char[][] arr;
-	static char[][] words;
-	static Point_1399[] points;
-	static int size;
-	static boolean[] visited;
-	static int[] valMap;
-	static int res = Integer.MIN_VALUE;
+	static String[] words;
+	static HashSet<Character> hs;
+	static double[] map;
+	static int[] visited;
 	
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
-		HashSet<Character> hs = new HashSet<>();
-		arr = new char[n][n];
-		int l = Integer.MIN_VALUE; 
-		char val = 0;
+		words = new String[n];
+		visited = new int[26];
+		
+		hs = new HashSet<Character>();
+		
 		for (int i = 0; i < n; i++) {
-			String str = br.readLine();
-			arr[i] = str.toCharArray();
-			if(arr[i].length > l) {
-				l = arr[i].length;
-				val = arr[i][0];
+			words[i] = br.readLine();
+		}
+		map = new double[26];
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < words[i].length(); j++) {
+				map[words[i].charAt(j) - 'A'] += Math.pow(10, words[i].length() - j);
+				hs.add(words[i].charAt(j));
 			}
 		}
 		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < arr[i].length; j++) {
-				hs.add(arr[i][j]);
-			}
-		}
-		size = hs.size();
-		words = new char [size][size];
-		points = new Point_1399[size];
-		for (int i = 0; i < size; i++) {
-			points[i] = new Point_1399();
-		}
-		visited = new boolean[10];
-		valMap = new int[size];
 		
-		int i = 0;
-		for (char a: hs) {
-			//words[i][0] = a;
-			points[i].setC(a);
-			if(val == a) {
-				//a = words[0][0];
-				a = points[0].getC();
-				//words[0][0] = a;
-				points[0].setC(val);
-				points[i].setC(a);
-			}
-			i++;
-		}
-		//words[0][1] = 9;
-		points[0].setNum(9);
-		dfs(1);
-		System.out.println(res);
-	}
-
-	private static void dfs(int cnt) {
-		if(cnt == size) {
-			for (int i = 0; i < size; i++) {
-				Point_1399 point = points[i];
-				char c = point.getC();
-				int num = point.getNum();
-				valMap[c - 'A'] = num;
-			}
-			String str = "";
-			int sum = 0;
-			for (int i = 0; i < arr.length; i++) {
-				sum = 0;
-				str = "";
-				for (int j = 0; j < arr[i].length; j++) {
-					char c = arr[i][j];
-					int val = valMap[c - 'A'];
-					str += val;
+		int num = 9;
+		double max = Integer.MIN_VALUE;
+		int maxIndex = 0;
+		
+		for (int idx = 0; idx < hs.size(); idx++) {
+			max = Integer.MIN_VALUE;
+			for (int i = 0; i < 26; i++) {
+				double val = map[i];
+				if(val > max) {
+					max = val;
+					maxIndex = i;
 				}
-				sum += Integer.parseInt(str);
 			}
-			if(res < sum)
-				res = sum;
-			return;
+			visited[maxIndex] = num;
+			--num;
+			map[maxIndex] = 0;	
 		}
 		
-		for (int i = cnt; i < size; i++) {
-			for (int j = 8 - (size - 2); j < 9; j++) {
-				//words[i][1] = 8 to 8 - (size - 1)...	
-				//words[i][1] = (char) j;
-				if(visited[j])
-					continue;
-				points[i].setNum(j);
-				visited[j] = true;
-				dfs(cnt + 1);
-				visited[j] = false;
+		/*for (int i = 0; i < 26; i++) {
+			System.out.print(visited[i]+" ");
+		}*/
+		int res = 0;
+		for (int i = 0; i < n; i++) {
+			String str = "";
+			for (int j = 0; j < words[i].length(); j++) {
+				char val = words[i].charAt(j);
+				str += visited[val - 'A'];
 			}
+			res += Integer.parseInt(str);
+			str = "";
 		}
-	}
-}
-
-class Point_1399 {
-	char c;
-	int num;
-	
-	public Point_1399(char c, int num) {
-		super();
-		this.c = c;
-		this.num = num;
-	}
-	
-	public Point_1399() {
-		super();
-	}
-
-	public char getC() {
-		return c;
-	}
-	public void setC(char c) {
-		this.c = c;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
+		System.out.println(res);
+		
 	}
 }

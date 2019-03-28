@@ -3,80 +3,81 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-//3:50
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class Main_2629 {
 	
+	static int[] stones;
+	static int[] balls;
 	static int n;
-	static int m;
-	static int[] stone;
-	static int[] ball;
-	static int a;
-	static int b;
-	static boolean isOk;
-	
-	public static void main(String[] args) throws IOException {
+	static boolean[] visited;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
-		stone = new int[n];
-		int sum = 0;
-		StringBuilder sb = new StringBuilder();
+		Queue<Integer> tempq = new LinkedList<Integer>();
 		String[] str = br.readLine().split(" ");
+		stones = new int[n];
 		for (int i = 0; i < n; i++) {
-			int val = Integer.parseInt(str[i]);
-			stone[i] = val;
-			sum += val;
+			stones[i] = Integer.parseInt(str[i]);
 		}
 		
-		m = Integer.parseInt(br.readLine());
-		ball = new int[m];
-		String[] info = br.readLine().split(" ");
+		int m = Integer.parseInt(br.readLine());
+		balls = new int[m];
+		String[] str2 = br.readLine().split(" ");
 		for (int i = 0; i < m; i++) {
-			ball[i] = Integer.parseInt(info[i]);
+			balls[i] = Integer.parseInt(str2[i]);
 		}
-		
+		visited = new boolean[n];
+		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < m; i++) {
-			if(ball[i] == sum) {
-				sb.append("Y"+" ");
-				continue;
-			}
-			if(ball[i] > sum) {
-				sb.append("N"+" ");
-				continue;
-			}
-			a = 0;
-			b = ball[i];
-			isOk = false;
-			dfs(0);
-			if(isOk) {
-				sb.append("Y"+" ");
-			}else {
-				sb.append("N"+" ");
-			}
+			int val = balls[i];
+			boolean res = go(val);
+			if(res)
+				sb.append("Y ");
+			else
+				sb.append("N ");
 		}
 		System.out.println(sb);
-	
 	}
 
-	private static boolean dfs(int idx) {
-		if(idx == n) {
-			if(a == b) {
-				isOk = true;
-				return true;
-			}
-		}
-		boolean res;
-		for (int i = idx; i < n; i++) {
-			//ball + Ãß... == Ãß...
-			a += stone[idx];
-			res = dfs(idx + 1);
-			if(res)
-				return true;
-			a -= stone[idx];
-			b += stone[idx];
-			res = dfs(idx + 1);
-			if(res)
-				return true;
-			b -= stone[idx];
+	private static boolean go(int val) {
+		for (int pick = 0; pick < n; pick++) {
+			for (int i = 0; i < (1 << n); i++) {
+				if(Integer.bitCount(i) == pick) {
+					int a = val;
+					int b = 0;
+					boolean[] visited = new boolean[n];
+					int cnt = 0;
+					for (int j = 0; j < n; j++) {
+						if(((1 << j) & i) > 0) {
+							a += stones[j];
+							visited[j] = true;
+							cnt ++;
+						}
+					}
+					for (int pick2 = 1; pick2 < n - cnt; pick2++) {
+						for (int i2 = 0; i2 < (1 << n); i2++) {
+							if(Integer.bitCount(i2) == pick2) {
+								for (int j = 0; j < n; j++) {
+									if(((1 << j) & i) > 0) {
+										if(visited[j]) {
+											b = 0;
+											break;
+										}
+										b += stones[j];
+									}
+								}
+								if(a == b)
+									return true;
+								else
+									b = 0;
+							}
+						}	
+					}
+				}
+			}	
 		}
 		return false;
 	}

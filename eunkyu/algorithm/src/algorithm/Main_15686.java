@@ -41,6 +41,7 @@ public class Main_15686 {
 		
 		Queue<Chicken_14501[]> chickesq = new LinkedList<>();
 		
+		//n개에 m개를 뽑을떄
 		for (int i = 0; i < (1 << size); i++) {
 			if(Integer.bitCount(i) == m) {
 				Chicken_14501[] tempChickens = new Chicken_14501[m];

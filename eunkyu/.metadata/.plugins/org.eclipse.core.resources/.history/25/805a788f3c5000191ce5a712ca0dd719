@@ -1,0 +1,81 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_12100 {
+	static int n;
+	static int[][] arr;
+	static int[][] copy;
+	static boolean[][] isSum;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n][n];
+		isSum = new boolean[n][n];
+		copy = new int[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(str[j]);
+			}
+		}
+		
+		for (int i = 0; i < 4; i++) {
+			cp(true);
+			goGame(i, 0);
+			cp(false);
+		}
+		
+	}
+	private static void cp(boolean type) {	
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(type)
+					copy[i][j] = arr[i][j];
+				else
+					arr[i][j] = copy[i][j];
+			}
+		}
+	
+	}
+	private static void goGame(int dir, int cnt) {
+	//0 위 1 아래 2오른쪽 3 왼쪽
+		if(cnt == 5) {
+			return;
+		}
+		for (int i = 0; i < 4; i++) {
+			
+			move(dir);
+			goGame(i, cnt + 1);
+		}
+	}
+	private static void move(int dir) {
+		switch (dir) {
+		case 0:
+			top();
+			break;
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		}
+	}
+	private static void top() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] == arr[i][j + 1]) {
+					
+				}
+			}
+		}
+	}
+}
