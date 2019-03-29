@@ -3,6 +3,7 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -42,7 +43,30 @@ public class Main_15686 {
 		Queue<Chicken_14501[]> chickesq = new LinkedList<>();
 		
 		//n개에 m개를 뽑을떄
-		for (int i = 0; i < (1 << size); i++) {
+
+		BigInteger big1 = BigInteger.ONE.shiftLeft(size);
+		BigInteger big2 = BigInteger.ZERO;
+		while(big1.compareTo(big2) > 0) {
+			if(big2.bitCount() == m) {
+				Chicken_14501[] tempChickens = new Chicken_14501[m];
+				int temp = 0;
+				for (int j = 0; j < size; j++) {
+					BigInteger big3 = BigInteger.ONE.shiftLeft(j);
+					if(big2.and(big3).compareTo(BigInteger.ZERO) > 0) {
+						tempChickens[temp] = chickens[j];
+						temp++;
+					}
+				}
+				chickesq.add(tempChickens);
+			}
+			big2 = big2.add(BigInteger.ONE);
+		}
+		
+		
+		
+		
+	/*	for (int i = 0; i < (1 << size); i++) {
+			System.out.println(Integer.bitCount(i)+"  i: "+i);
 			if(Integer.bitCount(i) == m) {
 				Chicken_14501[] tempChickens = new Chicken_14501[m];
 				int temp = 0;
@@ -54,7 +78,7 @@ public class Main_15686 {
 				}
 				chickesq.add(tempChickens);
 			}
-		}
+		}*/
 		
 		int rMin = Integer.MAX_VALUE;
 		while(!chickesq.isEmpty()) {

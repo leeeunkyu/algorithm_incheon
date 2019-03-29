@@ -13,7 +13,7 @@ public class Solution_1593 {
 	static int c; //맨홀 가로
 	static int l; //소요시간
 	static int[][] arr;
-	static boolean[][] visited;
+	static int[][] visited;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
@@ -30,18 +30,18 @@ public class Solution_1593 {
 					arr[i][j] = Integer.parseInt(str[j]);
 				}
 			}
-			visited = new boolean[n][m];
+			visited = new int[n][m];
 			int y = r;
 			int x = c;
 			goGame(y, x, arr[y][x], 1);
 			int res = 0;
 			for (int i = 0; i < n; i++) {
 				for (int j = 0; j < m; j++) {
-					if(visited[i][j])
+					if(visited[i][j] != 0)
 						++res;
 				}
 			}
-			print(0);
+			//print(0);
 			sb.append("#"+tc+" "+res+"\n");
 			//System.out.println(res);
 		}
@@ -52,25 +52,25 @@ public class Solution_1593 {
 	private static void goGame(int y, int x, int val, int cnt) {
 		boolean[] res = mapping(val);
 		if(cnt > l) {
-			print(cnt);
+			//print(cnt);
 			return;
 		}
-		visited[y][x] = true;
+		visited[y][x] = cnt;
 		for (int i = 0; i < 4; i++) {
 			if(res[i]) {
-				if(i == 0 && y - 1 >= 0 && mapping(arr[y - 1][x])[1] && !visited[y - 1][x]) {
+				if(i == 0 && y - 1 >= 0 && mapping(arr[y - 1][x])[1] && (visited[y - 1][x] == 0 || visited[y - 1][x] > cnt + 1)) {
 					//위랑 연결 위에 있어야 하는 애들은 1, 2, 5, 6
 					goGame(y - 1, x, arr[y - 1][x], cnt + 1);
 				}
-				if(i == 1 && y + 1 < n && mapping(arr[y + 1][x])[0] && !visited[y + 1][x]) {
+				if(i == 1 && y + 1 < n && mapping(arr[y + 1][x])[0] && (visited[y + 1][x] == 0 || visited[y + 1][x] > cnt + 1)) {
 					//아래랑 연결 아래에 있어야 하는 애들 1, 2, 4, 7
 					goGame(y + 1, x, arr[y + 1][x], cnt + 1);
 				}
-				if(i == 2 && x + 1 < m && mapping(arr[y][x + 1])[3] && !visited[y][x + 1]) {
+				if(i == 2 && x + 1 < m && mapping(arr[y][x + 1])[3] && (visited[y][x + 1] == 0 || visited[y][x + 1] > cnt + 1)) {
 					//오른쪽 연결 오른쪽에 있어야 하는 애들 1, 3, 6, 7
 					goGame(y, x + 1, arr[y][x + 1], cnt + 1);
 				}
-				if(i == 3 && x - 1 >= 0 && mapping(arr[y][x - 1])[2] && !visited[y][x - 1]) {
+				if(i == 3 && x - 1 >= 0 && mapping(arr[y][x - 1])[2] && (visited[y][x - 1] == 0 || visited[y][x - 1] > cnt + 1)) {
 					//왼쪽 연결 왼쪽에 있어야 하는 애
 					goGame(y, x - 1, arr[y][x - 1], cnt + 1);
 				}
@@ -123,7 +123,7 @@ public class Solution_1593 {
 		System.out.println(cnt);
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				if(visited[i][j])
+				if(visited[i][j] != 0)
 					System.out.print("T ");
 				else
 					System.out.print("F ");

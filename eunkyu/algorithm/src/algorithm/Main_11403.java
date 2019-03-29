@@ -14,43 +14,25 @@ public class Main_11403 {
 		for (int i = 0; i < n; i++) {
 			String[] str = br.readLine().split(" ");
 			for (int j = 0; j < n; j++) {
-				
-/*				arr[i][j] = Integer.MAX_VALUE;
-				arr[j][i] = Integer.MAX_VALUE;*/
 				int val = Integer.parseInt(str[j]);
-				if(val == 1) {
-					arr[i][j] = 1;
-				}
-				if(i == j) {
-					arr[i][j] = 0;
-					arr[j][i] = 0;
-				}
+				arr[i][j] = val;
+				if(val == 0)
+					arr[i][j] = 9999;
+				/*if(i == j)
+					arr[i][j] = 1;*/
+				
 			}
 		}
 		
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if(arr[i][j] == 0 && i != j) {
-					arr[i][j] = Integer.MAX_VALUE;
-					arr[j][i] = Integer.MAX_VALUE;
-				}
-			}
-		}
+
 		
-		for (int i = 0; i < n; i++) {
+	/*	for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				int val = arr[i][j];
-				/*if(val != Integer.MAX_VALUE && i != j) {
-					System.out.print(1+" ");
-				} else {
-					System.out.print(0+" ");
-				}*/
-				System.out.print(val+" ");
+				System.out.print(arr[i][j]+" ");
 			}
 			System.out.println();
-		}
+		}*/
 		
-		System.out.println();
 		
 		for (int k = 0; k < n; k++) {
 			for (int i = 0; i < n; i++) {
@@ -63,18 +45,12 @@ public class Main_11403 {
 				}
 			}
 		}
-		
-		System.out.println();
-		
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				int val = arr[i][j];
-				/*if(val != Integer.MAX_VALUE) {
-					System.out.print(1+" ");
-				} else {
+				if(arr[i][j] == 9999)
 					System.out.print(0+" ");
-				}*/
-				System.out.print(val+" ");
+				else
+					System.out.print(1+" ");
 			}
 			System.out.println();
 		}

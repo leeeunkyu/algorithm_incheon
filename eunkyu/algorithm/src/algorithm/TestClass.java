@@ -2,49 +2,17 @@ package algorithm;
 
 public class TestClass {
 	public static void main(String[] args) {
-		//Å°º¸µå ÀÚÆÇ´ë·Î 2Â÷¿ø ¹è¿­À» ¸¶Àú ¸¸µé¸é µÅ!!
-		char[][] map ={{'q','¤²'},{'Q','¤³'},{'w','¤¸'},{'W','¤¹'},{'e','¤§'},{'E','¤¨'},{'r','¤¡'},{'R','¤¢'},{'x','¤¼'},{'p','¤Ä'},{'t','¤µ'},{'m','¤Ñ'}};
-		StringBuilder ans = new StringBuilder();
-		String result = hangulToJaso("Å×½ºÆ®");
-		System.out.println(result);
-		for (int i = 0; i < result.length(); i++) {
-			char val = result.charAt(i);
-			for (int j = 0; j < map.length; j++) {
-				if(map[j][1] == val) {
-					ans.append(map[j][0]);
+		char[] A = {'a', 'b', 'c', 'd', 'e'};
+		int size = A.length;
+		for (int i = 0; i < (1 << size); i++) {
+			if(Integer.bitCount(i) == 3) {
+				for (int j = 0; j < size; j++) {
+					if(((1 << j) & i) > 0) {
+						System.out.print(A[j]+" ");
+					}
 				}
+				System.out.println();
 			}
 		}
-		System.out.println(ans);
-		//xptmxm
 	}
-    // ¤¡      ¤¢      ¤¤      ¤§      ¤¨      ¤©      ¤±      ¤²      ¤³      ¤µ      ¤¶      ¤·      ¤¸      ¤¹      ¤º      ¤»      ¤¼      ¤½      ¤¾
-    final static char[] ChoSung   = { 0x3131, 0x3132, 0x3134, 0x3137, 0x3138, 0x3139, 0x3141, 0x3142, 0x3143, 0x3145, 0x3146, 0x3147, 0x3148, 0x3149, 0x314a, 0x314b, 0x314c, 0x314d, 0x314e };
-    // ¤¿      ¤À      ¤Á      ¤Â      ¤Ã      ¤Ä      ¤Å      ¤Æ      ¤Ç      ¤È      ¤É      ¤Ê      ¤Ë      ¤Ì      ¤Í      ¤Î      ¤Ï      ¤Ð      ¤Ñ      ¤Ò      ¤Ó
-    final static char[] JwungSung = { 0x314f, 0x3150, 0x3151, 0x3152, 0x3153, 0x3154, 0x3155, 0x3156, 0x3157, 0x3158, 0x3159, 0x315a, 0x315b, 0x315c, 0x315d, 0x315e, 0x315f, 0x3160, 0x3161, 0x3162, 0x3163 };
-    // ¤¡      ¤¢      ¤£      ¤¤      ¤¥      ¤¦      ¤§      ¤©      ¤ª      ¤«      ¤¬      ¤­      ¤®      ¤¯      ¤°      ¤±      ¤²      ¤´      ¤µ      ¤¶      ¤·      ¤¸      ¤º      ¤»      ¤¼      ¤½      ¤¾
-    final static char[] JongSung  = { 0,      0x3131, 0x3132, 0x3133, 0x3134, 0x3135, 0x3136, 0x3137, 0x3139, 0x313a, 0x313b, 0x313c, 0x313d, 0x313e, 0x313f, 0x3140, 0x3141, 0x3142, 0x3144, 0x3145, 0x3146, 0x3147, 0x3148, 0x314a, 0x314b, 0x314c, 0x314d, 0x314e };
-
-    public static String hangulToJaso(String s) { // À¯´ÏÄÚµå ÇÑ±Û ¹®ÀÚ¿­À» ÀÔ·Â ¹ÞÀ½
-        int a, b, c; // ÀÚ¼Ò ¹öÆÛ: ÃÊ¼º/Áß¼º/Á¾¼º ¼ø
-        String result = "";
-        for (int i = 0; i < s.length(); i++) {
-            char ch = s.charAt(i);
-            if (ch >= 0xAC00 && ch <= 0xD7A3) { // "AC00:°¡" ~ "D7A3:ÆR" ¿¡ ¼ÓÇÑ ±ÛÀÚ¸é ºÐÇØ
-                c = ch - 0xAC00;
-                a = c / (21 * 28);
-                c = c % (21 * 28);
-                b = c / 28;
-                c = c % 28;
-                result = result + ChoSung[a] + JwungSung[b];
-                if (c != 0) result = result + JongSung[c] ; // c°¡ 0ÀÌ ¾Æ´Ï¸é, Áï ¹ÞÄ§ÀÌ ÀÖÀ¸¸é
-            } else {
-                result = result + ch;
-            }
-        }
-        return result;
-    }
 }
-
-
-

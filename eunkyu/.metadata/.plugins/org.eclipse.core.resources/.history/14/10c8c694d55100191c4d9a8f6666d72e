@@ -1,0 +1,75 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+//12:40 ~
+public class Main_12100 {
+	
+	static int n;
+	static int[][] arr;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(str[j]);
+			}
+		}
+		
+		goGame(0);
+		
+	
+	}
+
+	private static void goGame(int cnt) {
+		if(cnt == 5) {
+			
+		}
+		for (int i = 0; i < 4; i++) {
+			int[][] copy = new int[n][n];
+			copy(copy, true);
+			move(i);
+			goGame(cnt + 1);
+			copy(copy, false);
+		}
+	}
+
+	private static void copy(int[][] copy, boolean type) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(type)
+					copy[i][j] = arr[i][j];
+				else
+					arr[i][j] = copy[i][j];
+			}
+		}
+	}
+
+	private static void move(int dir) {
+		Queue<Integer> q = new LinkedList<Integer>();
+		switch (dir) {
+		
+		case 0:
+			//À§
+			break;
+		case 1:
+			
+			break;
+		case 2:
+			
+			break;
+		case 3:
+			
+			break;
+		default:
+			break;
+		}
+	}
+}
