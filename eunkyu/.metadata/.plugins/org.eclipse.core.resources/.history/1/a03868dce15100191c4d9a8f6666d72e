@@ -1,0 +1,50 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//14:00 ~ 
+public class Main_13458 {
+
+	static int n;
+	static int[] arr;
+	static int b;	//รั
+	static int c;	//บฮ
+	static int bCnt;
+	static int cCnt;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		
+		String[] str = br.readLine().split(" ");
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(str[i]);
+		}
+		String[] info = br.readLine().split(" ");
+		b = Integer.parseInt(info[0]);
+		c = Integer.parseInt(info[1]);
+		bCnt = arr.length;
+		
+		for (int i = 0; i < n; i++) {
+			arr[i] -= b;
+		}
+		
+		while(true) {
+			int check = 0;
+			for (int i = 0; i < n; i++) {
+				if(arr[i] != 0) {
+					arr[i] -= c;
+					++cCnt;
+				} else {
+					++check;
+				}
+			}
+			if(check == arr.length)
+				break;
+		}
+		
+	
+	}
+}

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="algorithm.Point_11559"/>
-<fullyQualifiedTypeName name="javax.swing.text.DefaultEditorKit.CopyAction"/>
-<fullyQualifiedTypeName name="algorithm.Walk_13913"/>
-<fullyQualifiedTypeName name="algorithm.Point_2573"/>
 <fullyQualifiedTypeName name="java.net.Inet4Address"/>
 <fullyQualifiedTypeName name="algorithm.Point_3184"/>
 <fullyQualifiedTypeName name="algorithm.Hole_5650"/>
@@ -21,7 +17,6 @@
 <fullyQualifiedTypeName name="org.omg.CORBA.INTERNAL"/>
 <fullyQualifiedTypeName name="org.omg.CORBA.portable.ValueInputStream"/>
 <fullyQualifiedTypeName name="java.lang.Iterable"/>
-<fullyQualifiedTypeName name="java.util.zip.InflaterInputStream"/>
 <fullyQualifiedTypeName name="algorithm.Bio_5648"/>
 <fullyQualifiedTypeName name="algorithm.PriorityQueueTest"/>
 <fullyQualifiedTypeName name="java.lang.ProcessBuilder"/>
@@ -47,17 +42,22 @@
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="algorithm.Point_1941"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImageFilter"/>
 <fullyQualifiedTypeName name="algorithm.People_1941"/>
 <fullyQualifiedTypeName name="algorithm.Dragon_15685"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
-<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="algorithm.Point_4902"/>
+<fullyQualifiedTypeName name="algorithm.Point_14502"/>
+<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="java.util.zip.InflaterInputStream"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImageFilter"/>
+<fullyQualifiedTypeName name="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"/>
+<fullyQualifiedTypeName name="org.omg.Messaging.SyncScopeHelper"/>
 <fullyQualifiedTypeName name="java.util.Queue"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="algorithm.Point_14502"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.math.BigInteger"/>
+<fullyQualifiedTypeName name="java.util.concurrent.ForkJoinPool"/>
+<fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 </qualifiedTypeNameHistroy>

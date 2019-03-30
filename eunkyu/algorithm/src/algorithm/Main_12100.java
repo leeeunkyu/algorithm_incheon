@@ -67,7 +67,6 @@ public class Main_12100 {
 		case 0:
 			//À§
 			for (int x = 0; x < n; x++) {
-				
 				for (int y = 0; y < n; y++) {
 					if(arr[y][x] == 0)
 						continue;
@@ -78,7 +77,8 @@ public class Main_12100 {
 						arr[y][x] = q.poll();
 					else
 						arr[y][x] = 0;
-				}			
+				}
+				
 				for (int y = 0; y < n; y++) {
 					if(y + 1 < n && arr[y][x] == arr[y + 1][x]) {
 						arr[y][x] += arr[y + 1][x];
