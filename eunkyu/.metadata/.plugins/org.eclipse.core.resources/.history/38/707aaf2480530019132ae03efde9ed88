@@ -1,0 +1,120 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+//15:10
+public class Solution_2112 {
+	
+	static int d;
+	static int w;
+	static int k;
+	static int[][] arr;
+	static int res;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] info = br.readLine().split(" ");
+			d = Integer.parseInt(info[0]);
+			w = Integer.parseInt(info[1]);
+			k = Integer.parseInt(info[2]);
+			arr = new int[d][w];
+			for (int i = 0; i < d; i++) {
+				String[] str = br.readLine().split(" ");
+				for (int j = 0; j < w; j++) {
+					int val = Integer.parseInt(str[j]);
+					arr[i][j] = val;
+				}
+			}
+			int cnt = 0;
+			boolean isOk = checkFilm();
+			while(!isOk) {
+				isOk = inject(cnt + 1);	
+				cnt++;
+			}
+			sb.append("#"+tc+" "+cnt+"\n");
+		}
+		System.out.println(sb);
+	}
+
+	private static boolean inject(int cnt) {
+		for (int i = 0; i < (1 << d); i++) {
+			if(Integer.bitCount(i) == cnt) {
+
+				int[] idxs = new int[cnt];
+				int temp = 0;
+				int[][] copy = new int[d][w];
+
+				for (int j = 0; j < d; j++) {
+					if(((1 << j) & i) > 0) {
+						idxs[temp] = j;
+						++temp;
+					}
+				}
+				copy(copy, true);
+				goInject(idxs, 0);
+				copy(copy, false);
+				if(res != 0) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	private static void goInject(int[] idxs, int idx) {
+		if(idx == d) {
+			if(checkFilm()) {
+				res = idxs.length;
+			}
+			return;
+		}
+		for (int i = 0; i < 2; i++) {
+			int[] temps = new int[w];
+			for (int j = 0; j < w; j++) {
+				temps[j] = arr[idxs[idx]][j];
+				arr[idxs[idx]][j] = i;
+			}
+			goInject(idxs, idx + 1);
+			for (int j = 0; j < w; j++) {
+				arr[idxs[idx]][j] = temps[j];
+			}
+		}
+		
+	}
+
+	private static void copy(int[][] copy, boolean type) {
+		for (int i = 0; i < d; i++) {
+			for (int j = 0; j < w; j++) {
+				if(type)
+					copy[i][j] = arr[i][j];
+				else
+					arr[i][j] = copy[i][j];
+			}
+		}
+	}
+
+	private static boolean checkFilm() {
+		for (int x = 0; x < w; x++) {
+			int cnt = 0;
+			int val = -1;
+			for (int y = 0; y < d; y++) {
+				if(val != arr[y][x]) {
+					cnt = 1;
+					val = arr[y][x];
+				} else {
+					++cnt;
+				}
+			}
+			if(cnt != k) {
+				return false;
+			}
+		}
+		return true;
+	}
+}

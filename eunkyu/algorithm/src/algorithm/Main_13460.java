@@ -66,7 +66,6 @@ public class Main_13460 {
 			int rCnt = balls[0].getCnt();
 			int bCnt = balls[1].getCnt();
 			
-			if(rCnt > 10) break;
 			if(arr[ry][rx] == 'O' && arr[by][bx] != 'O') {
 /*				System.out.println("====== ry: "+ry+" rx:"+rx +" rCnt: "+rCnt+"=====");
 */				res = rCnt;

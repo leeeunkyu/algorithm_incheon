@@ -6,136 +6,177 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
+//14:20 ~
 public class Main_15653 {
 	
-	static int n;
-	static int m;
+	static int n;	//세로
+	static int m;	//가로
+	static char[][] arr;
+	static int res;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		Ball_15653[] ball = new Ball_15653[2];
 		String[] str = br.readLine().split(" ");
-		n = Integer.parseInt(str[0]); //세로
-		m = Integer.parseInt(str[1]); //가로
-		char[][] arr = new char[n][m];
-		boolean[][] visited = new boolean[n][m];
-		
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		arr = new char[n][m];
+		Ball_15653 ball = new Ball_15653();
 		for (int i = 0; i < n; i++) {
-			String arrInfo = br.readLine();
+			String info = br.readLine();
 			for (int j = 0; j < m; j++) {
-				char val = arrInfo.charAt(j);
+				char val = info.charAt(j);
+				if(val == 'B') {
+					ball.setBx(j);
+					ball.setBy(i);
+				}
 				if(val == 'R') {
-					ball[0] = new Ball_15653(i, j, 1);
-				} else if(val == 'B') {
-					ball[1] = new Ball_15653(i, j, 2);
+					ball.setRx(j);
+					ball.setRy(i);
 				}
 				arr[i][j] = val;
 			}
 		}
 		
-		System.out.println(dfs(arr, ball, visited,0, 0));
+		res = -1;
+		goGame(ball);
+		System.out.println(res);
+		
 	}
 
-	private static int dfs(char[][] arr, Ball_15653[] ball, boolean[][] visited, int cnt, int idx) {
-		Queue<Ball_15653[]> balls = new LinkedList<Ball_15653[]>();
-		
+	private static void goGame(Ball_15653 ball) {
 		int[] dx = {0, 0, 1, -1};
 		int[] dy = {1, -1, 0, 0};
-		
-		Ball_15653 redBall = ball[0];
-		Ball_15653 blueBall = ball[1];
-		int redX = redBall.getX();
-		int redY = redBall.getY();
-		
-		int blueX = blueBall.getX();
-		int blueY = blueBall.getY();
-		visited[redY][redX] = true;
+		boolean[][][][] visited = new boolean[n][m][n][m];
+		visited[ball.getRy()][ball.getRx()][ball.getBy()][ball.getBx()] = true;
+		Queue<Ball_15653> balls = new LinkedList<Ball_15653>();
 		balls.add(ball);
-		
+
 		while(!balls.isEmpty()) {
-			ball = balls.poll();
-			
-			for (int i = 0; i < 4; i++) {
+			Ball_15653 b = balls.poll();
+			int rx = b.getRx();
+			int ry = b.getRy();
+			int bx = b.getBx();
+			int by = b.getBy();
+			int cnt = b.getCnt();
+			if(arr[ry][rx] == 'O' && arr[by][bx] != 'O') {
+				res = cnt;
+				return;
+			}
 				
-				int nextRedX = redX + dx[i];
-				int nextRedY = redY + dy[i];
-				int nextBlueX = blueX + dx[i];
-				int nextBlueY = blueY + dy[i];
-				boolean check = false;
+			for (int dir = 0; dir < 4; dir++) {
+				int nextRx = rx + dx[dir];
+				int nextRy = ry + dy[dir];
+				int nextBx = bx + dx[dir];
+				int nextBy = by + dy[dir];
 				
-				while(nextRedX >= 1 && nextRedX < m-1 && nextRedY >= 1 && nextRedY < n-1
-						&& arr[nextRedY][nextRedX] != '#'  && arr[nextRedY][nextRedX] != 'B'
-						&& !visited[nextRedY][nextRedX]) {
-					visited[nextRedY][nextRedX] = true;
-					redBall.setY(nextRedY);
-					redBall.setX(nextRedX);
-					if(nextBlueX >= 1 && nextBlueX < m-1 && nextBlueY >= 1 && nextBlueY < n-1
-							&& arr[nextBlueY][nextBlueX] != '#' && arr[nextBlueY][nextBlueX] != 'R') {
-						blueBall.setY(nextBlueY);
-						blueBall.setX(nextBlueX);
-						nextBlueX = blueX + dx[i];
-						nextBlueY = blueY + dy[i];
-					}		
-					nextRedX = redX + dx[i];
-					nextRedY = redY + dy[i];
-					check = true;
-					if(arr[nextRedY][nextRedX] == 'O') {
-						if(arr[nextBlueY][nextBlueX] == 'O') {
-							redBall.setY(redY);
-							redBall.setX(redX);
-							blueBall.setY(blueY);
-							blueBall.setX(blueX);
-							check = false;
+				while(true) {
+					if (arr[nextRy][nextRx] != '#' && arr[nextRy][nextRx] != 'O') {
+						nextRx += dx[dir];
+						nextRy += dy[dir];
+						
+					} else {
+						/*if(arr[nextRy][nextRx] == 'O') {
 							break;
-						} else {
-							System.out.println("cnt: "+cnt);
-							return cnt;
 						}
+						nextRx -= dx[dir];
+						nextRy -= dy[dir];	*/
+						if(arr[nextRy][nextRx] == '#') {
+							nextRx -= dx[dir];
+							nextRy -= dy[dir];	
+						}						
+						break;
 					}
 				}
-				
-				if (check) {
-					cnt++;
-					balls.add(ball);
-				}
-						
-			}			
-		}
 
-		return cnt;
+				while(true) {
+					if (arr[nextBy][nextBx] != '#' && arr[nextBy][nextBx] != 'O') {
+						nextBx += dx[dir];
+						nextBy += dy[dir];
+						
+					} else {
+						/*if(arr[nextBy][nextBx] == 'O') {
+							break;
+						}
+						nextBx -= dx[dir];
+						nextBy -= dy[dir];*/
+						if(arr[nextBy][nextBx] == '#') {
+							nextBx -= dx[dir];
+							nextBy -= dy[dir];
+						}
+						break;
+					}
+				}
+				if(arr[nextBy][nextBx] == 'O') {
+					visited[nextRy][nextRx][nextBy][nextBx] = true;
+					break;
+				}
+				if(nextRx == nextBx && nextRy == nextBy) {
+					int rDist = Math.abs(rx - nextRx) + Math.abs(ry - nextRy);
+					int bDist = Math.abs(bx - nextBx) + Math.abs(by - nextBy);
+					if(rDist > bDist) {
+						nextRx -= dx[dir];
+						nextRy -= dy[dir];
+					} else {
+						nextBx -= dx[dir];
+						nextBy -= dy[dir];
+					}
+				}
+				if(!visited[nextRy][nextRx][nextBy][nextBx]) {
+					visited[nextRy][nextRx][nextBy][nextBx] = true;
+					balls.add(new Ball_15653(nextRx, nextRy, nextBx, nextBy, cnt + 1));
+				}
+			}	
+		}		
 	}
 }
 
 class Ball_15653 {
-	int y;
-	int x;
-	int type; //1. red 2.blue
+	int rx;
+	int ry;
+	int bx;
+	int by;
+	int cnt;
 	
-	public Ball_15653(int y, int x, int type) {
+	public Ball_15653() {
 		super();
-		this.y = y;
-		this.x = x;
-		this.type = type;
+	}
+	public Ball_15653(int rx, int ry, int bx, int by, int cnt) {
+		super();
+		this.rx = rx;
+		this.ry = ry;
+		this.bx = bx;
+		this.by = by;
+		this.cnt = cnt;
 	}
 	
-	public int getY() {
-		return y;
+	public int getRx() {
+		return rx;
 	}
-	public void setY(int y) {
-		this.y = y;
+	public void setRx(int rx) {
+		this.rx = rx;
 	}
-	public int getX() {
-		return x;
+	public int getRy() {
+		return ry;
 	}
-	public void setX(int x) {
-		this.x = x;
+	public void setRy(int ry) {
+		this.ry = ry;
 	}
-	public int getType() {
-		return type;
+	public int getBx() {
+		return bx;
 	}
-	public void setType(int type) {
-		this.type = type;
+	public void setBx(int bx) {
+		this.bx = bx;
 	}
-	
-	
+	public int getBy() {
+		return by;
+	}
+	public void setBy(int by) {
+		this.by = by;
+	}
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 }
