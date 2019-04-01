@@ -75,11 +75,6 @@ public class Main_15653 {
 						nextRy += dy[dir];
 						
 					} else {
-						/*if(arr[nextRy][nextRx] == 'O') {
-							break;
-						}
-						nextRx -= dx[dir];
-						nextRy -= dy[dir];	*/
 						if(arr[nextRy][nextRx] == '#') {
 							nextRx -= dx[dir];
 							nextRy -= dy[dir];	
@@ -94,11 +89,6 @@ public class Main_15653 {
 						nextBy += dy[dir];
 						
 					} else {
-						/*if(arr[nextBy][nextBx] == 'O') {
-							break;
-						}
-						nextBx -= dx[dir];
-						nextBy -= dy[dir];*/
 						if(arr[nextBy][nextBx] == '#') {
 							nextBx -= dx[dir];
 							nextBy -= dy[dir];

@@ -51,13 +51,13 @@
 <fullyQualifiedTypeName name="java.util.concurrent.ForkJoinPool"/>
 <fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 <fullyQualifiedTypeName name="algorithm.Point_1949"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="algorithm.Ball_15653"/>
 <fullyQualifiedTypeName name="java.lang.Math"/>
-<fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>

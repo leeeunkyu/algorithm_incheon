@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;Main_14502.java&apos; to &apos;algorithm.Main_14502.java&apos;&#x0D;&#x0A;- Original project: &apos;algorithm&apos;&#x0D;&#x0A;- Destination element: &apos;algorithm.Main_14502.java&apos;&#x0D;&#x0A;- Original element: &apos;algorithm.Main_14502.java&apos;" description="Copy compilation unit" destination="/src&lt;algorithm{Main_14502.java" element1="/src&lt;algorithm{Main_14502.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1554093315452" units="1" version="1.0"/>
+</session>
