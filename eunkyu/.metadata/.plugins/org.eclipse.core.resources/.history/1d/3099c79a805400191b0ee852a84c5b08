@@ -1,0 +1,35 @@
+package algorithm;
+
+public class Combination_2 {
+	
+	static int[] arr;
+	static int n;
+	public static void main(String[] args) {
+		arr = new int[5];
+		arr[0] = 1;
+		arr[1] = 3;
+		arr[2] = 5;
+		arr[3] = 7;
+		arr[4] = 9;
+		
+		n = arr.length;
+		int r = 3;
+		int[] combArr = new int[n];
+		
+		doCombination(combArr, r, 0, 0);
+	}
+	private static void doCombination(int[] combArr, int r, int index, int target) {
+		if(r == 0) {
+			for (int i = 0; i < index; i++) {
+				System.out.print(arr[combArr[i]]+" ");
+			}
+			System.out.println();
+		} else if(target == n) {
+			return;
+		} else {
+			combArr[index] = target;
+			doCombination(combArr, r - 1, index + 1, target + 1);
+			doCombination(combArr, r, index, target + 1);
+		}
+	}
+}

@@ -7,6 +7,8 @@ import java.math.BigInteger;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import javax.swing.text.TabableView;
+
 public class Main_15686 {
 	
 	static int n;
@@ -14,6 +16,7 @@ public class Main_15686 {
 	static int[][] arr;
 	static int size;
 	static Chicken_14501[] chickens;
+	static Queue<Chicken_14501[]> chickesq;
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] info = br.readLine().split(" ");
@@ -40,32 +43,11 @@ public class Main_15686 {
 			chickens[i] = chickenq.poll();
 		}
 		
-		Queue<Chicken_14501[]> chickesq = new LinkedList<>();
+		chickesq = new LinkedList<>();
 		
 		//n개에 m개를 뽑을떄
-
-		BigInteger big1 = BigInteger.ONE.shiftLeft(size);
-		BigInteger big2 = BigInteger.ZERO;
-		while(big1.compareTo(big2) > 0) {
-			if(big2.bitCount() == m) {
-				Chicken_14501[] tempChickens = new Chicken_14501[m];
-				int temp = 0;
-				for (int j = 0; j < size; j++) {
-					BigInteger big3 = BigInteger.ONE.shiftLeft(j);
-					if(big2.and(big3).compareTo(BigInteger.ZERO) > 0) {
-						tempChickens[temp] = chickens[j];
-						temp++;
-					}
-				}
-				chickesq.add(tempChickens);
-			}
-			big2 = big2.add(BigInteger.ONE);
-		}
 		
-		
-		
-		
-	/*	for (int i = 0; i < (1 << size); i++) {
+/*		for (int i = 0; i < (1 << size); i++) {
 			System.out.println(Integer.bitCount(i)+"  i: "+i);
 			if(Integer.bitCount(i) == m) {
 				Chicken_14501[] tempChickens = new Chicken_14501[m];
@@ -80,6 +62,11 @@ public class Main_15686 {
 			}
 		}*/
 		
+		
+		int r = m;
+		int[] combArr = new int[m];
+		doCombination(combArr, r, 0, 0);
+		
 		int rMin = Integer.MAX_VALUE;
 		while(!chickesq.isEmpty()) {
 			Chicken_14501[] c = chickesq.poll();
@@ -87,14 +74,24 @@ public class Main_15686 {
 			if(rMin > min)
 				rMin = min;
 		}
-		System.out.println(rMin);
-		/*dfs(0);
-		
-		Arrays.sort(chickens);
-		for (int i = 0; i < chickens.length; i++) {
-			System.out.println(chickens[i].toString());
-		}*/
-	
+		System.out.println(rMin);	
+	}
+
+	private static void doCombination(int[] combArr, int r, int index, int target) {
+		if(r == 0) {
+			Chicken_14501[] tempChickens = new Chicken_14501[m];
+
+			for (int i = 0; i < m; i++) {
+				tempChickens[i] = chickens[combArr[i]];
+			}
+			chickesq.add(tempChickens);
+		} else if(target == size){
+			return;
+		} else {
+			combArr[index] = target;
+			doCombination(combArr, r - 1, index + 1, target + 1);
+			doCombination(combArr, r, index, target + 1);
+		}
 	}
 
 	private static int dfs(Chicken_14501[] c) {

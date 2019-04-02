@@ -49,7 +49,7 @@ public class Solution_2112 {
 	}
 
 	private static boolean inject(int cnt) {
-		for (int i = 0; i < (1 << d); i++) {
+		/*for (int i = 0; i < (1 << d); i++) {
 			if(Integer.bitCount(i) == cnt) {
 				int[] idxs = new int[cnt];
 				int temp = 0;
@@ -64,8 +64,35 @@ public class Solution_2112 {
 					return true;
 				}
 			}
-		}
+		}*/
+		
+		int r = cnt;
+		int[] combArr = new int[r];
+		doCombination(combArr, r, 0, 0, cnt);
 		return false;
+
+		
+	}
+
+	private static void doCombination(int[] combArr, int r, int index, int target, int cnt) {
+		if(res != 0) {
+			return ;
+		}
+		if(r == 0) {
+			
+			int[] idxs = new int[cnt];
+			for (int i = 0; i < cnt; i++) {
+				idxs[i] = combArr[i];
+			}
+			goInject(idxs, 0);
+			
+		} else if(target == d) {
+			return;
+		} else {
+			combArr[index] = target;
+			doCombination(combArr, r - 1, index + 1, target + 1, cnt);
+			doCombination(combArr, r, index, target + 1, cnt);
+		}
 	}
 
 	private static boolean goInject(int[] idxs, int idx) {
