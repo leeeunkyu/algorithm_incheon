@@ -1,0 +1,26 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+//17:50
+public class Main_1182 {
+	
+	static int n;
+	static int s;
+	static int[] arr;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println(Integer.MAX_VALUE);
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		s = Integer.parseInt(str[1]);
+		arr = new int[n];
+		String[] info = br.readLine().split(" ");
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(info[i]);
+		}
+		
+	}
+}

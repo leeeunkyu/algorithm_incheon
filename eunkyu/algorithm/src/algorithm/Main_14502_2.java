@@ -41,11 +41,16 @@ public class Main_14502_2 {
 				}
 			}
 		}
-		
+		//N R
+		//1 비트마스크 
+		//2 재귀 조합코드를작성
 		pointq = new LinkedList<Point_14502_2[]>();
-		
+		//CNT = N
+		//R = 3
 		int r = 3;
 		int[] combArr = new int[r];
+		//combArr 0(3), 1(10), 2(32)
+		//32 1,2,...20...32.
 		doCombnation(combArr, r, 0, 0);
 		
 		while(!pointq.isEmpty()) {
@@ -55,38 +60,33 @@ public class Main_14502_2 {
 				Point_14502_2 point = points[i];
 				arr[point.getY()][point.getX()] = 1;
 			}
-/*			print();
-*/			goVirus();
+			goVirus();
 			safeCnt = 0;
 			safeSection();
 			if(max < safeCnt)
 				max = safeCnt;
-			//System.out.println(safeCnt);
-/*			for (int i = 0; i < 3; i++) {
-				Point_14502_2 point = points[i];
-				arr[point.getY()][point.getX()] = 0;
-			}*/
 			copy(true);
-
-/*			print();
-*/		}
+		}
 		System.out.println(max);
 	}
 	private static void doCombnation(int[] combArr, int r, int index, int target) {
 		if(r == 0) {
-			Point_14502_2[] points = new Point_14502_2[3];
+			Point_14502_2[] points = new Point_14502_2[3]; //벽
 			for (int i = 0; i < index; i++) {
 				points[i] = map[combArr[i]];
 			}
+			//points(크기가 3이고 벽 세개가 선택된애들)
 			pointq.add(points);
 		} else if(target == cnt) {
 			return;
 		} else {
-			combArr[index] = target;
+			combArr[index] = target;//0 (5)1 (10)2(32)
 			doCombnation(combArr, r - 1, index + 1, target + 1);
 			doCombnation(combArr, r, index, target + 1);
 		}
+		//nCr = n-1Cr-1 + n-1Cr
 	}
+	
 	private static void safeSection() {
 		visited2 = new boolean[n][m];
 		for (int i = 0; i < n; i++) {

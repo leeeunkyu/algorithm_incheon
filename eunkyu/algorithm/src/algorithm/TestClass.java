@@ -5,75 +5,37 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class TestClass {
+	
+	static String[] A;
+	static int n;
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		String[] str = br.readLine().split(" ");
-		StringBuilder sb = new StringBuilder();
-		StringBuilder sb2 = new StringBuilder();
-		String[] info = new String[str.length - 3];
+		A = new String[5];
+		A[0] = "A";
+		A[1] = "B";
+		A[2] = "C";
+		A[3] = "D";
+		A[4] = "E";
 		
-		for (int i = 0; i < info.length; i++) {
-			info[i] = str[i + 3];
-		}
-
-		int size = info.length;
-		int min = Integer.parseInt(str[1]);
-		int max = Integer.parseInt(str[2]);
-		
-		
-		
-		//3
-		//000 001 010 100 011 110 111
-		for (int i = 0; i < (1 << size); i++) {
-			if(Integer.bitCount(i) == min) {
-				String ans = "";
-				int[] tempArr = new int[min];
-				int tempIdx = 0;
-				for (int j = 0; j < size; j++) {
-					if(((1 << j) & i) > 0) {
-						tempArr[tempIdx] = j;
-						tempIdx += 1;
-					}
-				}
-				
-				for (int idx = 0; idx < min; idx++) {
-					ans = "";
-					int temp2 = tempArr[min - 1];
-					tempArr[min - 1] = tempArr[0];
-					tempArr[0] = temp2;
-					for (int j = 0; j < min; j++) {
-						ans += info[tempArr[j]];
-					}
-					sb.append("\""+ans+"\" ");
-				}
-				
+		n = A.length;
+		int r = 3;
+		int[] combArr = new int[r];
+		doCombination(combArr, r, 0, 0);
+	}
+	private static void doCombination(int[] combArr, int r, int index, int target) {
+		if(r == 0) {
+			//더 이상 뽑을게 x 검사 시작
+			for (int i = 0; i < index; i++) {
+				System.out.print(combArr[i]+" ");
 			}
-			
-			if(Integer.bitCount(i) == max) {
-				String ans = "";
-				int[] tempArr = new int[max];
-				int tempIdx = 0;
-				for (int j = 0; j < size; j++) {
-					if(((1 << j) & i) > 0) {
-						tempArr[tempIdx] = j;
-						tempIdx += 1;
-					}
-				}
-				
-				for (int idx = 0; idx < max; idx++) {
-					ans = "";
-					int temp2 = tempArr[max - 1];
-					tempArr[max - 1] = tempArr[0];
-					tempArr[0] = temp2;
-					for (int j = 0; j < max; j++) {
-						ans += info[tempArr[j]];
-					}
-					sb2.append("\""+ans+"\" ");
-				}
-			}
+			System.out.println();
+		}else if(target == n) {
+			//끝까지 다 돌았다
+			return;
+		}else {
+			combArr[index] = target;
+			doCombination(combArr, r - 1, index + 1, target + 1); //지금 단계 경우의수 선택
+			doCombination(combArr, r, index, target + 1); //선택 안함
 		}
 		
-		System.out.println(sb);
-		System.out.println(sb2);
 	}
 }

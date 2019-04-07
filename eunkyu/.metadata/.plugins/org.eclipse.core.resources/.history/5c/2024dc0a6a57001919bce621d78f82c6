@@ -1,0 +1,52 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Queue;
+
+public class Solution_7 {
+	
+	static int n;
+	static int m;
+	static int[][] arr;
+	static int maxcnt;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			n = Integer.parseInt(str[0]);
+			m = Integer.parseInt(str[1]);
+			
+			arr = new int[n][n];
+			
+			for (int i = 0; i < n; i++) {
+				String[] info = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					arr[i][j] = Integer.parseInt(info[j]);
+				}
+			}
+			
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					go(i, j);
+				}
+			}
+		}
+	}
+
+	private static void go(int y, int x) {
+		Queue<>
+	}
+}
+
+class Point_7 {
+	int y;
+	int x;
+	int hCnt;
+	int kCnt;
+	
+	
+}

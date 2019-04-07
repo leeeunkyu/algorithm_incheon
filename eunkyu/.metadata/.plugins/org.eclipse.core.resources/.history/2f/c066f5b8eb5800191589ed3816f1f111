@@ -1,0 +1,30 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//13:15
+public class Main_17136 {
+	
+	static int n;
+	static int[][] arr;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		arr = new int[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(str[j]);
+			}
+		}
+		
+		goGame();
+	}
+
+	private static void goGame() {
+		
+	}
+}

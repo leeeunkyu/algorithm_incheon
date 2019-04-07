@@ -1,0 +1,48 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//11:40
+public class Solution_7393 {
+	
+	static int n;
+	static boolean visied[];
+	static int res;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			for (int i = 1; i < 9; i++) {
+				visied = new boolean[10];
+				res = 0;
+				dfs(i, 0, ""+i);
+			}
+			
+			sb.append("#"+tc+" "+res+"\n");
+		}
+		System.out.println(sb);
+	}
+
+	private static void dfs(int idx, int cnt, String str) {
+		if(cnt == n) {
+			for (int i = 0; i < 10; i++) {
+				if(!visied[i]) {
+					return;
+				}
+			}
+			++res;
+			return;
+		} else {
+			if(idx >= 0 && idx < 10) {
+				visied[idx] = true;
+				dfs(idx + 1, cnt + 1, " "+(idx + 1));
+				dfs(idx - 1, cnt+ 1, " "+(idx - 1));	
+			}
+		}
+	}
+}

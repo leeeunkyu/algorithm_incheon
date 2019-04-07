@@ -6,20 +6,20 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="People_1941_2" key="selection"/>
+		<item value="여기" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
-		<item value="true" key="wholeword"/>
+		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="여기"/>
+			<item value="T"/>
+			<item value="8 7 6 5 4 3 2 1 0 1 2 1 0"/>
+			<item value="8 7 6 5 4 3 2 1 0 1 0 1 0"/>
+			<item value="print"/>
+			<item value="goGame"/>
 			<item value="People_1941"/>
 			<item value="Point_14502"/>
-			<item value="Y"/>
-			<item value="X"/>
-			<item value="cnt: 1"/>
-			<item value="#"/>
-			<item value=" y: 1 x:2 y: 1 x:4 y: 2 x:3 y: 3 x:0 y: 3 x:1 y: 3 x:4 y: 4 x:3"/>
-			<item value=" y: 0 x:4 y: 1 x:2 y: 1 x:4 y: 2 x:2 y: 3 x:1 y: 3 x:4 y: 4 x:3"/>
 		</list>
 		<list key="replacehistory">
 			<item value="People_1941_2"/>
@@ -33,7 +33,7 @@
 		<item value="288" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="390" key="DIALOG_HEIGHT"/>
-		<item value="312" key="DIALOG_X_ORIGIN"/>
-		<item value="168" key="DIALOG_Y_ORIGIN"/>
+		<item value="750" key="DIALOG_X_ORIGIN"/>
+		<item value="260" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

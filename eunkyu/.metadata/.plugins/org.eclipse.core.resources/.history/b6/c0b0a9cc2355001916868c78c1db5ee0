@@ -1,0 +1,18 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+//17:50
+public class Main_1182 {
+	
+	static int n;
+	static int s;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		s = Integer.parseInt(str[1]);
+	}
+}

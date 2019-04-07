@@ -1,0 +1,25 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class Main_9019 {
+	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+	}
+	/*
+	 * if(D) {
+	 *  n = 2n
+	 *  if(n > 9999) {
+	 *  	n %= 10000
+	 *  }
+	 * }
+	 * if(S) {
+	 * 	n -= 1;
+	 *  if(n == -1) {
+	 *    n = 9999
+	 *   }
+	 * }
+	 */
+}

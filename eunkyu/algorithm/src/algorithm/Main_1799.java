@@ -1,16 +1,16 @@
 package algorithm;
 
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+//17:05
 public class Main_1799 {
 	
 	static int n;
 	static int[][] arr;
-	static int cnt;
-	
+	static boolean[][] visited;
+	static int max;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
@@ -22,49 +22,58 @@ public class Main_1799 {
 				arr[i][j] = Integer.parseInt(str[j]);
 			}
 		}
+		visited = new boolean[n][n];
+		max = 0;
 		int a = 0;
-		cnt = 0;
 		dfs(0, 0, 0, 0);
-		a = cnt;
+		a = max;
+		max = 0;
 		int b = 0;
-		cnt = 0;
-		dfs(1, 0, 1, 0);
-		b = cnt;
+		dfs(0, 1, 1, 0);
+		b = max;
 		System.out.println(a + b);
-	
 	}
 
-	private static void dfs(int x, int y, int type, int temp) {
+	private static void dfs(int y, int x, int color, int cnt) {
 		if(x >= n) {
-			y += 1;
-			x = 0;
+			y++;
+			if(y >= n) {
+				if(cnt > max) {
+					max = cnt;
+					//print(cnt);
+				}
+				return;	
+			}
+			x = (y + color) % 2;
 		}
-		if(y >= n) {
-			if(cnt < temp)
-				cnt = temp;
-			return;
-		}
-		
-		if((x + y) % 2 != type) {
-			dfs(x + 1, y, type, temp);
-			return;
-		}
-		
-		if(arr[y][x] == 1 && check(x, y, type)) {
-			arr[y][x] = 2;
-			dfs(x + 2, y, type, temp + 1);
-			arr[y][x] = 1;
-		}
-		dfs(x + 2, y, type, temp);
+		if(arr[y][x] == 1 && !visited[y][x] && check(y, x)) {
+			visited[y][x] = true;
+			dfs(y, x + 2, color, cnt + 1);
+			visited[y][x] = false;
+		} 
+		dfs(y, x + 2, color, cnt);
+
 		
 	}
 
-	private static boolean check(int x, int y, int type) {
+	private static void print(int cnt) {
+		System.out.println(cnt);
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < n; j++) {
-				if(arr[i][j] == 2 && Math.abs(i - y) == Math.abs(j - x)) {
+				if(visited[i][j])
+					System.out.print("T");
+				else
+					System.out.print("F");
+			}
+			System.out.println();
+		}
+	}
+
+	private static boolean check(int y, int x) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(visited[i][j] && Math.abs(y - i) == Math.abs(x - j))
 					return false;
-				}
 			}
 		}
 		return true;
