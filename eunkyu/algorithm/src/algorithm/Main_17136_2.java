@@ -1,11 +1,10 @@
 package algorithm;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 //13:20
-public class Main_17136 {
+public class Main_17136_2 {
 	
 	static int n = 10;
 	static int[][] arr;
@@ -29,57 +28,46 @@ public class Main_17136 {
 					++total;
 			}
 		}
-		
-		//System.out.println(total);
-		//System.out.println(drawNum);
+
 		visited = new boolean[n][n];
 		res = -1;
-		goGame();
+		goGame(0, 0);
 		System.out.println(res);
 	}
 
-	private static void goGame() {
+	private static void goGame(int a, int b) {
+		int y = 0;
+		int x = 0;
 		if(drawNum == total) {
-			if(res == -1 || res < cnt)
+			if(res == -1 || res > cnt)
 				res = cnt;
 			return;
 		}
-		if(res != -1 && cnt >= res)
+		if(res != -1 && cnt >= res) {
 			return;
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
+		}
+		loop:
+		for (int i = a; i < n; i++) {
+			for (int j = b; j < n; j++) {
 				if(arr[i][j] == 1 && !visited[i][j]) {
-					setMap(i, j);
+					y = i;
+					x = j;
+					break loop;
 				}
 			}
+			a = 0;
+			b = 0;
 		}
-	}
-
-	private static void setMap(int y, int x) {
 		for (int i = 5; i >= 1; i--) {
 			if(nums[i] > 0 && check(y, x, i)) {
 				draw(y, x, i);
 				nums[i] -= 1;
 				++cnt;
-				goGame();
+				goGame(y, x + i);
 				nums[i] += 1;
 				--cnt;
 				erase(y, x, i);
 			}
-		}
-	}
-
-	private static void print() {
-		System.out.println();
-		System.out.println("drawNum: "+drawNum+"  cnt: "+cnt);
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if(visited[i][j])
-					System.out.print("T ");
-				else
-					System.out.print("F ");
-			}
-			System.out.println();
 		}
 	}
 
