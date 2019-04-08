@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="algorithm.Bio_5648"/>
-<fullyQualifiedTypeName name="algorithm.PriorityQueueTest"/>
 <fullyQualifiedTypeName name="java.lang.ProcessBuilder"/>
 <fullyQualifiedTypeName name="algorithm.Dist_5648"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
@@ -21,13 +19,11 @@
 <fullyQualifiedTypeName name="algorithm.Dragon_15685"/>
 <fullyQualifiedTypeName name="algorithm.Point_4902"/>
 <fullyQualifiedTypeName name="java.util.zip.InflaterInputStream"/>
-<fullyQualifiedTypeName name="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"/>
 <fullyQualifiedTypeName name="org.omg.Messaging.SyncScopeHelper"/>
 <fullyQualifiedTypeName name="java.util.concurrent.ForkJoinPool"/>
 <fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 <fullyQualifiedTypeName name="algorithm.Point_1949"/>
 <fullyQualifiedTypeName name="algorithm.Ball_15653"/>
-<fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.util.PriorityQueue"/>
 <fullyQualifiedTypeName name="java.lang.Comparable"/>
 <fullyQualifiedTypeName name="algorithm.Pivot"/>
@@ -46,18 +42,22 @@
 <fullyQualifiedTypeName name="algorithm.Val"/>
 <fullyQualifiedTypeName name="java.util.Deque"/>
 <fullyQualifiedTypeName name="java.awt.Checkbox"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
 <fullyQualifiedTypeName name="algorithm.Point_7"/>
-<fullyQualifiedTypeName name="java.awt.image.BufferedImageFilter"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="algorithm.Point_1736"/>
+<fullyQualifiedTypeName name="algorithm.Point_17136"/>
+<fullyQualifiedTypeName name="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.util.HashSet"/>
+<fullyQualifiedTypeName name="java.awt.color.CMMException"/>
+<fullyQualifiedTypeName name="algorithm.Enemy_17135"/>
+<fullyQualifiedTypeName name="java.awt.image.BufferedImageFilter"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="algorithm.Point_1736"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="algorithm.Point_17136"/>
 </qualifiedTypeNameHistroy>

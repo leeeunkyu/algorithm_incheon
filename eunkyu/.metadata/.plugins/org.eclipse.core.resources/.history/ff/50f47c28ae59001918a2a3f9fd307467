@@ -1,0 +1,138 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Solution_5658_2 {
+	
+	static int n;
+	static Bio_5648_2[] bios;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			bios = new Bio_5648_2[n];
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				bios[i] = new Bio_5648_2(
+						Integer.parseInt(str[1]),
+						Integer.parseInt(str[0]),
+						Integer.parseInt(str[2]),
+						Integer.parseInt(str[3]));
+			}
+			
+			goBio();
+		
+		
+		}
+		
+	}
+	private static void goBio() {
+		for (int i = 0; i < n; i++) {
+			Bio_5648_2 bio1 = bios[i];			
+			for (int j = 0; j < n; j++) {
+				Bio_5648_2 bio2 = bios[j];
+				if(i == j || bio1.getD() == bio2.getD())
+					continue;
+				int dist = -1;
+				if(checkOne(bio1, bio2)) {
+					//마주볼때
+					dist =  Math.abs(bio1.getX() - bio2.getX()) + Math.abs(bio1.getY() - bio2.getY());
+				}
+				if(checkTwo(bio1, bio2)) {
+					
+				}
+			}
+		}
+	}
+	private static boolean checkTwo(Bio_5648_2 bio1, Bio_5648_2 bio2) {
+		int x1 = bio1.getX();
+		int y1 = bio1.getY();
+		int d1 = bio1.getD();
+		int x2 = bio2.getX();
+		int y2 = bio2.getY();
+		int d2 = bio2.getD();
+		if(d1 == 0) {
+			
+		}
+		else if(d1 == 1) {
+			
+		}
+		else if(d1 == 2) {
+			
+		} else {
+			
+		}
+		return false;
+	}
+	private static boolean checkOne(Bio_5648_2 bio1, Bio_5648_2 bio2) {
+		int x1 = bio1.getX();
+		int y1 = bio1.getY();
+		int d1 = bio1.getD();
+		int x2 = bio2.getX();
+		int y2 = bio2.getY();
+		int d2 = bio2.getD();
+		
+		if((d1 == 0 && d2 == 1 && x1 == x2 && y1 < y2) 
+				|| (d1 == 1 && d2 == 0 && x1 == x2 && y1 > y2)
+				|| (d1 == 2 && d2 == 3 && y1 == y2 && x1 > x2) 
+				|| (d1 == 3 && d2 == 2 && y1 == y2 && x1 < x2)) {
+			return true;
+		}
+		return false;
+	}
+}
+
+class Bio_5648_2 {
+	int y;
+	int x;
+	int d;
+	int k;
+	
+	public Bio_5648_2(int y, int x, int d, int k) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.d = d;
+		this.k = k;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getD() {
+		return d;
+	}
+
+	public void setD(int d) {
+		this.d = d;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
+	
+	
+	
+	
+}

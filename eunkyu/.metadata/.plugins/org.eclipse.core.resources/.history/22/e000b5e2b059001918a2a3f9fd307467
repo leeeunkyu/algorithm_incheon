@@ -1,0 +1,227 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.PriorityQueue;
+
+public class Solution_5658_2 {
+	
+	static int n;
+	static Bio_5648_2[] bios;
+	static int res;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			bios = new Bio_5648_2[n];
+			for (int i = 0; i < n; i++) {
+				String[] str = br.readLine().split(" ");
+				bios[i] = new Bio_5648_2(
+						Integer.parseInt(str[1]),
+						Integer.parseInt(str[0]),
+						Integer.parseInt(str[2]),
+						Integer.parseInt(str[3]));
+			}
+			res = 0;
+			goBio();
+			sb.append("#"+tc+" "+res+"\n");		
+		}
+		System.out.println(sb);
+		
+	}
+	private static void goBio() {
+		PriorityQueue<Dist_5648_2> pq = new PriorityQueue<>();
+		for (int i = 0; i < n; i++) {
+			Bio_5648_2 bio1 = bios[i];			
+			for (int j = 0; j < n; j++) {
+				Bio_5648_2 bio2 = bios[j];
+				if(i == j || bio1.getD() == bio2.getD())
+					continue;
+				double dist = -1;
+				if(checkOne(bio1, bio2)) {
+					//마주볼때
+					dist =  Math.abs(bio1.getX() - bio2.getX()) + Math.abs(bio1.getY() - bio2.getY()) / 2;
+				}
+				if(checkTwo(bio1, bio2)) {
+					dist = Math.abs(bio1.getX() - bio2.getX()) + Math.abs(bio1.getY() - bio2.getY()) / 2;
+				}
+				
+				if(dist != -1) {
+					pq.add(new Dist_5648_2(i, j, dist));
+				}
+				
+			}
+		}
+		int[] visited = new int[n];
+		int sum = 0;
+		while(!pq.isEmpty()) {
+			Dist_5648_2 dists = pq.poll();
+			int b1 = dists.getB1();
+			int b2 = dists.getB2();
+			int dist = dists.getDist();
+			if(visited[b1] == 0 && visited[b2] == 0) {
+				visited[b1] = dist;
+				visited[b2] = dist;
+				sum += bios[b1].getK();
+				sum += bios[b2].getK();
+			}
+			else if(visited[b1] == 0 && visited[b2] != 0) {
+				if(dist == visited[b2]) {
+					visited[b1] = dist;
+					sum += bios[b1].getK();
+				}
+			}
+			else if(visited[b2] == 0 && visited[b1] != 0) {
+				if(dist == visited[b1]) {
+					visited[b2] = dist;
+					sum += bios[b2].getK();
+				}
+			}
+		}
+		
+		res = sum;
+	}
+	private static boolean checkTwo(Bio_5648_2 bio1, Bio_5648_2 bio2) {
+		int x1 = bio1.getX();
+		int y1 = bio1.getY();
+		int d1 = bio1.getD();
+		int x2 = bio2.getX();
+		int y2 = bio2.getY();
+		int d2 = bio2.getD();
+		if(d1 == 0 && d2 != 1) {
+			if(d2 == 2 && x1 < x2 && y1 < y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+			if(d2 == 3 && x1 > x2 && y1 < y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+		}
+		else if(d1 == 1 && d2 != 0) {
+			if(d2 == 2 && x1 < x2 && y1 > y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+			if(d2 == 3 && x1 > x2 && y1 > y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+		}
+		else if(d1 == 2 && d2 != 3) {
+			if(d2 == 0 && x1 > x2 && y1 > y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+			if(d2 == 1 && x1 > x2 && y1 < y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+		}
+		else if(d1 == 3 && d2 != 2) {
+			if(d2 == 0 && x1 < x2 && y1 > y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+			if(d2 == 1 && x1 < x2 && y1 < y2 && Math.abs(x1 - x2) == Math.abs(y1 - y2)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private static boolean checkOne(Bio_5648_2 bio1, Bio_5648_2 bio2) {
+		int x1 = bio1.getX();
+		int y1 = bio1.getY();
+		int d1 = bio1.getD();
+		int x2 = bio2.getX();
+		int y2 = bio2.getY();
+		int d2 = bio2.getD();
+		
+		if((d1 == 0 && d2 == 1 && x1 == x2 && y1 < y2) 
+				|| (d1 == 1 && d2 == 0 && x1 == x2 && y1 > y2)
+				|| (d1 == 2 && d2 == 3 && y1 == y2 && x1 > x2) 
+				|| (d1 == 3 && d2 == 2 && y1 == y2 && x1 < x2)) {
+			return true;
+		}
+		return false;
+	}
+}
+class Dist_5648_2 implements Comparable<Dist_5648_2>{
+	int b1;
+	int b2;
+	double dist;
+	
+	public Dist_5648_2(int b1, int b2, double dist) {
+		super();
+		this.b1 = b1;
+		this.b2 = b2;
+		this.dist = dist;
+	}
+	
+	public int getB1() {
+		return b1;
+	}
+	public void setB1(int b1) {
+		this.b1 = b1;
+	}
+	public int getB2() {
+		return b2;
+	}
+	public void setB2(int b2) {
+		this.b2 = b2;
+	}
+	public double getDist() {
+		return dist;
+	}
+	public void setDist(double dist) {
+		this.dist = dist;
+	}
+
+	@Override
+	public int compareTo(Dist_5648_2 d) {
+		return this.getDist() - d.getDist();
+	}
+}
+class Bio_5648_2 {
+	int y;
+	int x;
+	int d;
+	int k;
+	
+	public Bio_5648_2(int y, int x, int d, int k) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.d = d;
+		this.k = k;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getD() {
+		return d;
+	}
+
+	public void setD(int d) {
+		this.d = d;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}	
+}
