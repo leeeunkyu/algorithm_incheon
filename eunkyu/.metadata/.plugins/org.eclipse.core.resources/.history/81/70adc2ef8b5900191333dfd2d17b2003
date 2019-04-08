@@ -1,0 +1,124 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+//08:05
+public class Main_17135 {
+	
+	static int n;	//За
+	static int m;	//ї­
+	static int d;
+	static int[][] arr;
+	static Queue<int[]> arrows;
+	static Enemy_17135[] enemys;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		Queue<Enemy_17135> tempq = new LinkedList<>();
+		
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		d = Integer.parseInt(str[2]);
+		arrows = new LinkedList<int[]>();
+		arr = new int[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			String[] info = br.readLine().split(" ");
+			for (int j = 0; j < m; j++) {
+				int val = Integer.parseInt(info[j]);
+				arr[i][j] = val;
+				if(val == 1) {
+					tempq.add(new Enemy_17135(i, j, 1));
+				}
+			}
+		}
+		
+		init(tempq);
+		int size = enemys.length;
+		while(!arrows.isEmpty()) {
+			Enemy_17135[] copyEnemy = new Enemy_17135[size];
+			copy(copyEnemy, size, true);
+			goGame();
+			copy(copyEnemy, size, false);
+		}
+	}
+
+	private static void init(Queue<Enemy_17135> tempq) {
+		int r = 3;
+		int[] combArr = new int[r];
+		doCombination(combArr, r, 0, 0);
+		
+		enemys = new Enemy_17135[tempq.size()];
+		int temp = 0;
+		while(!tempq.isEmpty()) {
+			enemys[temp++] = tempq.poll();
+		}
+	}
+
+	private static void copy(Enemy_17135[] copyEnemy, int size, boolean type) {
+		for (int i = 0; i < size; i++) {
+			if(type) {
+				copyEnemy[i].setY(enemys[i].getY());
+				copyEnemy[i].setX(enemys[i].getX());
+			} else {
+				enemys[i].setX(copyEnemy[i].getX());
+				enemys[i].setY(copyEnemy[i].getY());
+				enemys[i].setState(1);
+			}
+				
+		}
+		
+	}
+
+	private static void goGame() {
+		
+	}
+
+	private static void doCombination(int[] combArr, int r, int index, int target) {
+		if(r == 0) {
+			arrows.add(combArr);
+		}else if(m == target) {
+			return;
+		}else {
+			combArr[index] = target;
+			doCombination(combArr, r - 1, index + 1, target +1);
+			doCombination(combArr, r, index, target + 1);
+		}
+	}
+}
+
+class Enemy_17135 {
+	int y;
+	int x;
+	int state;
+	
+	public Enemy_17135(int y, int x, int state) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.state = state;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getState() {
+		return state;
+	}
+	public void setState(int state) {
+		this.state = state;
+	}
+}
