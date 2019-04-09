@@ -1,0 +1,200 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_2549 {
+	
+	static int n = 4;
+	static int[][] arr;
+	static int res;
+	static Deque<Info_2549> infodq;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		arr = new int[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(str[j]);
+			}
+		}
+		Deque<Info_2549> dq = new LinkedList<Info_2549>();
+		infodq = new LinkedList<>();
+		res = Integer.MAX_VALUE;
+		go(0, dq, 0);
+		System.out.println(res);
+		System.out.println(infodq.size());
+		while(!infodq.isEmpty()) {
+			Info_2549 i = infodq.pollFirst();
+			System.out.println(i.getType()+" "+i.getPivot()+" "+i.getIdx());
+		}
+		
+		
+	}
+
+	private static void go(int cnt, Deque<Info_2549> dq, int c) {
+		if(res > cnt && check()){
+			int size = dq.size();
+			//System.out.println(cnt);
+			res = cnt;
+			for (int i = 0; i < size; i++) {
+				Info_2549 info = dq.pollFirst();
+				//System.out.println(info);
+				dq.addLast(info);
+			}
+			infodq = dq;
+			//System.out.println();
+			return;
+		}
+		if(res < cnt)
+			return;
+		if(dq.size() > 24)
+			return;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 4; j++) {
+				for (int j2 = 1; j2 <= 3; j2++) {
+					if(res < cnt)
+						return;
+					int[][] cpArr = new int[n][n];
+					copy(cpArr, false);
+					
+					if(i == 0) {
+						//행
+						dq.add(new Info_2549(1, j, j2));
+						moveOne(j, j2);
+					} else {
+						//열
+						dq.add(new Info_2549(2, j, j2));
+						moveTwo(j, j2);
+					}
+					//print(dq);		
+					go(cnt + 1, dq, c + j2);
+					dq.pollLast();
+					copy(cpArr, true);
+				}
+			}
+		}
+	}
+
+	private static void copy(int[][] cpArr, boolean type) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(!type)
+					cpArr[i][j] = arr[i][j];
+				else
+					arr[i][j] = cpArr[i][j];
+			}
+		}
+	}
+
+	private static void moveTwo(int pivot, int idx) {
+		//pivot 열을 가로로 idx만큼 이동
+		Deque<Integer> dq = new LinkedList<>();
+		for (int i = 0; i < n; i++) {
+			int val = arr[pivot][i];
+			dq.addLast(val);
+		}
+		for (int i = 0; i < idx; i++) {
+			int val = dq.pollLast();
+			dq.addFirst(val);
+		}
+		
+		for (int i = 0; i < n; i++) {
+			arr[pivot][i] = dq.pollFirst();
+		}
+	}
+
+	private static void moveOne(int pivot, int idx) {
+		//pivot 행을  아래로 idx만큼 이동
+		Deque<Integer> dq = new LinkedList<>();
+		for (int i = n - 1; i >= 0; i--) {
+			int val = arr[i][pivot];
+			dq.addLast(val);
+		}
+		for (int i = 0; i < idx; i++) {
+			int val = dq.pollFirst();
+			dq.addLast(val);
+		}
+		
+		for (int i = n - 1; i >= 0; i--) {
+			arr[i][pivot] = dq.pollFirst();
+		}
+	}
+
+	private static boolean check() {
+		
+		int temp = 0;
+		int[] temps = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] != temps[temp]) {
+					return false;
+				}
+				++temp;
+			}
+		}
+		return true;
+	}
+
+	private static void print(Deque<Info_2549> dq) {
+		System.out.println();
+		System.out.println(dq);
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}
+
+class Info_2549 {
+	int type;
+	int pivot;
+	int idx;
+	
+	public Info_2549(int type, int pivot, int idx) {
+		super();
+		this.type = type;
+		this.pivot = pivot;
+		this.idx = idx;
+	}
+	
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	public int getPivot() {
+		return pivot;
+	}
+	public void setPivot(int pivot) {
+		this.pivot = pivot;
+	}
+	public int getIdx() {
+		return idx;
+	}
+	public void setIdx(int idx) {
+		this.idx = idx;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Info_2549 [type=");
+		builder.append(type);
+		builder.append(", pivot=");
+		builder.append(pivot);
+		builder.append(", idx=");
+		builder.append(idx);
+		builder.append("]");
+		return builder.toString();
+	}	
+	
+}

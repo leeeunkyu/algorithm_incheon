@@ -1,0 +1,118 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_16918 {
+	
+	static int r;	//세로
+	static int c;	//가로
+	static int n;
+	static char[][] arr;
+	static Boom_16918[] booms;
+	static int size;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		r = Integer.parseInt(str[0]);
+		c = Integer.parseInt(str[1]);
+		n = Integer.parseInt(str[2]);
+		arr = new char[r][c];
+		size = 0;
+		booms = new Boom_16918[r * c];
+		for (int i = 0; i < r; i++) {
+			String info = br.readLine();
+			for (int j = 0; j < c; j++) {
+				char val = info.charAt(j);
+				arr[i][j] = val;
+				if(val == 'O') {
+					booms[size] = new Boom_16918(i, j, 0);
+					++size;
+				}
+			}
+		}
+		
+		goGame();
+		
+		
+		
+	}
+
+	private static void goGame() {
+		goTime();
+		for (int i = 1; i < n;) {
+			//
+			setBoom();
+			isBoom();
+			goTime();
+			i++;
+			if(!(i < n)) break;
+			//
+			isBoom();
+			goTime();
+			i++;
+			if(!(i < n)) break;
+		}
+	}
+
+	private static void goTime() {
+		for (int j = 0; j < size; j++) {
+			booms[j].setTime(booms[j].getTime() + 1);
+		}
+	}
+
+	private static void isBoom() {
+		Queue<Boom_16918> q = new LinkedList<Boom_16918>();
+		for (int i = 0; i < size; i++) {
+			if(booms[j].getTime() == 2);
+		}
+	}
+
+	private static void setBoom() {
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				if(arr[i][j] == '.') {
+					arr[i][j] = 'O';
+					booms[size] = new Boom_16918(i, j, 0);
+					++size;
+				}
+			}
+		}
+	}
+}
+
+class Boom_16918 {
+	int y;
+	int x;
+	int time;
+	
+	public Boom_16918(int y, int x, int time) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.time = time;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getTime() {
+		return time;
+	}
+	public void setTime(int time) {
+		this.time = time;
+	}
+}

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="java.lang.ProcessBuilder"/>
-<fullyQualifiedTypeName name="algorithm.Dist_5648"/>
-<fullyQualifiedTypeName name="java.util.Map"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.beans.Visibility"/>
 <fullyQualifiedTypeName name="algorithm.People_2383"/>
 <fullyQualifiedTypeName name="algorithm.Point_7569"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="algorithm.Word_1339"/>
-<fullyQualifiedTypeName name="java.lang.IncompatibleClassChangeError"/>
 <fullyQualifiedTypeName name="algorithm.Point_S_2105"/>
 <fullyQualifiedTypeName name="algorithm.Ball_13460"/>
 <fullyQualifiedTypeName name="java.lang.Character"/>
@@ -24,8 +18,6 @@
 <fullyQualifiedTypeName name="java.security.interfaces.RSAKey"/>
 <fullyQualifiedTypeName name="algorithm.Point_1949"/>
 <fullyQualifiedTypeName name="algorithm.Ball_15653"/>
-<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
-<fullyQualifiedTypeName name="java.lang.Comparable"/>
 <fullyQualifiedTypeName name="algorithm.Pivot"/>
 <fullyQualifiedTypeName name="algorithm.Point_0401_2"/>
 <fullyQualifiedTypeName name="java.lang.Iterable"/>
@@ -40,24 +32,32 @@
 <fullyQualifiedTypeName name="java.lang.StackOverflowError"/>
 <fullyQualifiedTypeName name="java.util.Stack"/>
 <fullyQualifiedTypeName name="algorithm.Val"/>
-<fullyQualifiedTypeName name="java.util.Deque"/>
 <fullyQualifiedTypeName name="java.awt.Checkbox"/>
 <fullyQualifiedTypeName name="java.math.BigInteger"/>
 <fullyQualifiedTypeName name="algorithm.Point_7"/>
-<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="algorithm.Point_1736"/>
 <fullyQualifiedTypeName name="algorithm.Point_17136"/>
 <fullyQualifiedTypeName name="org.omg.PortableInterceptor.SYSTEM_EXCEPTION"/>
-<fullyQualifiedTypeName name="java.util.Queue"/>
-<fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.util.HashSet"/>
 <fullyQualifiedTypeName name="java.awt.color.CMMException"/>
 <fullyQualifiedTypeName name="algorithm.Enemy_17135"/>
 <fullyQualifiedTypeName name="java.awt.image.BufferedImageFilter"/>
+<fullyQualifiedTypeName name="algorithm.Bio_5648_2"/>
+<fullyQualifiedTypeName name="java.lang.Math"/>
+<fullyQualifiedTypeName name="java.lang.Comparable"/>
+<fullyQualifiedTypeName name="java.util.PriorityQueue"/>
+<fullyQualifiedTypeName name="algorithm.Dist_5648_2"/>
+<fullyQualifiedTypeName name="java.awt.geom.Dimension2D"/>
+<fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.lang.IncompatibleClassChangeError"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="java.util.Queue"/>
+<fullyQualifiedTypeName name="java.util.Deque"/>
+<fullyQualifiedTypeName name="java.util.LinkedList"/>
+<fullyQualifiedTypeName name="javax.sound.midi.MidiDevice.Info"/>
+<fullyQualifiedTypeName name="algorithm.Info_2549"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 </qualifiedTypeNameHistroy>

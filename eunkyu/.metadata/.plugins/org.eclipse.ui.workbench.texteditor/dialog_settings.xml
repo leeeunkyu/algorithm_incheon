@@ -6,26 +6,28 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="여기" key="selection"/>
+		<item value="j" key="selection"/>
 		<item value="true" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
-		<item value="false" key="wholeword"/>
+		<item value="true" key="wholeword"/>
 		<list key="findhistory">
+			<item value="j"/>
+			<item value="bio2.getD()"/>
+			<item value="bio1.getD()"/>
 			<item value="여기"/>
 			<item value="T"/>
 			<item value="8 7 6 5 4 3 2 1 0 1 2 1 0"/>
 			<item value="8 7 6 5 4 3 2 1 0 1 0 1 0"/>
 			<item value="print"/>
-			<item value="goGame"/>
-			<item value="People_1941"/>
-			<item value="Point_14502"/>
 		</list>
 		<list key="replacehistory">
+			<item value="x"/>
+			<item value="d2"/>
+			<item value="d1"/>
 			<item value="People_1941_2"/>
 			<item value="Point_14502_2"/>
 			<item value="y"/>
-			<item value="x"/>
 			<item value="2"/>
 		</list>
 	</section>
@@ -33,7 +35,7 @@
 		<item value="288" key="DIALOG_WIDTH"/>
 		<item value="1|맑은 고딕|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|맑은 고딕" key="DIALOG_FONT_NAME"/>
 		<item value="390" key="DIALOG_HEIGHT"/>
-		<item value="750" key="DIALOG_X_ORIGIN"/>
+		<item value="672" key="DIALOG_X_ORIGIN"/>
 		<item value="260" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>
