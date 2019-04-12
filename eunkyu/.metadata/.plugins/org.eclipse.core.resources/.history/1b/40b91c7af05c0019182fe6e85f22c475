@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-//15:30 ~ 16:20
+//15:30
 public class Main_16236 {
 	
 	static int n; //Å©±â
@@ -19,7 +19,6 @@ public class Main_16236 {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		n = Integer.parseInt(br.readLine());
 		arr = new int[n][n];
-		visited = new boolean[n][n];
 		Shark_16236 shark = null;
 		for (int i = 0; i < n; i++) {
 			String[] str = br.readLine().split(" ");
@@ -34,9 +33,7 @@ public class Main_16236 {
 		
 		eatCnt = 0;
 		while(isEat(shark.getSize())) {
-			boolean res = goGame(shark);
-			if(!res)
-				break;
+			goGame(shark);	
 		}
 		System.out.println(totalTime);
 		
@@ -53,7 +50,7 @@ public class Main_16236 {
 		return false;
 	}
 
-	private static boolean goGame(Shark_16236 shark) {
+	private static void goGame(Shark_16236 shark) {
 		int[] dx = {0, 0, 1, -1};
 		int[] dy = {1, -1, 0, 0};
 		Queue<Shark_16236> sharkq = new LinkedList<Shark_16236>();
@@ -70,7 +67,7 @@ public class Main_16236 {
 			int sy = s.getY();
 			int size = s.getSize();
 			int step = s.getStep();
-			if(step >= eatTime) {
+			if(step > eatTime) {
 				continue;
 			}
 			for (int dir = 0; dir < 4; dir++) {
@@ -79,10 +76,10 @@ public class Main_16236 {
 				
 				if(nextX >= 0 && nextX < n && nextY >= 0 && nextY < n
 						&& arr[nextY][nextX] <= size &&!visited[nextY][nextX]) {
-					if(arr[nextY][nextX] != 0 && arr[nextY][nextX] < size) {
+					if(arr[nextY][nextX] < size) {
 						//eat
 						eatFish.add(new Shark_16236(nextY, nextX, arr[nextY][nextX], 0));
-						eatTime = step + 1;
+						eatTime = step;
 					} else {
 						sharkq.add(new Shark_16236(nextY, nextX, size, step + 1));
 					}
@@ -96,23 +93,8 @@ public class Main_16236 {
 			totalTime += eatTime;
 			++eatCnt;
 			eatFish(eatFish, shark);
-		} else {
-			return false;
 		}
-		return true;
 		
-	//	print(shark.size);
-		
-	}
-
-	private static void print(int size) {
-		System.out.println("sharksize: "+size);
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				System.out.print(arr[i][j]+" ");
-			}
-			System.out.println();
-		}
 	}
 
 	private static void eatFish(Queue<Shark_16236> eatFish, Shark_16236 shark) {
@@ -144,15 +126,12 @@ public class Main_16236 {
 		}
 		
 		arr[y][x] = 0;
-		arr[y][x] = 9;
-		arr[shark.getY()][shark.getX()] = 0;
 		if(eatCnt == shark.getSize()) {
 			shark.setSize(eatCnt + 1);
 			eatCnt = 0;
 		}
 		shark.setX(x);
 		shark.setY(y);
-	
 	}
 
 	private static void visitClear() {

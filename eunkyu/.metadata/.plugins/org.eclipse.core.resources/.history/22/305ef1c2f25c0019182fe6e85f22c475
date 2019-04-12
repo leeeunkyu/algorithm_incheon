@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-//15:30 ~ 16:20
+//15:30
 public class Main_16236 {
 	
 	static int n; //Å©±â
@@ -34,9 +34,7 @@ public class Main_16236 {
 		
 		eatCnt = 0;
 		while(isEat(shark.getSize())) {
-			boolean res = goGame(shark);
-			if(!res)
-				break;
+			goGame(shark);	
 		}
 		System.out.println(totalTime);
 		

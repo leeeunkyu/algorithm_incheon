@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 
-//15:30 ~ 16:20
+//15:30
 public class Main_16236 {
 	
 	static int n; //Å©±â
@@ -144,7 +144,7 @@ public class Main_16236 {
 		}
 		
 		arr[y][x] = 0;
-		arr[y][x] = 9;
+		/*arr[y][x] = 9;*/
 		arr[shark.getY()][shark.getX()] = 0;
 		if(eatCnt == shark.getSize()) {
 			shark.setSize(eatCnt + 1);

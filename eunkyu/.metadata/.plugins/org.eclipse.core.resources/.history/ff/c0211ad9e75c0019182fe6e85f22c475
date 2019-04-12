@@ -1,0 +1,25 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//14:50
+public class Main_7229_2 {
+	
+	static int n;
+	static int m;
+	
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			String[] str = br.readLine().split(" ");
+		
+			m = Integer.parseInt(br.readLine());
+		
+		}
+	}
+}

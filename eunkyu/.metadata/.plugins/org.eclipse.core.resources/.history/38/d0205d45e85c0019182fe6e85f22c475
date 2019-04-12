@@ -1,0 +1,41 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//14:50
+public class Main_7229_2 {
+	
+	static int n;
+	static int m;
+	static int[] cakes;
+	static int cutCnt;
+	static int[] cutInfo;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			n = Integer.parseInt(br.readLine());
+			String[] str = br.readLine().split(" ");
+			cakes = new int[n];
+			cutInfo = new int[n];
+			for (int i = 0; i < n; i++) {
+				cakes[i] = Integer.parseInt(str[i]);
+			}
+			m = Integer.parseInt(br.readLine());
+			cutCnt = 0;
+			goGame();
+		}
+	}
+
+	private static void goGame() {
+		if(cutCnt == m) {
+			return;
+		}
+		for (int i = 0; i < n; i++) {
+			
+		}
+	}
+}
