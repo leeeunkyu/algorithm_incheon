@@ -1,0 +1,182 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution_2115 {
+	
+	static int n;
+	static int m;
+	static int c;
+	static int[][] arr;
+	static Queue<Point_2115> list;
+	static int maxVal;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			n = Integer.parseInt(str[0]);
+			m = Integer.parseInt(str[1]);
+			c = Integer.parseInt(str[2]);
+			arr = new int[n][n];
+			list = new LinkedList<Point_2115>();
+			for (int i = 0; i < n; i++) {
+				String[] info = br.readLine().split(" ");
+				for (int j = 0; j < n; j++) {
+					arr[i][j] = Integer.parseInt(info[j]);
+				}
+			}
+			
+			int r = 2;
+			int[] combArr = new int[r];
+			doCombnation(combArr, r, 0, 0);
+			
+			maxVal = Integer.MIN_VALUE;
+			
+			goGame();
+			
+			sb.append("#"+tc+" "+maxVal+"\n");
+		}
+		System.out.println(sb);
+	}
+	/* n == 3
+	 * 0 1 2 4 5 6 7
+	 * 3 4 5
+	 * 6 7 8
+	 */
+	private static void doCombnation(int[] combArr, int r, int index, int target) {
+		if(r == 0) {
+			int a = combArr[0];
+			int b = combArr[1];
+			int a1 = a / n;
+			int b1 = b / n;
+			int a2 = a % n;
+			int b2 = b % n;
+			if(a2 == 0 && a1 == 1 && b2 == 2 && b1 == 1)
+				System.out.println("stop");
+			/*if(a1 == b1)
+				return;*/
+			if(a2 + (m - 1) >= n || b2 + (m - 1) >= n)
+				return;
+			if(a1 == b1) {
+				if(a2 + (m - 1) >= b2 || b2 + (m - 1) >= a2)
+					return;
+			}
+			
+			list.add(new Point_2115(a2, a1, b2, b1));
+		} else if(target == n * n) {
+			return;
+		} else {
+			combArr[index] = target;
+			doCombnation(combArr, r - 1, index + 1, target + 1);
+			doCombnation(combArr, r, index, target + 1);
+		}
+	}
+
+	private static void goGame() {
+		while(!list.isEmpty()) {
+			Point_2115 point = list.poll();
+			int px1 = point.getX1();
+			int tempx1 = px1;
+			int py1 = point.getY1();
+			int px2 = point.getX2();
+			int tempx2 = px2;
+			int py2 = point.getY2();
+			int val1 = 0;
+			int c1 = 0;
+			int c2 = 0;
+			if(px1 == 0 && py1 == 1 && px2 == 2 && py2 == 1)
+				System.out.println("stop");
+			int aMax = Integer.MIN_VALUE;
+			for (int dir = 0; dir < m; dir++) {
+				px1 = tempx1 + dir;
+				for (int i = 0; i < m; i++) {
+					if(px1 + i >= n || px1 + i >= tempx1 + m)
+						px1 = tempx1 - i;
+					if(c1 + arr[py1][px1 + i] <= c) {
+						c1 += arr[py1][px1 + i];
+						val1 += (arr[py1][px1 + i] * arr[py1][px1 + i]);
+					}
+				}
+				
+				if(aMax < val1) {
+					aMax = val1;
+				}
+				c1 = 0;
+				val1 = 0;
+			}
+			int bMax = Integer.MIN_VALUE;
+			int val2 = 0;
+			for (int dir = 0; dir < m; dir++) {
+				px2 = tempx2 + dir;
+				for (int i = 0; i < m; i++) {
+					if(px2 + i >= n || px2 + i >= tempx2 + m)
+						px2 = tempx2 - i;
+					if(c2 + arr[py2][px2 + i] <= c) {
+						c2 += arr[py2][px2 + i];
+						val2 += (arr[py2][px2 + i] * arr[py2][px2 + i]);
+					}
+				}
+				if(bMax < val2) {
+					bMax = val2;
+				}
+				c2 = 0;
+				val2 = 0;
+			}
+			
+			if(aMax + bMax > maxVal) {
+				System.out.println(tempx1 +" "+py1);
+				System.out.println(aMax);
+				System.out.println(tempx2 +" "+py2);
+				System.out.println(bMax);
+				maxVal = aMax + bMax;
+			}
+			
+		}
+	}
+}
+
+class Point_2115 {
+	int x1;
+	int y1;
+	int x2;
+	int y2;
+	
+	public Point_2115(int x1, int y1, int x2, int y2) {
+		super();
+		this.x1 = x1;
+		this.y1 = y1;
+		this.x2 = x2;
+		this.y2 = y2;
+	}
+	
+	public int getX1() {
+		return x1;
+	}
+	public void setX1(int x1) {
+		this.x1 = x1;
+	}
+	public int getY1() {
+		return y1;
+	}
+	public void setY1(int y1) {
+		this.y1 = y1;
+	}
+	public int getX2() {
+		return x2;
+	}
+	public void setX2(int x2) {
+		this.x2 = x2;
+	}
+	public int getY2() {
+		return y2;
+	}
+	public void setY2(int y2) {
+		this.y2 = y2;
+	}
+}

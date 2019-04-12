@@ -46,7 +46,7 @@ public class Solution_2105_copy {
 					for (int b = 1; b < n; b++) {
 						if(j + a <= n - 1
 								&& i + a+ b <= n - 1
-								&& j -b >= 0
+								&& j - b >= 0
 								&& (a + b) * 2 > res) {
 							visitClear();
 							boolean isAble = true;

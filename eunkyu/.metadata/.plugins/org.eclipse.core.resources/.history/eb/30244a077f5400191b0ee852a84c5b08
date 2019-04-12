@@ -1,7 +1,0 @@
-package algorithm;
-
-public class Combination_2 {
-	public static void main(String[] args) {
-		int arr = {}
-	}
-}

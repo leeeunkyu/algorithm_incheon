@@ -1,0 +1,117 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//14:50
+public class Solution_7465 {
+	
+	static int n;	
+	static int m;
+	static int[][] arr;
+	static boolean[][] visited;
+	static boolean[] isGrp;
+	static int cnt;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] info = br.readLine().split(" ");
+			n = Integer.parseInt(info[0]);
+			m = Integer.parseInt(info[1]);
+			arr = new int[n][n];
+			visited = new boolean[n][n];
+			isGrp = new boolean[n];
+			for (int i = 0; i < m; i++) {
+				info = br.readLine().split(" ");
+				int a = Integer.parseInt(info[0]) - 1;
+				int b = Integer.parseInt(info[1]) - 1;
+				arr[a][b] = 1;
+				arr[b][a] = 1;
+			}
+			init();
+			//print();
+			cnt = 0;
+			goGame();
+			int a = 0;
+			for (int i = 0; i < isGrp.length; i++) {
+				if(!isGrp[i]) {
+					a++;
+				}
+			}
+			sb.append("#" + tc + " " + (cnt + a) + "\n");
+		}
+		System.out.println(sb);
+		
+	}
+	private static void goGame() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(i == j)
+					continue;
+				if(arr[i][j] > 0 && !visited[i][j]) {
+					cycle(i ,j);
+/*					System.out.println(i+"  "+j);
+*/					++cnt;
+				}
+			}
+		}
+	}
+	private static void cycle(int i, int j) {
+		visited[i][j] = true;	//12
+		visited[j][i] = true;	//21
+		for (int idx = 0; idx < n; idx++) {
+			if(arr[idx][j] > 0 && !visited[idx][j])
+				cycle(idx, j);
+		}
+		
+		for (int idx = 0; idx < n; idx++) {
+			if(arr[idx][i] > 0 && !visited[idx][i])
+				cycle(idx, i);
+		}
+		
+	}
+	private static void print() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	private static void init() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] != 1)
+					arr[i][j] = Integer.MAX_VALUE;
+			}
+		}
+		
+		for (int k = 0; k < n; k++) {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if(arr[i][k] == Integer.MAX_VALUE || arr[k][j] == Integer.MAX_VALUE)
+						continue;
+					if(arr[i][j] > arr[i][k] + arr[k][j])
+						arr[i][j] = arr[i][k] + arr[k][j];
+				}
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(i == j)
+					arr[i][j] = 0;
+				if(arr[i][j] == Integer.MAX_VALUE)
+					arr[i][j] = 0;
+				if(arr[i][j] > 0) {
+					isGrp[i] = true;
+					isGrp[j] = true;
+				}
+					
+			}
+		}
+	}
+}

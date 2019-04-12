@@ -1,0 +1,180 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Solution_1953_2 {
+	
+	static int n;	//세로크기
+	static int m;	//가로크기
+	static int r;	//세로위치
+	static int c;	//가로위치
+	static int l;	//소요된 시간
+	static int[][] arr;
+	static int res = 0;
+	static boolean[][] visited;
+
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] str = br.readLine().split(" ");
+			n = Integer.parseInt(str[0]);
+			m = Integer.parseInt(str[1]);
+			r = Integer.parseInt(str[2]);
+			c = Integer.parseInt(str[3]);
+			l = Integer.parseInt(str[4]);
+			arr = new int[n][m];
+			visited = new boolean[n][m];
+			for (int i = 0; i < n; i++) {
+				String[] info = br.readLine().split(" ");
+				for (int j = 0; j < m; j++) {
+					arr[i][j] = Integer.parseInt(info[j]);
+				}
+			}
+			
+			goGame();
+			
+			System.out.println(res);
+		}
+	}
+	
+	private static void goGame() {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		
+		Queue<Point_1953_2> pointq = new LinkedList<Point_1953_2>();
+		pointq.add(new Point_1953_2(r, c, 0));
+		
+		while(!pointq.isEmpty()) {
+			Point_1953_2 point = pointq.poll();
+			int px = point.getX();
+			int py = point.getY();
+			int cnt = point.getCnt();
+			if(cnt + 1 == l) {
+				continue;
+			}
+			for (int dir = 0; dir < 4; dir++) {
+				int nextX = px + dx[dir];
+				int nextY = py + dy[dir];
+				if(nextX >= 0 && nextX < m && nextY >= 0 && nextY < n
+						&& !visited[nextY][nextX] && arr[nextY][nextX] != 0) {
+					if(isMove(arr[py][px], dir) && isMove2(arr[nextY][nextX], dir)) {
+						pointq.add(new Point_1953_2(nextY, nextX, cnt + 1));
+						visited[nextY][nextX] = true;
+						++res;
+					}
+				}
+			}
+		}
+		
+		System.out.println();
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(visited[i][j])
+					System.out.print(1);
+				else
+					System.out.print(0);
+			}
+			System.out.println();
+		}
+		
+	}
+
+
+	private static boolean isMove2(int val, int dir) {
+		/*
+		 * int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		 */
+		switch (val) {
+		case 1:
+			return true;
+		case 2:
+			if(dir == 0 || dir == 1)
+				return true;
+		case 3:
+			if(dir == 2 || dir == 3)
+				return true;
+		case 4:
+			if(dir == 0 || dir == 3)
+				return true;
+		case 5:
+			if(dir == 1 || dir == 3)
+				return true;
+		case 6:
+			if(dir == 2 || dir == 1)
+				return true;
+		case 7:
+			if(dir == 2 || dir == 0)
+				return true;
+		}
+		return false;
+	}
+
+	private static boolean isMove(int val, int dir) {
+		switch (val) {
+		case 1:
+			return true;
+		case 2:
+			if(dir == 0 || dir == 1)
+				return true;
+		case 3:
+			if(dir == 2 || dir == 3)
+				return true;
+		case 4:
+			if(dir == 1 || dir == 2)
+				return true;
+		case 5:
+			if(dir == 0 || dir == 2)
+				return true;
+		case 6:
+			if(dir == 3 || dir == 0)
+				return true;
+		case 7:
+			if(dir == 3 || dir == 1)
+				return true;
+		}
+		return false;
+	}
+}
+
+class Point_1953_2 {
+	int y;
+	int x;
+	int cnt;
+	
+	public Point_1953_2(int y, int x, int cnt) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.cnt = cnt;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
+	
+}

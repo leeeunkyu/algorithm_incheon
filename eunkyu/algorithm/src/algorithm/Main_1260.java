@@ -31,7 +31,9 @@ public class Main_1260 {
 
 		// dfs(a,c,v);
 		dfs(a, c, v, true);
-	
+		System.out.println();
+		c = new boolean[n + 1];
+		bfs(a, c, v);
 	}
 	
 	public static void dfs(int[][] a, boolean[] c, int v, boolean flag) {
@@ -41,8 +43,7 @@ public class Main_1260 {
 		
 		stack.push(v);
 		c[v] = true;
-		System.out.println(v+" ");
-		
+		System.out.print(v+" ");
 		while(!stack.isEmpty()) {
 			int vv = stack.peek(); //°ª ÀÐ±â
 			
@@ -52,7 +53,7 @@ public class Main_1260 {
 			for (int i = 1; i <= n; i++) {
 				if(a[vv][i] == 1 && !c[i]) {
 					stack.push(i);
-					System.out.println(i+" ");
+					System.out.print(i+" ");
 				
 					c[i] = true;
 					flag = true;
@@ -72,10 +73,10 @@ public class Main_1260 {
 		int n = a.length - 1;
 		
 		queue.add(v);
-		
+		c[v] = true;
 		while (!queue.isEmpty()) {
 			v = queue.poll(); //¾Õ¿¡²¨ »Ì°í Á¦°Å
-			System.out.println(v+ " ");
+			System.out.print(v+ " ");
 			for (int i = 0; i <= n; i++) {
 				if(a[v][i] == 1 && !c[i]) {
 					queue.add(i);

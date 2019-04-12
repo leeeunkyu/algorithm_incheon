@@ -1,0 +1,39 @@
+package algorithm;
+
+public class Rotate {
+	
+	static int n = 3;
+	static int[][] arr;
+	static int[][] copy;
+	public static void main(String[] args) {
+		arr = new int[n][n];
+		copy = new int[n][n];
+		int val = 1;
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = val++;
+			}
+		}
+		print();
+		rotate90();
+		print();
+	
+	}
+
+	private static void rotate90() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				copy[i][j] = arr[i][n - j];
+			}
+		}
+	}
+
+	private static void print() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}

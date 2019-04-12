@@ -1,0 +1,12 @@
+package algorithm;
+
+
+//14:50
+public class Main_7465 {
+	
+	static int n;	
+
+	public static void main(String[] args) {
+		
+	}
+}

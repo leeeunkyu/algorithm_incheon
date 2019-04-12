@@ -1,0 +1,62 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//14:50
+public class Main_7465 {
+	
+	static int n;	
+	static int m;
+	static int[][] arr;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+		
+		for (int tc = 1; tc <= testCase; tc++) {
+			String[] info = br.readLine().split(" ");
+			n = Integer.parseInt(info[0]);
+			m = Integer.parseInt(info[1]);
+			arr = new int[n][n];
+			for (int i = 0; i < m; i++) {
+				info = br.readLine().split(" ");
+				int a = Integer.parseInt(info[0]);
+				int b = Integer.parseInt(info[1]);
+				arr[a][b] = 1;
+				arr[b][a] = 1;
+			}
+			init();
+			print();
+			
+		}
+		
+	}
+	private static void print() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(arr[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+	private static void init() {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] != 1)
+					arr[i][j] = Integer.MAX_VALUE;
+			}
+		}
+		
+		for (int k = 0; k < n; k++) {
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < n; j++) {
+					if(arr[i][k] == Integer.MAX_VALUE || arr[k][j] == Integer.MAX_VALUE)
+						continue;
+					if(arr[i][j] > arr[i][k] + arr[k][j])
+						arr[i][j] = arr[i][k] + arr[k][j];
+				}
+			}
+		}
+	}
+}

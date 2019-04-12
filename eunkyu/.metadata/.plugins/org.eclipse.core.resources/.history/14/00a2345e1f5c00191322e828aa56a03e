@@ -1,0 +1,11 @@
+package algorithm;
+
+//14:45 ~ 
+public class Main_4012 {
+	
+	static int n;	//½ÄÀç·á
+	
+	public static void main(String[] args) {
+		
+	}
+}

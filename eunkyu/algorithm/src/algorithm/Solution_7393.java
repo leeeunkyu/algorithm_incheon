@@ -8,7 +8,8 @@ import java.io.InputStreamReader;
 public class Solution_7393 {
 	
 	static int n;
-	static boolean visied[];
+	static int visied[];
+	static boolean isOk[];
 	static int res;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,12 +18,11 @@ public class Solution_7393 {
 		
 		for (int tc = 1; tc <= testCase; tc++) {
 			n = Integer.parseInt(br.readLine());
+			visied = new int[n];
+			isOk = new boolean[10];
 			res = 0;
 			for (int i = 1; i <= 9; i++) {
-				visied = new boolean[10];
-				visied[i] = true;
-				dfs(i, 1, ""+i, 1);
-				visied[i] = false;
+				dfs(i, 1, ""+i, i);
 			}
 			
 			sb.append("#"+tc+" "+res+"\n");
@@ -30,37 +30,29 @@ public class Solution_7393 {
 		System.out.println(sb);
 	}
 
-	private static void dfs(int idx, int cnt, String str, int tCnt) {
+	private static void dfs(int idx, int cnt, String str, int sum) {
 		if(cnt == n) {
-			for (int i = 0; i < 10; i++) {
-				if(!visied[i]) {
+			for (int i = 0; i < isOk.length; i++) {
+				isOk[i] = false;
+			}
+			for (int i = 0; i < str.length(); i++) {
+				int val = str.charAt(i) - '0';
+				isOk[val] = true;
+			}
+			for (int i = 0; i < isOk.length; i++) {
+				if(!isOk[i]) {
 					return;
 				}
 			}
 			//System.out.println(str);
-			if(res == 1000000000) {
-				res = 0;
-			}
 			++res;
 			return;
 		} else {
-			if(idx + 1 < 10 && 10 - tCnt < n - cnt) {
-				if(!visied[idx + 1]) {
-					visied[idx + 1] = true;
-					dfs(idx + 1, cnt + 1, str + " "+(idx + 1), tCnt + 1);
-				} else {
-					dfs(idx + 1, cnt + 1, str + " "+(idx + 1), tCnt);
-				}
-				visied[idx + 1] = false;
+			if(idx + 1 < 10 ) {
+				dfs(idx + 1, cnt + 1, str + (idx + 1), sum + (idx + 1));
 			}
 			if(idx - 1 >= 0) {
-				if(!visied[idx - 1]) {
-					visied[idx - 1] = true;
-					dfs(idx - 1, cnt+ 1, str + " "+(idx - 1), tCnt + 1);
-				} else {
-					dfs(idx - 1, cnt+ 1, str + " "+(idx - 1), tCnt);
-				}
-				visied[idx - 1] = false;
+				dfs(idx - 1, cnt + 1, str + (idx - 1), sum + (idx - 1));
 			}
 		}
 	}

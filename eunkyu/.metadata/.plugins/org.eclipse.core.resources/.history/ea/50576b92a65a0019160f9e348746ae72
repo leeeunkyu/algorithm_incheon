@@ -1,0 +1,77 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Main_2206_2 {
+	
+	static int n;
+	static int m;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		
+		go();
+	}
+
+	private static void go() {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		
+		Queue<Point_2206_2> pointq = new LinkedList<Point_2206_2>();
+		pointq.add(new Point_2206_2(0, 0, 1));
+		
+		while(!pointq.isEmpty()) {
+			Point_2206_2 point = pointq.poll();
+			int px = point.getX();
+			int py = point.getY();
+			int step = point.getStep();
+			
+			for (int dir = 0; dir < 4; dir++) {
+				int nextX = px + dx[dir];
+				int nextY = py + dy[dir];
+				if(nextX >= 0 && nextX < m && nextY >= 0 && nextY < n) {
+					pointq.add(new Point_2206_2(nextY, nextX, step + 1));
+				}
+			}
+		}
+	}
+}
+
+class Point_2206_2 {
+	int y;
+	int x;
+	int step;
+	
+	public Point_2206_2(int y, int x, int step) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.step = step;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getStep() {
+		return step;
+	}
+	public void setStep(int step) {
+		this.step = step;
+	}
+}

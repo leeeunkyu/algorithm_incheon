@@ -1,0 +1,30 @@
+package algorithm;
+
+import java.io.InputStreamReader;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+
+//18:08
+public class Solution_1952 {
+	
+	static int[] priceMap;
+	static int[] monthPrice;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int testCase = Integer.parseInt(br.readLine());
+	
+		for (int tc = 1; tc <= testCase; tc++) {
+			priceMap = new int[4];
+			String[] str = br.readLine().split(" ");
+			for (int i = 0; i < 4; i++) {
+				priceMap[i] = Integer.parseInt(str[i]);
+			}
+			
+			String[] info = br.readLine().split(" ");
+			for (int i = 0; i < 12; i++) {
+				monthPrice[i] = Integer.parseInt(info[i]);
+			}
+		}
+	}
+}

@@ -36,6 +36,7 @@ public class Main_16918 {
 			}
 		}
 		
+		print();
 		goGame();
 		print();
 		
@@ -54,11 +55,12 @@ public class Main_16918 {
 
 	private static void goGame() {
 		goTime();
-		for (int i = 1; i < n; i++) {
+		print();
+		for (int i = 1; true; i++) {
 			//
-			goTime();
 			setBoom();
 			isBoom();
+			goTime();
 			System.out.println(i+"  "+size);
 			print();
 			System.out.println();
@@ -75,8 +77,9 @@ public class Main_16918 {
 		Queue<Boom_16918> q = new LinkedList<Boom_16918>();
 		int[] dx = {0, 0, 1, -1};
 		int[] dy = {1, -1, 0, 0};
+		
 		for (int i = 0; i < size; i++) {
-			if(booms[i].getTime() == 3) {
+			if(booms[i].getTime() == 2) {
 				arr[booms[i].getY()][booms[i].getX()] = '.';
 				for (int j = 0; j < 4; j++) {
 					int nextX = booms[i].getX() + dx[j];
@@ -87,22 +90,27 @@ public class Main_16918 {
 				}
 			}
 		}
-		int temp = 0;
+		Queue<Boom_16918> bq = new LinkedList<>();
 		for (int i = 0; i < r; i++) {
 			for (int j = 0; j < c; j++) {
 				if(arr[i][j] == 'O') {
-					for (int j2 = 0; j2 < size; j2++) {
-						if(booms[j2].getX() == j && booms[j2].getY() == i) {
-							booms[temp] = new Boom_16918(i, j, booms[j].getTime());
-							++temp;		
+					for (int idx = 0; idx < n; idx++) {
+						Boom_16918 boom = booms[idx];
+						if(boom.getX() == j && boom.getX() == i) {
+							bq.add(boom);
 						}
 					}
 				}
 			}
 		}
-		
-		size = temp;
-
+		int temp = 0;
+		size = bq.size();
+		System.out.println(size);
+		while(!bq.isEmpty()) {
+			Boom_16918 boom = bq.poll();
+			booms[temp++] = boom;
+		}
+		System.out.println();
 		
 	}
 
@@ -111,7 +119,7 @@ public class Main_16918 {
 			for (int j = 0; j < c; j++) {
 				if(arr[i][j] == '.') {
 					arr[i][j] = 'O';
-					booms[size] = new Boom_16918(i, j, 0);
+					booms[size] = new Boom_16918(i, j, -1);
 					++size;
 				}
 			}

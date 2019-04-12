@@ -1,0 +1,48 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_7576 {
+	
+	static int n;
+	static int m;
+	static int[][] arr;
+	//정수 1은 익은 토마토, 정수 0은 익지 않은 토마토, 정수 -1은 토마토가 들어있지 않은 칸을 나타낸다. 
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		arr = new int[n][m];
+		int cnt = 0;
+		for (int i = 0; i < n; i++) {
+			String[] info = br.readLine().split(" ");
+			for (int j = 0; j < m; j++) {
+				int val = Integer.parseInt(info[j]);
+				arr[i][j] = val;
+				if(val == 0)
+					cnt++;
+			}
+		}
+		if(cnt == 0) {
+			System.out.println(0);
+			return;
+		}
+		
+		goGame();
+		
+		
+		
+	}
+	private static void goGame() {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if(arr[i][j] == 1)
+			}
+		}
+	}
+}

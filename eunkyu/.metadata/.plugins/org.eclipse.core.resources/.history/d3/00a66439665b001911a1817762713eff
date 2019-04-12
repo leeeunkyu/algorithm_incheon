@@ -1,0 +1,81 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+//16:40 ~ 
+public class Main_14499_2 {
+	
+	static int n;
+	static int m;
+	static int x;
+	static int y;
+	static int k;
+	static int[][] arr;
+	static int[][] val ={{0, 0, 0},{0, 0, 0},{0, 0, 0},{0, 0, 0}};
+			
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		n = Integer.parseInt(str[0]);
+		m = Integer.parseInt(str[1]);
+		x = Integer.parseInt(str[2]);
+		y = Integer.parseInt(str[3]);
+		k = Integer.parseInt(str[4]);
+	
+		arr = new int[n][m];
+		
+		for (int i = 0; i < n; i++) {
+			String[] info = br.readLine().split(" ");
+			for (int j = 0; j < m; j++) {
+				arr[i][j] = Integer.parseInt(info[j]);
+			}
+		}
+		
+		String[] orderInfo = br.readLine().split(" ");
+		int[] order = new int[orderInfo.length];
+		
+		for (int i = 0; i < order.length; i++) {
+			order[i] = Integer.parseInt(orderInfo[i]);
+		}
+		
+		for (int i = 0; i < order.length; i++) {
+			int top = val[1][0];
+			int bot = val[3][1];
+			int o = order[i];
+		}
+	}
+	
+	public static void moveRight() {
+		int temp = val[1][0];
+		val[1][0] = val[1][1];
+		val[1][1] = val[1][2];
+		val[1][2] = val[3][1];
+		val[3][1] = temp;
+	}
+	
+	public static void moveLeft() {
+		int temp = val[1][0];
+		val[1][0] = val[3][1];
+		val[3][1] = val[1][2];
+		val[1][2] = val[1][1];
+		val[1][1] = temp;
+	}
+	
+	public static void moveTop() {
+		int temp = val[0][1];
+		val[0][1] = val[1][1];
+		val[1][1] = val[2][1];
+		val[2][1] = val[3][1];
+		val[3][1] = temp;
+	}
+	
+	public static void moveBot() {
+		int temp = val[1][1];
+		val[1][1] = val[2][1];
+		val[2][1] = val[3][1];
+		val[3][1] = val[0][1];
+		val[0][1] = temp;
+	}
+}
