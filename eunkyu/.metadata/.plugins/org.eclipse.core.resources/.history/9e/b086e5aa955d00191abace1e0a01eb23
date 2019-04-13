@@ -1,0 +1,7 @@
+package algorithm;
+
+public class LastTest {
+	public static void main(String[] args) {
+		
+	}
+}

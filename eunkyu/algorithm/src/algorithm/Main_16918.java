@@ -3,44 +3,115 @@ package algorithm;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 
 public class Main_16918 {
 	
-	static int r;	//세로
-	static int c;	//가로
+	static int r;
+	static int c;
 	static int n;
 	static char[][] arr;
-	static Boom_16918[] booms;
+	static int [][] boomMap;
 	static int size;
-	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] str = br.readLine().split(" ");
+
 		r = Integer.parseInt(str[0]);
 		c = Integer.parseInt(str[1]);
 		n = Integer.parseInt(str[2]);
+		size = r * c;
 		arr = new char[r][c];
-		size = 0;
-		booms = new Boom_16918[(r + 1)  * (c + 1)];
+		boomMap = new int[r][c];
 		for (int i = 0; i < r; i++) {
 			String info = br.readLine();
 			for (int j = 0; j < c; j++) {
 				char val = info.charAt(j);
 				arr[i][j] = val;
 				if(val == 'O') {
-					booms[size] = new Boom_16918(i, j, 0);
-					++size;
+					boomMap[i][j] = 1;
 				}
 			}
 		}
 		
-		print();
+		
 		goGame();
 		print();
+	
+	
+	}
+
+	private static void goGame() {
+		/*
+		 * 1. 0 초 - 시작(일부 구간에 폭탄 설치)
+		 * 2. 1초  다음 1초 동안 봄버맨은 아무것도 하지 않는다. setTime(time + 1)
+		 * 3. 2초 setBoom();
+		 * 4. 3초 폭탄 폭발
+		 * 3 4 반복
+		 */
 		
+		setTime(); //1초
+		//print();
+		for (int i = 0; i < n - 1; i++) {
+			setTime();
+			setBoom();		
+			isBoom();
+			//print();
+		}
 		
+
+		
+/*		 //2초
+		print();
+
+		setTime();
+		
+		print();*/
+
+	}
+	
+	private static void isBoom() {
+		int[] dx = {0, 0, 1, -1};
+		int[] dy = {1, -1, 0, 0};
+		
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				if(arr[i][j] == 'O' && boomMap[i][j] > 3) {
+					arr[i][j] = '.';
+					boomMap[i][j] = 0;
+					for (int dir = 0; dir < 4; dir++) {
+						int nextX = j + dx[dir];
+						int nextY = i + dy[dir];
+						if(nextX >= 0 && nextX < c 
+								&& nextY >=0 && nextY < r
+								&& boomMap[nextY][nextX] <= 3) {
+							arr[nextY][nextX] = '.';
+							boomMap[nextY][nextX] = 0;
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private static void setBoom() {
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				if(arr[i][j] == '.') {
+					arr[i][j] = 'O';
+					boomMap[i][j] = 1;
+				}
+			}
+		}
+	}
+
+	private static void setTime() {
+		for (int i = 0; i < r; i++) {
+			for (int j = 0; j < c; j++) {
+				if(boomMap[i][j] != 0) {
+					boomMap[i][j] = boomMap[i][j] + 1;
+				}
+			}
+		}
 	}
 
 	private static void print() {
@@ -50,81 +121,8 @@ public class Main_16918 {
 			}
 			System.out.println();
 		}
-		System.out.println();
 	}
-
-	private static void goGame() {
-		goTime();
-		print();
-		for (int i = 1; true; i++) {
-			//
-			setBoom();
-			isBoom();
-			goTime();
-			System.out.println(i+"  "+size);
-			print();
-			System.out.println();
-		}
-	}
-
-	private static void goTime() {
-		for (int j = 0; j < size; j++) {
-			booms[j].setTime(booms[j].getTime() + 1);
-		}
-	}
-
-	private static void isBoom() {
-		Queue<Boom_16918> q = new LinkedList<Boom_16918>();
-		int[] dx = {0, 0, 1, -1};
-		int[] dy = {1, -1, 0, 0};
-		
-		for (int i = 0; i < size; i++) {
-			if(booms[i].getTime() == 2) {
-				arr[booms[i].getY()][booms[i].getX()] = '.';
-				for (int j = 0; j < 4; j++) {
-					int nextX = booms[i].getX() + dx[j];
-					int nextY = booms[i].getY() + dy[j];
-					if(nextX >= 0 && nextX < c && nextY >= 0 && nextY < r) {
-						arr[nextY][nextX] = '.';
-					}
-				}
-			}
-		}
-		Queue<Boom_16918> bq = new LinkedList<>();
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-				if(arr[i][j] == 'O') {
-					for (int idx = 0; idx < n; idx++) {
-						Boom_16918 boom = booms[idx];
-						if(boom.getX() == j && boom.getX() == i) {
-							bq.add(boom);
-						}
-					}
-				}
-			}
-		}
-		int temp = 0;
-		size = bq.size();
-		System.out.println(size);
-		while(!bq.isEmpty()) {
-			Boom_16918 boom = bq.poll();
-			booms[temp++] = boom;
-		}
-		System.out.println();
-		
-	}
-
-	private static void setBoom() {
-		for (int i = 0; i < r; i++) {
-			for (int j = 0; j < c; j++) {
-				if(arr[i][j] == '.') {
-					arr[i][j] = 'O';
-					booms[size] = new Boom_16918(i, j, -1);
-					++size;
-				}
-			}
-		}
-	}
+	
 }
 
 class Boom_16918 {

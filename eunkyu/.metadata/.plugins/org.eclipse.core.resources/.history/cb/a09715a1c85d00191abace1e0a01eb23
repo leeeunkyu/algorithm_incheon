@@ -1,0 +1,50 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2239 {
+	
+	static int n = 8;
+	static int[][] arr;
+	static boolean[][] visited;
+	static boolean[] isNum;
+ 	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		arr = new int[n][n];
+		visited = new boolean[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String str = br.readLine();
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = str.charAt(j) - '0';
+			}
+		}
+		
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if(arr[i][j] == 0) {
+					visited[i][j] = true;
+					dfs(i, j);
+					visited[i][j] = false; 
+				}
+			}
+		}
+		
+	}
+
+	private static void dfs(int y, int x) {
+		for (int i = 1; i <= 9; i++) {
+			arr[y][x] = i;
+			if(check()) {
+				
+			}
+		}
+	}
+
+	private static boolean check() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+}

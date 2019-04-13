@@ -1,0 +1,58 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2239 {
+	
+	static int n = 8;
+	static int[][] arr;
+	static boolean[][] visited;
+	static boolean[] isNum;
+ 	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		arr = new int[n][n];
+		visited = new boolean[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String str = br.readLine();
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = str.charAt(j) - '0';
+			}
+		}
+		
+		dfs(0, 0);
+		
+	}
+
+	private static void dfs(int y, int x) {
+		for (int i = y; i < n; i++) {
+			for (int j = x; j < n; j++) {
+				if(arr[i][j] == 0 && !visited[i][j]) {
+					y = i;
+					x = j;
+					break;
+				}
+			}
+			y = 0;
+		}
+		
+		for (int i = 1; i <= 9; i++) {
+			if(check(i)) {
+				visited[y][x] = true;
+				arr[y][x] = i;
+				dfs(y, x);
+				visited[y][x] = false;
+			}
+		}
+	}
+
+	private static boolean check(int pivot) {
+		for (int j = 0; j < arr.length; j++) {
+			
+		}
+		
+		return false;
+	}
+}

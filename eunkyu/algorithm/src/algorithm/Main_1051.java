@@ -6,19 +6,19 @@ import java.io.InputStreamReader;
 
 public class Main_1051 {
 	
-	static int n;	//세로
-	static int m;	//가로
+	static int n;
+	static int m;
 	static int[][] arr;
-	static int w;
-	static int res;
+	static int minVal;
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] str = br.readLine().split(" ");
-	
+		
 		n = Integer.parseInt(str[0]);
 		m = Integer.parseInt(str[1]);
 		arr = new int[n][m];
+		minVal = Math.min(n, m);
 		
 		for (int i = 0; i < n; i++) {
 			String info = br.readLine();
@@ -26,35 +26,24 @@ public class Main_1051 {
 				arr[i][j] = info.charAt(j) - '0';
 			}
 		}
-		if(n > m) {
-			w = m;
-		} else {
-			w = n;
-		}
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < m; j++) {
-				go(i, j);
+		
+		for (int p = minVal; p >= 1; p--) {
+			int idx = p - 1;
+			for (int i = 0; i < n; i++) {
+				for (int j = 0; j < m; j++) {
+					if(i + idx >= 0 && i + idx < n
+							&& j + idx >= 0 && j + idx < m) {
+						if(arr[i][j] == arr[i + idx][j] && arr[i][j] == arr[i][j + idx]
+								&& arr[i][j] == arr[i + idx][j + idx]) {
+							System.out.println(p * p);
+							return;
+						}
+					}
+				}
 			}
 		}
-		System.out.println(res);
-	
-	}
-	private static void go(int i, int j) {
-		for (int idx = 1; idx < w - i && idx < w - j; idx++) {
-			System.out.println(idx+"  i: "+i+"  j: "+j);
-			if(check(i, j, idx)) {
-				res = idx;
-			}	
-		}
 		
-	}
-	private static boolean check(int i, int j, int idx) {
-		int val = arr[i][j];
-		if(arr[i][j + idx] == val
-				&& arr[i + idx][j] == val
-				&& arr[i + idx][j + idx] == val) {
-			return true;
-		}
-		return false;
+		
+	
 	}
 }

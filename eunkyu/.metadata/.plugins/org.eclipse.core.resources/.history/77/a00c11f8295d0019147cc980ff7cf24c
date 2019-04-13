@@ -1,0 +1,111 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+
+//22:20
+public class Main_14891 {
+	
+	static Deque[] deque;
+	static int[][] order;
+	static int k;
+	static boolean[] visited;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		deque = new Deque[4];
+		for (int i = 0; i < 4; i++) {
+			Deque<Integer> dq = new LinkedList<Integer>(); 
+			String str = br.readLine();
+			for (int j = 0; j < 8; j++) {
+				dq.addLast(str.charAt(j) - '0');
+			}
+			deque[i] = dq;
+		}
+		
+		k = Integer.parseInt(br.readLine());
+		order = new int[2][k];
+		for (int i = 0; i < k; i++) {
+			String[] info = br.readLine().split(" ");
+			order[0][i] = Integer.parseInt(info[0]);
+			order[1][i] = Integer.parseInt(info[1]);
+		}
+		goGame();
+	}
+	
+	private static void goGame() {
+		for (int i = 0; i < k; i++) {
+			visited = new boolean[4];
+			int num = order[i][0];
+			int dir = order[i][1];
+			if(dir == 1)
+				rotateR(deque[num - 1], num - 1, dir);
+			else
+				rotateL(deque[num - 1], num - 1, dir);
+			
+		}
+	}
+
+	public static void rotateR(Deque<Integer> dq, int curNum, int dir) {
+		//시계 방향
+		if(curNum < 0 || curNum > 3)
+			return;
+		int r = 0;
+		int l = 0;
+		
+		for (int i = 0; i < 8; i++) {
+			int val = dq.pollFirst();
+			if(i == 2)
+				r = val;
+			if(i == 6)
+				l = val;
+			dq.addLast(val);
+		}
+		visited[curNum] = true;
+		if(!visited[curNum + 1])
+			isR(r, curNum + 1, dir * -1);
+		if(!visited[curNum - 1])
+			isL(l, curNum - 1, dir * -1);
+		
+		if(dir == 1) {
+			int val = dq.pollLast();
+			dq.addFirst(val);	
+		} else {
+			int val = dq.pollFirst();
+			dq.addLast(val);
+		}
+		
+	}
+	
+	private static boolean isR(int r, int curNum, int dir) {
+		if(curNum + 1> 3)
+			return false;
+		Deque<Integer> dq = deque[curNum + 1];
+		int l = 0;
+		for (int i = 0; i < 8; i++) {
+			int val = dq.pollFirst();
+			if(i == 6)
+				l = val;
+			dq.addLast(val);
+		}
+		if(l != r) {
+			isL(r, curNum);
+			int val = dq.pollFirst();
+			dq.addLast(val);
+		} else {
+			return false;
+		}
+		return false;
+	}
+
+	private static void isL(int r, int curNum, int dir) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void rotateL(Deque<Integer> dq, int curNum, int dir) {
+		
+	}
+}

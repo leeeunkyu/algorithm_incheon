@@ -1,0 +1,117 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.time.Duration;
+import java.util.LinkedList;
+import java.util.Queue;
+
+//15:20
+public class Main_15685_2 {
+	
+	static int width = 101;
+	static int height = 101;
+	static int n;
+	static Dragon_15685_2[] draons;
+	static boolean[][] visited;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		draons = new Dragon_15685_2[n];
+		visited = new boolean[width][height];
+		for (int i = 0; i < n; i++) {
+			String[] str = br.readLine().split(" ");
+			draons[i] = 
+					new Dragon_15685_2(Integer.parseInt(str[1]),
+							Integer.parseInt(str[0]),
+							Integer.parseInt(str[2]),
+							Integer.parseInt(str[3]));
+		}
+		
+		goGame();
+	}
+	private static void goGame() {
+		int[] dirMap = {1, 2, 3, 0};
+		int[] dx = {1, 0, -1, 0};
+		int[] dy = {0, -1, 0, 1};
+		for (int i = 0; i < n; i++) {
+			Dragon_15685_2 draon = draons[i];
+			int y = draon.getY();
+			int x = draon.getX();
+			int d = draon.getD();
+			int g = draon.getG();
+			
+			int size = 0;
+			int[] curve = new int[1024];
+			curve[size++] = d;
+			visited[y][x] = true;
+			
+			for (int j = 0; j < g; j++) {
+				for (int j2 = size - 1; j2 >= 0; j2--) {
+					curve[size++] = dirMap[dirMap[j2]];
+				}
+			}
+			
+			for (int j = 0; j < size; j++) {
+				y += dy[curve[j]];
+				x += dx[curve[j]];
+				if(x >= 0 && x < n && y>= 0 && y < n) {
+					visited[y][x] = true;
+				}
+			}
+		}
+		
+		int res = 0;
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if(visited[i][j] && visited[i][j + 1] && visited[i + 1][j] && visited[i + 1][j + 1]) {
+					++res;
+				}
+			}
+		}
+		
+		System.out.println(res);
+	}
+}
+
+class Dragon_15685_2 {
+	int y;
+	int x;
+	int d;
+	int g;
+	
+	public Dragon_15685_2(int y, int x, int d, int g) {
+		super();
+		this.y = y;
+		this.x = x;
+		this.d = d;
+		this.g = g;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	public void setY(int y) {
+		this.y = y;
+	}
+	public int getX() {
+		return x;
+	}
+	public void setX(int x) {
+		this.x = x;
+	}
+	public int getD() {
+		return d;
+	}
+	public void setD(int d) {
+		this.d = d;
+	}
+	public int getG() {
+		return g;
+	}
+	public void setG(int g) {
+		this.g = g;
+	}
+
+}

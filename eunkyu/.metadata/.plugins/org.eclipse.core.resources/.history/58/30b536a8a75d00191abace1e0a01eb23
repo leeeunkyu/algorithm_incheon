@@ -1,0 +1,49 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_16939 {
+	
+	static int[][] arr = {{0, 0, 1, 2, 0, 0, 0, 0},
+			{0, 0, 3, 4, 0, 0, 0, 0},
+			{13, 14, 5, 6, 17, 18, 21, 22},
+			{15, 16, 7, 8, 19, 20, 23, 24},
+			{0, 0, 9, 10, 0, 0, 0, 0},
+			{0, 0, 11, 12, 0, 0, 0, 0}};
+	static int[][] map;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String[] str = br.readLine().split(" ");
+		map = new int[6][8];
+		int temp = 1;
+		loop:
+		for (int v = 0; v < 24; v++) {
+			int val = Integer.parseInt(str[v]);
+			for (int i = 0; i < 6; i++) {
+				for (int j = 0; j < 8; j++) {
+					if(arr[i][j] == temp) {
+						System.out.println(i+"  "+j);
+						System.out.println(val);
+						map[i][j] = val;
+						temp++;
+						continue loop;
+					}
+				}
+			}
+		}
+		
+		print();
+	
+	}
+	private static void print() {
+		System.out.println();
+		for (int i = 0; i < 6; i++) {
+			for (int j = 0; j < 8; j++) {
+				System.out.print(map[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+}

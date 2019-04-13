@@ -1,0 +1,84 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2239 {
+	
+	static int n = 9;
+	static int[][] arr;
+	static boolean[][] visited;
+ 	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		arr = new int[n][n];
+		visited = new boolean[n][n];
+		
+		for (int i = 0; i < n; i++) {
+			String str = br.readLine();
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = str.charAt(j) - '0';
+			}
+		}
+		
+		dfs(0, 0);
+		
+	}
+
+	private static void dfs(int y, int x) {
+		for (int i = y; i < n; i++) {
+			for (int j = x; j < n; j++) {
+				if(arr[i][j] == 0 && !visited[i][j]) {
+					y = i;
+					x = j;
+					break;
+				}
+			}
+			y = 0;
+		}
+		
+		for (int i = 1; i <= 9; i++) {
+			if(check(y, x)) {
+				visited[y][x] = true;
+				arr[y][x] = i;
+				dfs(y, x);
+				visited[y][x] = false;
+			}
+		}
+	}
+
+	private static boolean check(int y, int x) {
+		boolean[] isNum = new boolean[n];
+		for (int i = 0; i < n; i++) {
+			if(!isNum[arr[y][i]]) {
+				isNum[arr[y][i]] = true;
+			} else {
+				if(arr[y][i] == 0)
+					continue;
+				else
+					return false;
+			}
+		}
+		
+		isNum = new boolean[n];
+		for (int i = 0; i < n; i++) {
+			if(!isNum[arr[i][x]]) {
+				isNum[arr[i][x]] = true;
+			} else {
+				if(arr[i][x] == 0)
+					continue;
+				else
+					return false;
+			}
+		}
+		
+		isNum = new boolean[9];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				
+			}
+		}
+		
+		return true;
+	}
+}

@@ -1,0 +1,38 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class Main_2231 {
+	
+	static int n;
+	static String str;
+	public static void main(String[] args) throws NumberFormatException, IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		str = br.readLine();
+		n = Integer.parseInt(str);
+		int size = str.length();
+		
+		//n 자리수 
+		//n -1 자리수부터 검사
+		//n >= 3 이면 n - 1 에 가장 앞자리는 9
+		System.out.println(n - 1);
+		double pivot = Math.pow(10, n - 1); 
+		System.out.println(pivot);
+		for (int i = (int)pivot; i < n; i++) {
+			String temp = ""+i;
+			int sum = i;
+			for (int j = 0; j < temp.length(); j++) {
+				sum += temp.charAt(j) - '0';
+			}
+			
+			if(sum == n) {
+				System.out.println(i);
+				return;
+			}
+		}
+		
+	}
+
+}

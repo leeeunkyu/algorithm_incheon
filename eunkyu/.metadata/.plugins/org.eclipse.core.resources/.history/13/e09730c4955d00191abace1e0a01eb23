@@ -1,0 +1,8 @@
+package algorithm;
+
+public class LastTest {
+	public static void main(String[] args) {
+		char[][] arr = {{'a','b','c','d'}, {'e','f','g','h'}
+		,{'i','j','k','l'},{'n','m','o','p'}};
+	}
+}

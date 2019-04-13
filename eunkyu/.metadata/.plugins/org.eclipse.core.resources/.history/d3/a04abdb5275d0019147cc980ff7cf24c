@@ -1,0 +1,54 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+
+//22:20
+public class Main_14891 {
+	
+	static Deque[] deque;
+	static int[][] order;
+	static int k;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		deque = new Deque[4];
+		for (int i = 0; i < 4; i++) {
+			Deque<Integer> dq = new LinkedList<Integer>(); 
+			String str = br.readLine();
+			for (int j = 0; j < 8; j++) {
+				dq.addLast(str.charAt(j) - '0');
+			}
+			deque[i] = dq;
+		}
+		
+		k = Integer.parseInt(br.readLine());
+		order = new int[2][k];
+		for (int i = 0; i < k; i++) {
+			String[] info = br.readLine().split(" ");
+			order[0][i] = Integer.parseInt(info[0]);
+			order[1][i] = Integer.parseInt(info[1]);
+		}
+		
+		goGame();
+	}
+	
+	private static void goGame() {
+		for (int i = 0; i < k; i++) {
+			int num = order[i][0];
+			int dir = order[i][1];
+			
+			
+		}
+	}
+
+	public static void rotateR() {
+		
+	}
+	
+	public static void rotateL() {
+		
+	}
+}

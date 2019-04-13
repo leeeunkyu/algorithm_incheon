@@ -1,0 +1,22 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+//22:20
+public class Main_14891 {
+	public static void main(String[] args) {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		for (int i = 0; i < 4; i++) {
+			String str = br.readLine();
+		}
+	}
+	
+	public static void rotateR() {
+		
+	}
+	
+	public static void rotateL() {
+		
+	}
+}

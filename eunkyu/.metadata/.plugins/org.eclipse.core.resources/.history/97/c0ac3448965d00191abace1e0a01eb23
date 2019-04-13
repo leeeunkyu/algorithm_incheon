@@ -1,0 +1,43 @@
+package algorithm;
+
+public class LastTest {
+	static char[][] arr = {{'a','b','c','d'}, {'e','f','g','h'}
+	,{'i','j','k','l'},{'n','m','o','p'}};
+	static int n = 4;
+	static char[][] copy = new char[4][4];
+	
+	public static void main(String[] args) {	
+		roate90();
+		print();
+		rotate180();
+		print();
+		rotate270();
+		
+	}
+
+
+	private static void print() {
+		System.out.println();
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				System.out.print(copy[i][j]+" ");
+			}
+			System.out.println();
+		}
+	}
+
+
+	private static void rotate270() {
+		
+	}
+
+
+	private static void rotate180() {
+		
+	}
+
+
+	private static void roate90() {
+		
+	}
+}

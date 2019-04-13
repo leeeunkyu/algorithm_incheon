@@ -1,0 +1,33 @@
+package algorithm;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Deque;
+import java.util.LinkedList;
+
+//22:20
+public class Main_14891 {
+	
+	static Deque[] deque;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		deque = new Deque[4];
+		for (int i = 0; i < 4; i++) {
+			Deque<Integer> dq = new LinkedList<Integer>(); 
+			String str = br.readLine();
+			for (int j = 0; j < 8; j++) {
+				dq.addLast(str.charAt(j) - '0');
+			}
+		}
+	}
+	
+	public static void rotateR() {
+		
+	}
+	
+	public static void rotateL() {
+		
+	}
+}

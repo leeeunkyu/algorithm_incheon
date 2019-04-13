@@ -1,0 +1,16 @@
+package algorithm;
+
+//22:20
+public class Main_14891 {
+	public static void main(String[] args) {
+		
+	}
+	
+	public static void rotateR() {
+		
+	}
+	
+	public static void rotateL() {
+		
+	}
+}
